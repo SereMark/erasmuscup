@@ -180,7 +180,7 @@ export default function LandingPage() {
               <ul className="space-y-1 text-sm mt-4 leading-relaxed">
                 <li><strong>Colors:</strong> Purple & Yellow</li>
                 <li><strong>Animal:</strong> Owl</li>
-                <li><strong>Motto:</strong> Sharp minds sharper claws.”</li>
+                <li><strong>Motto:</strong> “Sharp minds sharper claws.”</li>
                 <li><strong>Captain:</strong> Alex</li>
               </ul>
             </div>
