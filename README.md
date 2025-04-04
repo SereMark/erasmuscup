@@ -132,12 +132,4 @@ See the unabridged madness in the [House Cup Rules 2025](./House-Cup-Rules.md).
 
 ---
 
-## 10. Contact
-
-- **Email**: [contact@erasmuscup.com](mailto:contact@erasmuscup.com) for kidnapping invites or media coverage.  
-- **Website**: [erasmuscup.com](https://erasmuscup.com)  
-- **Owl Mail**: Temporarily suspended. Our owls unionized and are picketing for hazard pay.
-
----
-
 > “It’s all fun and games until someone tries giving *Constructive Feedback.* Then, well… see you at the next Strawberry Moon.”
