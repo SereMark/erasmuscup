@@ -5,18 +5,20 @@ function HouseCupRulesPage() {
     <section className="p-4 sm:p-6 max-w-4xl mx-auto text-gray-100">
       {/* MAIN TITLE */}
       <h1 className="text-3xl sm:text-4xl font-extrabold mb-6 text-center">
-        🏆 House Cup Rules 2025 🏆
+        🏆 <strong>House Cup Rules 2025</strong> 🏆
       </h1>
 
       {/* INTRO / STATUTORY INFO */}
       <div className="mb-6 bg-[#2a2a2a] p-4 sm:p-6 rounded-xl shadow-lg backdrop-blur-md">
         <p className="text-sm sm:text-base leading-relaxed whitespace-pre-wrap">
-          <strong>Public Act:</strong> 2025 No 3{"\n"}
-          <strong>Date of Assent:</strong> 21 March 2025{"\n"}
-          <strong>Commencement:</strong> see section 3(2)
+          <strong>Public Act:</strong> <em>2025 No 3</em>
+          {"\n"}
+          <strong>Date of Assent:</strong> <em>21 March 2025</em>
+          {"\n"}
+          <strong>Commencement:</strong> <em>see section 3(2)</em>
 
-          {"\n\n"}This document includes every word of the original Act (including 4 April 2025
-          amendments) with improved styling, emojis, and clickable anchors for easy navigation. 
+          {"\n\n"}This document includes every word of the original Act (including <strong>4 April 2025
+          amendments</strong>) with improved styling, emojis, and clickable anchors for easy navigation.
           <em> No text has been removed or altered.</em>
         </p>
       </div>
@@ -35,6 +37,7 @@ function HouseCupRulesPage() {
               2 Object and Purpose
             </a>
           </li>
+
           <li className="mt-2 font-semibold">Part 1: The House Cup</li>
           <ul className="list-disc list-inside ml-6 space-y-1">
             <li>
@@ -53,6 +56,7 @@ function HouseCupRulesPage() {
               </a>
             </li>
           </ul>
+
           <li className="mt-2 font-semibold">Part 2: House Points</li>
           <ul className="list-disc list-inside ml-6 space-y-1">
             <li>
@@ -66,6 +70,7 @@ function HouseCupRulesPage() {
               </a>
             </li>
           </ul>
+
           <li className="mt-2 font-semibold">Part 3: Recommendations</li>
           <ul className="list-disc list-inside ml-6 space-y-1">
             <li>
@@ -84,6 +89,7 @@ function HouseCupRulesPage() {
               </a>
             </li>
           </ul>
+
           <li className="mt-2 font-semibold">Part 4: Bonus Points</li>
           <ul className="list-disc list-inside ml-6 space-y-1">
             <li>
@@ -107,6 +113,7 @@ function HouseCupRulesPage() {
               </a>
             </li>
           </ul>
+
           <li className="mt-2 font-semibold">Part 5: Punishment</li>
           <ul className="list-disc list-inside ml-6 space-y-1">
             <li>
@@ -140,6 +147,7 @@ function HouseCupRulesPage() {
               </a>
             </li>
           </ul>
+
           <li className="mt-2 font-semibold">Part 6: Roles</li>
           <ul className="list-disc list-inside ml-6 space-y-1">
             <li>
@@ -148,6 +156,7 @@ function HouseCupRulesPage() {
               </a>
             </li>
           </ul>
+
           <li className="mt-2 font-semibold">
             <a href="#schedule-1" className="underline hover:text-gray-300">
               Schedule 1: House Cup Register
@@ -157,18 +166,8 @@ function HouseCupRulesPage() {
       </div>
 
       {/* FULL TEXT CARDS */}
-      <RuleCard
-        id="section-1"
-        title="1 Interpretation"
-        text={section1}
-        emoji="🔍"
-      />
-      <RuleCard
-        id="section-2"
-        title="2 Object and Purpose"
-        text={section2}
-        emoji="🎯"
-      />
+      <RuleCard id="section-1" title="1 Interpretation" text={section1} emoji="🔍" />
+      <RuleCard id="section-2" title="2 Object and Purpose" text={section2} emoji="🎯" />
 
       <PartHeading partNumber={1} title="The House Cup" id="part-1" />
 
@@ -214,6 +213,7 @@ function HouseCupRulesPage() {
 
 /**
  * Renders a Part heading. E.g. "Part 1: The House Cup"
+ * We use a bold, italic, or other styling for emphasis.
  */
 function PartHeading({ partNumber, title, id }) {
   return (
@@ -222,7 +222,7 @@ function PartHeading({ partNumber, title, id }) {
       className="my-8 bg-[#1f1f1f] p-4 sm:p-6 rounded-xl shadow-lg backdrop-blur-md"
     >
       <h2 className="text-2xl sm:text-3xl font-extrabold">
-        🗂 Part {partNumber}: {title}
+        🗂 <em>Part {partNumber}: {title}</em>
       </h2>
     </div>
   )
@@ -230,27 +230,53 @@ function PartHeading({ partNumber, title, id }) {
 
 /**
  * Renders a single rule "section" with a title, an ID for anchor linking,
- * and the raw text. 
+ * and the raw text. We add bold or italic to certain lines for emphasis,
+ * while preserving the text. 
+ * 
+ * The text is passed in as a raw string, but we can do minimal replacements
+ * or styling if we want. If we need to highlight certain phrases, 
+ * we can do so carefully inside the text.
  */
 function RuleCard({ id, title, text, emoji = "👉" }) {
+  const highlightMap = [
+    { term: "Basic Rules", replacement: "<strong>Basic Rules</strong>" },
+    { term: "Buffaloed", replacement: "<strong>Buffaloed</strong>" },
+    { term: "Cool Shit", replacement: "<em>Cool Shit</em>" },
+    { term: "House Cup", replacement: "<strong>House Cup</strong>" },
+    { term: "Murder", replacement: "<em>Murder</em>" },
+    { term: "Cheating", replacement: "<strong>Cheating</strong>" },
+    { term: "Treason", replacement: "<strong>Treason</strong>" },
+    { term: "public hanging", replacement: "<em>public hanging</em>" },
+  ]
+
+  let enhancedText = text
+  highlightMap.forEach(({ term, replacement }) => {
+    const regex = new RegExp(term, "g")
+    enhancedText = enhancedText.replace(regex, replacement)
+  })
+
   return (
     <div
       id={id}
       className="mb-8 bg-[#2a2a2a] p-4 sm:p-6 rounded-xl shadow-md backdrop-blur"
     >
       <h3 className="text-xl sm:text-2xl font-bold mb-3 flex items-center gap-2">
-        <span>{emoji}</span> {title}
+        <span>{emoji}</span> <span dangerouslySetInnerHTML={{ __html: title }} />
       </h3>
-      <div className="text-sm sm:text-base whitespace-pre-wrap leading-relaxed">
-        {text}
-      </div>
+
+      {/* We'll display the text with dangerouslySetInnerHTML to preserve the inserted bold/italic tags. */}
+      <div
+        className="text-sm sm:text-base whitespace-pre-wrap leading-relaxed"
+        dangerouslySetInnerHTML={{ __html: enhancedText }}
+      />
     </div>
   )
 }
 
 /**
  * Renders the 'Schedule 1' card. We pass the entire text as a prop to keep
- * code tidy. 
+ * code tidy. We can do minimal or no formatting here unless we want to highlight 
+ * certain words. 
  */
 function ScheduleCard({ id, text }) {
   return (
@@ -259,7 +285,7 @@ function ScheduleCard({ id, text }) {
       className="mt-8 bg-[#2a2a2a] p-4 sm:p-6 rounded-xl shadow-md backdrop-blur"
     >
       <h3 className="text-xl sm:text-2xl font-bold mb-3 flex items-center gap-2">
-        <span>📜</span> Schedule 1: House Cup Register
+        <span>📜</span> <strong>Schedule 1: House Cup Register</strong>
       </h3>
       <div className="text-sm sm:text-base whitespace-pre-wrap leading-relaxed">
         {text}
@@ -271,12 +297,6 @@ function ScheduleCard({ id, text }) {
 /************************************************************************
  * Original Full Text (split into constants for easier reading)
  ************************************************************************/
-
-/* 
-   NOTE: Each constant below is EXACT text from the official PDF,
-   arranged by section. We only added line breaks where appropriate.
-   No content is removed or altered.
-*/
 
 const section1 = `
 (1) In this Act, unless the context otherwise requires,—
