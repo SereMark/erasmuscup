@@ -3,72 +3,125 @@ import { motion } from "framer-motion"
 
 export default function LeaderboardPage() {
   const [scores] = useState([
-    { house: "Brew Crew", points: 150 },
-    { house: "House Tiger", points: 120 },
-    { house: "House Hoo", points: 95 },
-    { house: "Deep Jungle", points: 85 }
+    { house: "Brew Crew", points: 450 },
+    { house: "House Tiger", points: 360 },
+    { house: "House Hoo", points: 290 },
+    { house: "Deep Jungle", points: 215 }
   ])
 
+  // Sort scores in descending order
+  const sortedScores = [...scores].sort((a, b) => b.points - a.points)
+
+  // Assign rank-based styling for top 3
+  const getRankStyles = (rank) => {
+    if (rank === 1) return "bg-gradient-to-r from-yellow-400 to-yellow-600 text-black"
+    if (rank === 2) return "bg-gradient-to-r from-gray-300 to-gray-500 text-black"
+    if (rank === 3) return "bg-gradient-to-r from-amber-700 to-amber-900 text-white"
+    return "bg-[#3a3a3a]"
+  }
+
   return (
-    <section className="p-4 sm:p-6 max-w-5xl mx-auto">
-      <motion.h1
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="text-4xl sm:text-5xl font-extrabold mb-6 text-center tracking-tight text-gray-100"
-      >
-        Leaderboard
-      </motion.h1>
+    <section className="pb-12">
+      {/* Hero Header */}
+      <div className="relative w-full h-[40vh] overflow-hidden rounded-xl shadow-xl mb-10 mx-auto max-w-5xl">
+        {/* Background Image */}
+        <img
+          src="/assets/logos/house-cup-logo.png"
+          alt="Leaderboard background"
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-gradient-start to-brand-gradient-end opacity-90" />
+        
+        {/* Hero Content */}
+        <div className="relative w-full h-full flex items-center justify-center">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="px-4 max-w-3xl text-center"
+          >
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 text-white drop-shadow-lg">
+              Who Rules Them All?
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl font-light text-gray-200 leading-relaxed">
+              The House Cup scoreboard updated in real-time.
+              <br className="hidden sm:block" />
+              Check your House ranking and climb to the top… or face the consequences.
+            </p>
+          </motion.div>
+        </div>
+      </div>
 
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="bg-[#2a2a2a]/90 backdrop-blur-md rounded-lg overflow-hidden shadow-lg text-gray-200"
-      >
-        <table className="min-w-full">
-          <thead className="bg-[#3a3a3a]/90 text-gray-100">
-            <tr>
-              <th className="px-4 py-3 font-semibold text-left text-sm sm:text-base w-2/3">
-                House
-              </th>
-              <th className="px-4 py-3 font-semibold text-left text-sm sm:text-base w-1/3">
-                Points (placeholder)
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {scores.map((s, i) => {
-              const isFirst = i === 0
-              return (
-                <tr
-                  key={i}
-                  className={
-                    "border-b border-gray-600 last:border-0 hover:bg-[#3a3a3a]/70 transition-colors " +
-                    (isFirst ? "bg-[#3a3a3a]/60" : "")
-                  }
-                >
-                  <td className="px-4 py-3 text-xs sm:text-base flex items-center space-x-3">
-                    {isFirst && (
-                      <span className="text-brand-gradient-end">🏆</span>
-                    )}
-                    <span>{s.house}</span>
-                  </td>
-                  <td className="px-4 py-3 text-xs sm:text-base">
-                    {s.points}
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </motion.div>
+      <div className="px-4 sm:px-6 max-w-5xl mx-auto">
+        <motion.h2
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-3xl sm:text-4xl font-extrabold mb-6 text-center tracking-tight text-gray-100"
+        >
+          Current Standings
+        </motion.h2>
 
-      <p className="text-center text-gray-400 mt-4 text-xs sm:text-sm leading-relaxed">
-        Don’t see your House on top? 
-        Try a <em>Super Gambit</em> or snag some <em>Public Nudity</em> points. 
-        The Strawberry Moon won’t wait!
-      </p>
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="bg-[#2a2a2a]/90 backdrop-blur-md rounded-lg overflow-hidden shadow-lg text-gray-200"
+        >
+          <table className="min-w-full">
+            <thead className="bg-[#3a3a3a]/90 text-gray-100">
+              <tr>
+                <th className="px-4 py-3 font-semibold text-left text-sm sm:text-base w-16">
+                  Rank
+                </th>
+                <th className="px-4 py-3 font-semibold text-left text-sm sm:text-base w-2/3">
+                  House
+                </th>
+                <th className="px-4 py-3 font-semibold text-left text-sm sm:text-base w-1/3">
+                  Points
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedScores.map((s, i) => {
+                const rank = i + 1
+                return (
+                  <motion.tr
+                    key={s.house}
+                    initial={{ y: 20, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: i * 0.1 }}
+                    className="border-b border-gray-600 last:border-0 hover:bg-[#3a3a3a]/50 transition-colors"
+                  >
+                    {/* Rank Badge */}
+                    <td className="px-4 py-3 text-center">
+                      <span
+                        className={`flex w-10 h-10 rounded-full items-center justify-center font-bold text-sm sm:text-base ${getRankStyles(rank)}`}
+                      >
+                        {rank}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-xs sm:text-base flex items-center space-x-3">
+                      {rank === 1 && <span className="text-brand-gradient-end">🏆</span>}
+                      <span>{s.house}</span>
+                    </td>
+                    <td className="px-4 py-3 text-xs sm:text-base">
+                      {s.points}
+                    </td>
+                  </motion.tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </motion.div>
+
+        <p className="text-center text-gray-400 mt-4 text-xs sm:text-sm leading-relaxed">
+          Don’t see your House on top?
+          Try a <em>Super Gambit</em> or snag some <em>Public Nudity</em> points.
+          The Strawberry Moon won’t wait!
+        </p>
+      </div>
     </section>
   )
 }

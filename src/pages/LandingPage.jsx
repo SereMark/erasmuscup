@@ -1,10 +1,49 @@
 import React from "react"
 import { motion } from "framer-motion"
+import { Link } from "react-router-dom"
 
 export default function LandingPage() {
   return (
     <section className="p-4 sm:p-6">
-      {/* Instagram Section */}
+      {/* HERO SECTION */}
+      <div className="relative w-full h-[70vh] overflow-hidden rounded-xl shadow-xl mb-10">
+        {/* Background Image */}
+        <img
+          src="/assets/logos/house-cup-logo.png"
+          alt="Hero background"
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        />
+        {/* Dark gradient hero overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-gradient-start to-brand-gradient-end opacity-90" />
+        
+        {/* Hero Content */}
+        <div className="relative w-full h-full flex flex-col items-center justify-center text-center">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="px-4 max-w-2xl"
+          >
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 text-white drop-shadow-lg">
+              House Cup 2025
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl font-light mb-6 text-gray-200 leading-relaxed">
+              The (totally not cult-like) competition that unites four Houses—
+              <em>all regulated by the House Cup Rules 2025.</em>
+            </p>
+
+            {/* Call To Action */}
+            <Link
+              to="/leaderboard"
+              className="inline-block bg-white text-black font-semibold px-6 py-3 rounded-md hover:opacity-90 transition-opacity text-sm sm:text-base"
+            >
+              Check the Leaderboard
+            </Link>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* INSTAGRAM SECTION */}
       <motion.div
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -16,7 +55,7 @@ export default function LandingPage() {
             Follow Us on Instagram
           </h2>
           <p className="text-sm sm:text-base max-w-md leading-relaxed">
-            Get exclusive behind-the-scenes action, live event updates, 
+            Get exclusive behind-the-scenes action, live event updates,
             and witness House rivalry in glorious detail.
           </p>
           <a
@@ -37,34 +76,8 @@ export default function LandingPage() {
         />
       </motion.div>
 
-      {/* Hero Section */}
-      <div className="w-full h-[70vh] relative overflow-hidden rounded-xl shadow-xl">
-        {/* Dark gradient hero overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-gradient-start to-brand-gradient-end" />
-        
-        {/* Hero Content */}
-        <div className="w-full h-full flex flex-col items-center justify-center text-center relative">
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="px-4 max-w-2xl"
-          >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 text-white drop-shadow-lg">
-              House Cup 2025
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl font-light mb-4 text-gray-200 leading-relaxed">
-              The (totally not cult-like) competition that unites four Houses— 
-              <em>all regulated by the House Cup Rules 2025.</em>
-            </p>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-5xl mx-auto mt-10 space-y-14">
-
-        {/* Overview */}
+      <div className="max-w-5xl mx-auto space-y-14">
+        {/* OVERVIEW */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -82,7 +95,7 @@ export default function LandingPage() {
               (see Section 3(b)(1-8)).
             </li>
             <li>
-              House Events run <strong>weekly</strong>, awarding <strong>25 to 100 </strong>
+              House Events run <strong>weekly</strong>, awarding <strong>25 to 100</strong>{" "}
               points based on final ranking (Section 6).
             </li>
             <li>
@@ -101,7 +114,7 @@ export default function LandingPage() {
           </p>
         </motion.div>
 
-        {/* The Four Houses */}
+        {/* THE FOUR HOUSES */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -110,7 +123,6 @@ export default function LandingPage() {
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-100">The Four Houses</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
             {/* Brew Crew */}
             <div
               className="rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100 flex flex-col"
@@ -207,7 +219,7 @@ export default function LandingPage() {
           </div>
         </motion.div>
 
-        {/* Features */}
+        {/* FEATURES */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -230,7 +242,7 @@ export default function LandingPage() {
           </ul>
         </motion.div>
 
-        {/* Rules */}
+        {/* RULES AT A GLANCE */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -256,7 +268,7 @@ export default function LandingPage() {
           </p>
         </motion.div>
 
-        {/* Founding Principle */}
+        {/* FOUNDING PRINCIPLE */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
