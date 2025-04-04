@@ -1,25 +1,37 @@
 {
   "name": "erasmuscup",
   "version": "1.0.0",
-  "description": "A fun website for an Erasmus House Cup.",
+  "description": "🧙‍♂️ The official website for the Erasmus House Cup 2025 — a chaotic, Harry Potter-inspired competition of pride, events, and jelly beans.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SereMark/erasmuscup.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "erasmus",
+    "house cup",
+    "harry potter",
+    "vite",
+    "react",
+    "tailwind",
+    "game",
+    "fun",
+    "leaderboard",
+    "jelly beans",
+    "gambits"
+  ],
+  "author": "Sere Gergő Márk <seremark056@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/SereMark/erasmuscup/issues"
   },
-  "homepage": "https://github.com/SereMark/erasmuscup#readme",
+  "homepage": "https://erasmuscup.com",
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",

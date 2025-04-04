@@ -2,15 +2,15 @@
 
 ## 1. Overview
 
-Welcome to **erasmuscup.com**, the unstoppable, irrefutable, and *totally* not cult-like hub for this semester’s Harry Potter-inspired Erasmus House Cup. We’ve got Houses, we’ve got Crimes, we’ve got Yards of beer, and we’ve got the apparently unstoppable plague of *public nudity.*  
+Welcome to **erasmuscup.com**, the unstoppable, irrefutable, and *totally* not cult-like hub for this semester’s Harry Potter-inspired Erasmus House Cup. We’ve got Houses, we’ve got Crimes, we’ve got Yards of beer, and we’ve got an apparently unstoppable plague of *public nudity.*  
 
 Here, you can:  
 - **Monitor** the real-time leaderboard of House Points, murders (shockingly unpunished), and attendance achievements  
 - **Consult** official House Cup laws, so you know exactly how badly your next Treason attempt might go  
 - **Organize** weekly events (avoid Blood Moons) and spontaneous Gambits (or **Super** Gambits if you’re feeling *extra*)  
-- **Cash in** your House Points for jelly beans, while navigating bizarre punishments in the official Constitution
+- **Cash in** your House Points for jelly beans, while navigating bizarre punishments in the official Constitution  
 
-Oh, and of course: **this is definitely not a cult**. We keep repeating that, so it must be true.
+And, of course: **this is definitely not a cult**. We keep repeating that, so it must be true.
 
 ---
 
@@ -32,35 +32,35 @@ When you join, our apparently foolproof **16Personalities Test** sorts you into 
 ## 3. Features
 
 - **📊 Leaderboard**  
-  Now tracking even more ways to lose points for Buffaloing, Nudity, and opening beverages incorrectly (How’s That’ed).
+  Tracks your House Points and all the ways you can lose them: Buffaloing, Nudity, and opening beverages incorrectly (How’s That’ed).
 
 - **📆 Weekly & Surprise Events**  
-  Still banned on Blood Moons. Still mandatory if you don’t want to hemorrhage House Points.
+  Never on Blood Moons. Participate if you don’t want to hemorrhage House Points.
 
 - **⚖️ Extra Crimes & Strange Punishments**  
-  *Murder?* Eh, no actual punishment. *Constructive Feedback?* Immediate death by Strawberry Moon Execution. Seems fair.
+  *Murder?* No actual punishment. *Constructive Feedback?* Immediate death by Strawberry Moon Execution. Seems fair.
 
 - **💥 Super Gambits**  
-  Amp up the chaos with dynamically scalable point totals. Perfect for large-scale meltdown events.
+  Dynamically scalable point totals for large-scale meltdown events.
 
 - **🪧 Armistices**  
-  Because sometimes you need to ally with your sworn House enemies to chase bigger points… or cheat fate.
+  Sometimes you need to ally with your sworn House enemies to chase bigger points… or cheat fate.
 
 - **🕵️ House Judge Role**  
   Elected to interpret rules, resolve disputes, and occasionally dock points from *every* house. No one is safe.
 
 - **📡 Nudity Geo-Tracking** *(In Progress)*  
-  Because awarding points for going full-birthday-suit *once per half-semester* just isn’t enough. We’re mapping it.
+  Because awarding points for going full-birthday-suit *once per half-semester* just isn’t enough. Soon, we’ll map it too.
 
 ---
 
 ## 4. Legal Framework Highlights
 
 - **House Points**: Win them in events, lose them for Cheating, Buffaloing, or existing incorrectly.  
-- **Armistices**: Collude with other Houses. The official rules say it’s (sometimes) legal!  
+- **Armistices**: Collude with other Houses; the official rules say it’s (sometimes) legal.  
 - **Gambits & Super Gambits**: Impromptu events carrying serious point stakes—some with bigger multipliers.  
 - **Punishable Crimes**: Treason (very bad), Constructive Feedback (worse?), Public Nudity (ironically *earns* you points), and of course, the ultimate crime of **Losing**.  
-- **Murder**: Still in the rules. Still apparently allowed. We... we’re working on that.  
+- **Murder**: Part of the rules, with no specified penalty.
 
 See the unabridged madness in the [House Cup Rules 2025](./House-Cup-Rules.md).
 
@@ -80,7 +80,7 @@ See the unabridged madness in the [House Cup Rules 2025](./House-Cup-Rules.md).
 
 ---
 
-## 6. Developer Setup (Because Why Would You Do This?)
+## 6. Developer Setup
 
 1. **Clone** this insanity:  
    ```bash
@@ -95,12 +95,12 @@ See the unabridged madness in the [House Cup Rules 2025](./House-Cup-Rules.md).
    ```bash
    npm run dev
    ```
-4. Build for production (like an overachiever):  
+4. **Build** for production:
    ```bash
    npm run build
    ```
 
-(You do realize you need an official House Cup registration or a (consensual) Blood Oath, right?)
+(You do realize you need an official House Cup registration or a *consensual* Blood Oath, right?)
 
 ---
 
@@ -108,16 +108,16 @@ See the unabridged madness in the [House Cup Rules 2025](./House-Cup-Rules.md).
 
 - **Fully Embracing the Madness**: Our laws are comedic but non-negotiable.  
 - **Absolute House Identity**: Mascots, anthems, war cries—this is your House family, for better or (very likely) worse.  
-- **User Experience**: Is overshadowed by chaotic rules and fear of losing. *Still better than forgetting to say “not out.”*  
+- **User Experience**: Overshadowed by chaotic rules and fear of losing. (Still better than forgetting to say “not out.”)  
 - **Mobile-First**: Because you never know where you’ll need to record a Gambit or public nudity.
 
 ---
 
 ## 8. Roadmap
 
-- **🧮 Larger-Than-Life Super Gambit System**: More participants = more points (and possibly more betrayal).  
+- **🧮 Super Gambit System**: More participants = more points (and possibly more betrayal).  
 - **📜 Interactive Constitution Browser**: So you can argue about Tenth Amendment issues with your House Judge in real time.  
-- **📸 Nudity Map™**: Coming soon—like Pokémon GO, but for streakers.  
+- **📸 Nudity Map™**: Like Pokémon GO, but for streakers.  
 - **🗳️ Potential Fifth House**: *House Shrimp? House Sloth?* Democracy shall decide.  
 - **🎆 Fireworks for Treason Prevention**: Light up the sky every time you *don’t* overthrow the event organizers.  
 - **💬 Whistleblower Hotline**: Snitch (pun intended) on your House for personal gain.
