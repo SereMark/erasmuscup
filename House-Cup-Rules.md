@@ -1,7 +1,9 @@
-# 🏆 House Cup Rules 2025 
+# 🏆 House Cup Rules 2025
 **Public Act: 2025 No 3**  
 **Date of Assent:** 21 March 2025  
 **Commencement:** see section 3(2)
+
+---
 
 ## Contents
 
@@ -114,8 +116,7 @@
 
 ## 5. House Events
 
-1. House Events:
-
+1. House Events:  
    a. Are to take place weekly, with no less than one House Event taking place per week.  
    b. Are to be decided by consensus of Participants, irrespective of Founders or House Captains.  
    c. May not take place on a Blood Moon.
@@ -130,8 +131,7 @@
 ## 6. Awarding of House Points
 
 1. The following, agglutinated to the rules pertaining to the Revocation of House Points in section 7, are to be known as the Point System.  
-2. House Points are awarded on the following rules:
-
+2. House Points are awarded on the following rules:  
    a. Winning a House Event results in 100 points.  
    b. Second place in a House Event results in 75 points.  
    c. Third place in a House Event results in 50 points.  
@@ -144,8 +144,7 @@
 
 ## 7. Revocation of House Points
 
-1. Points will be revoked from Houses in the following circumstances:
-
+1. Points will be revoked from Houses in the following circumstances:  
    a. Failure to have one representative at a House Event will result in the loss of 50 points.  
    b. Establishment of any of the House Cup Crimes will result in a loss of points outlined in their respective sections.  
    c. Getting Buffaloed 3 times in one night will result in the loss of 10 points.  
@@ -158,10 +157,12 @@
 ## 8. Event Selection and Decision
 
 1. There is no prescribed mechanism of event selection, and:  
-   a. Activity  
-   b. Date  
-   c. Time  
+   - Activity  
+   - Date  
+   - Time  
+
    are to be decided by consensus.
+
 2. Events are to be advertised in the House Cup WhatsApp group.  
 3. Any suggestions for future House Events are to be put into the WhatsApp group and/or noted down for future reference.
 
@@ -170,9 +171,9 @@
 ## 9. Overthrowing the Event Organisers
 
 1. Overthrowing Event Organisers by means of:  
-   a. Treason  
-   b. Bomb Threats  
-   c. Magical Wishes and/or Spells  
+   - Treason  
+   - Bomb Threats  
+   - Magical Wishes and/or Spells  
 
    is strictly prohibited, and establishes the actus reus for Treason under section 15.
 
@@ -189,8 +190,7 @@
 
 ## 11. Attendance and Pride
 
-1. Bonus points will be awarded for attendance:
-
+1. Bonus points will be awarded for attendance:  
    a. For each attending member at an event, the attending House will be awarded 1 point per person.  
    b. The points for attendance are limited in number to the number of people of the smallest house attending.  
    c. In order to get this point, the attending member must be dressed in their House colour or Trim, or have on hand any animal paraphernalia.
@@ -354,13 +354,12 @@
 
 ## Schedule 1: House Cup Register
 
-The following natural persons are hereby Participants in the House Cup:
+> The following natural persons are hereby Participants in the House Cup:
 
 **Name:**  
-**Signature:**
+**Signature:**  
 
 ### House Captains:
-
 ```
 ________________________________________________________________   _____________
 ________________________________________________________________   _____________
@@ -369,7 +368,6 @@ ________________________________________________________________   _____________
 ```
 
 ### Participants:
-
 ```
 ________________________________________________________________   _____________
 ________________________________________________________________   _____________
