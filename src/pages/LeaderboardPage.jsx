@@ -3,10 +3,10 @@ import { motion } from "framer-motion"
 
 export default function LeaderboardPage() {
   const [scores] = useState([
-    { house: "Brew Crew", points: 450 },
-    { house: "House Tiger", points: 360 },
-    { house: "House Hoo", points: 290 },
-    { house: "Deep Jungle", points: 215 }
+    { house: "Brew Crew", points: 141 },
+    { house: "House Tiger", points: 110 },
+    { house: "House Hoo", points: 107 },
+    { house: "Deep Jungle", points: 182 }
   ])
 
   // Sort scores in descending order

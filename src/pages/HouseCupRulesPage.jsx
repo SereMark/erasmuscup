@@ -1,29 +1,11 @@
-/*************************
- * src/pages/HouseCupRulesPage.jsx
- *************************/
-import React, { useEffect } from "react"
-
-/**
- * A simple helper to ensure the entire page uses smooth scrolling via CSS.
- * You can also add this to your global CSS if preferred.
- */
-function useSmoothScrolling() {
-  useEffect(() => {
-    document.documentElement.style.scrollBehavior = "smooth"
-    return () => {
-      document.documentElement.style.scrollBehavior = "auto"
-    }
-  }, [])
-}
+import React from "react"
 
 function HouseCupRulesPage() {
-  useSmoothScrolling()
-
   return (
     <section className="p-4 sm:p-6 max-w-4xl mx-auto text-gray-100">
       {/* MAIN TITLE */}
       <h1 className="text-3xl sm:text-4xl font-extrabold mb-6 text-center">
-        🏆 House Cup Rules 2025 (Amended 4 April) 🏆
+        🏆 House Cup Rules 2025 🏆
       </h1>
 
       {/* INTRO / STATUTORY INFO */}
