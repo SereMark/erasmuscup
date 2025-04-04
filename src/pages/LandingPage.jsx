@@ -13,9 +13,9 @@ export default function LandingPage() {
           alt="Hero background"
           className="absolute inset-0 w-full h-full object-cover opacity-40"
         />
-        {/* Dark gradient hero overlay */}
+        {/* Dark gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-brand-gradient-start to-brand-gradient-end opacity-90" />
-        
+
         {/* Hero Content */}
         <div className="relative w-full h-full flex flex-col items-center justify-center text-center">
           <motion.div
@@ -28,17 +28,25 @@ export default function LandingPage() {
               House Cup 2025
             </h1>
             <p className="text-base sm:text-lg md:text-xl font-light mb-6 text-gray-200 leading-relaxed">
-              The (totally not cult-like) competition that unites four Houses—
-              <em>all regulated by the House Cup Rules 2025.</em>
+              A friendly, house-based contest among Erasmus students –
+              <em> governed by the House Cup Rules 2025.</em>
             </p>
 
             {/* Call To Action */}
-            <Link
-              to="/leaderboard"
-              className="inline-block bg-white text-black font-semibold px-6 py-3 rounded-md hover:opacity-90 transition-opacity text-sm sm:text-base"
-            >
-              Check the Leaderboard
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+              <Link
+                to="/leaderboard"
+                className="inline-block bg-white text-black font-semibold px-6 py-3 rounded-md hover:opacity-90 transition-opacity text-sm sm:text-base"
+              >
+                Check the Leaderboard
+              </Link>
+              <Link
+                to="/housecup-rules"
+                className="inline-block bg-white text-black font-semibold px-6 py-3 rounded-md hover:opacity-90 transition-opacity text-sm sm:text-base"
+              >
+                Read the Full Rules
+              </Link>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -51,21 +59,20 @@ export default function LandingPage() {
         className="mb-10 bg-gradient-to-r from-pink-500 to-purple-600 p-8 rounded-xl shadow-xl flex flex-col sm:flex-row items-center sm:justify-between text-white"
       >
         <div className="mb-6 sm:mb-0 space-y-2 sm:space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-extrabold">
-            Follow Us on Instagram
-          </h2>
+          <h2 className="text-2xl sm:text-3xl font-extrabold">Follow Us on Instagram</h2>
           <p className="text-sm sm:text-base max-w-md leading-relaxed">
-            Get exclusive behind-the-scenes action, live event updates,
-            and witness House rivalry in glorious detail.
+            See live event updates, house rivalries, and behind-the-scenes stories.
           </p>
           <a
             href="https://www.instagram.com/house_cup_erasmus/"
             className="inline-block bg-white text-pink-600 font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity text-sm sm:text-base"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Go to Instagram
           </a>
         </div>
-        
+
         <motion.img
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -77,7 +84,7 @@ export default function LandingPage() {
       </motion.div>
 
       <div className="max-w-5xl mx-auto space-y-14">
-        {/* OVERVIEW */}
+        {/* INTRO & DISCLAIMER */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -85,32 +92,24 @@ export default function LandingPage() {
           transition={{ duration: 0.5 }}
           className="bg-[#2a2a2a] p-6 sm:p-8 rounded-xl shadow-lg backdrop-blur-md text-gray-100"
         >
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Overview</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Welcome!</h2>
           <p className="text-base sm:text-lg leading-relaxed mb-4">
-            Welcome to a House-based competition where:
+            The House Cup is an entertaining competition of four Houses formed via the
+            <strong> 16Personalities Test</strong>. It’s absolutely not a cult — just a way
+            to gather, have fun, and earn (or lose) points for your House.
           </p>
-          <ul className="list-disc list-inside space-y-2 pl-2 text-gray-200 text-sm sm:text-base">
-            <li>
-              Each House was formed after the <strong>16Personalities Test</strong> 
-              (see Section 3(b)(1-8)).
-            </li>
-            <li>
-              House Events run <strong>weekly</strong>, awarding <strong>25 to 100</strong>{" "}
-              points based on final ranking (Section 6).
-            </li>
-            <li>
-              Missing an event or racking up “House Crimes” can cause brutal point deductions
-              (Sections 5 & 7).
-            </li>
-            <li>
-              <strong>Public Nudity</strong> is “discouraged” but can net you 30 points
-              if documented (once per half-semester).
-            </li>
+          <p className="text-sm sm:text-base leading-relaxed text-gray-200">
+            How it works in a nutshell:
+          </p>
+          <ul className="list-disc list-inside space-y-1 pl-2 text-gray-200 text-sm sm:text-base mb-4">
+            <li>Join your assigned House after the personality quiz.</li>
+            <li>Attend weekly events or spontaneous challenges to earn House Points.</li>
+            <li>Avoid losing points by skipping events or committing “House Crimes.”</li>
+            <li>By the <strong>Strawberry Moon</strong>, the highest-scoring House takes the <em>House Pokal</em>. Others must do a <em>Yardie</em> or face comedic doom.</li>
           </ul>
-          <p className="mt-4 text-gray-200 text-sm sm:text-base leading-relaxed">
-            By the time the <em>Strawberry Moon</em> rises, whichever House stands atop
-            the leaderboard wins the <strong>House Pokal</strong>.  
-            The rest risk a public hanging—unless saved by a heroic <em>Yardie</em> (Sec. 18).
+          <p className="text-sm sm:text-base leading-relaxed text-gray-200">
+            Want detailed legalese (featuring yard-glass beer stunts and odd rules)? 
+            <strong> Read the Full Rules</strong> to see it all.
           </p>
         </motion.div>
 
@@ -121,7 +120,12 @@ export default function LandingPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-100">The Four Houses</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-100">Meet The Four Houses</h2>
+          <p className="text-sm sm:text-base mb-6 text-gray-100 leading-relaxed">
+            Each House has a unique style and anthem. You don’t pick the House—
+            <strong> the test picks it for you</strong>.
+          </p>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Brew Crew */}
             <div
@@ -130,18 +134,16 @@ export default function LandingPage() {
             >
               <div className="flex justify-between items-center">
                 <h3 className="text-xl sm:text-2xl font-bold drop-shadow-lg">Brew Crew</h3>
-                <img 
+                <img
                   src="/assets/logos/brew-crew-logo.png"
                   alt="Brew Crew Logo"
                   className="w-14 h-14 sm:w-16 sm:h-16"
                 />
               </div>
               <ul className="space-y-1 text-sm mt-4 leading-relaxed">
-                <li><strong>Colors:</strong> Gold with Green trim</li>
-                <li><strong>Animal:</strong> The Alligator – cold-blooded, cold-beered</li>
-                <li><strong>Anthem:</strong> National Anthem of USSR</li>
-                <li><strong>Motto:</strong> “Veni, Vidi, Bibi – we came, we saw, we drank.”</li>
-                <li><strong>Values:</strong> Communism, Beer, zero penalty for <em>Murder</em></li>
+                <li><strong>Colors:</strong> Gold & Green</li>
+                <li><strong>Animal:</strong> Alligator</li>
+                <li><strong>Motto:</strong> “Veni, Vidi, Bibi.”</li>
                 <li><strong>Captain:</strong> Viky</li>
               </ul>
             </div>
@@ -153,7 +155,7 @@ export default function LandingPage() {
             >
               <div className="flex justify-between items-center">
                 <h3 className="text-xl sm:text-2xl font-bold drop-shadow-lg">House Hoo</h3>
-                <img 
+                <img
                   src="/assets/logos/house-hoo-logo.png"
                   alt="House Hoo Logo"
                   className="w-14 h-14 sm:w-16 sm:h-16"
@@ -162,11 +164,8 @@ export default function LandingPage() {
               <ul className="space-y-1 text-sm mt-4 leading-relaxed">
                 <li><strong>Colors:</strong> Purple & Yellow</li>
                 <li><strong>Animal:</strong> Owl</li>
-                <li><strong>Anthem:</strong> “Who Are You” by The Who</li>
                 <li><strong>Motto:</strong> “Mentes acutæ, unguibus acutioribus.”</li>
-                <li><strong>Values:</strong> Ambition, Cleverness, Sage, Strategy</li>
                 <li><strong>Captain:</strong> Alex</li>
-                <li><strong>Bursar:</strong> Maria</li>
               </ul>
             </div>
 
@@ -177,16 +176,14 @@ export default function LandingPage() {
             >
               <div className="flex justify-between items-center">
                 <h3 className="text-xl sm:text-2xl font-bold drop-shadow-lg">House Tiger</h3>
-                <img 
+                <img
                   src="/assets/logos/not-available.png"
                   alt="House Tiger Logo"
                   className="w-14 h-14 sm:w-16 sm:h-16"
                 />
               </div>
               <p className="text-sm mt-4 leading-relaxed">
-                <strong>Info:</strong> Not Available  
-                <br />
-                (16Personalities quiz stuck loading?)
+                <strong>Info:</strong> Currently “finding itself.”
               </p>
             </div>
 
@@ -197,7 +194,7 @@ export default function LandingPage() {
             >
               <div className="flex justify-between items-center">
                 <h3 className="text-xl sm:text-2xl font-bold drop-shadow-lg">Deep Jungle</h3>
-                <img 
+                <img
                   src="/assets/logos/deep-jungle-logo.png"
                   alt="Deep Jungle Logo"
                   className="w-14 h-14 sm:w-16 sm:h-16"
@@ -206,20 +203,14 @@ export default function LandingPage() {
               <ul className="space-y-1 text-sm mt-4 leading-relaxed">
                 <li><strong>Colors:</strong> Deep Green & Mustard</li>
                 <li><strong>Animal:</strong> Raccoon</li>
-                <li><strong>Anthem:</strong> “Once upon a time in Africa”</li>
-                <li>
-                  <strong>Motto:</strong> “Smart lemurs, clever play. Think first, then slay.”
-                </li>
-                <li>
-                  <strong>Values:</strong> Intelligence, Success, Diversity, Muscular
-                </li>
+                <li><strong>Motto:</strong> “Think first, then slay.”</li>
                 <li><strong>Captain:</strong> Marco</li>
               </ul>
             </div>
           </div>
         </motion.div>
 
-        {/* FEATURES */}
+        {/* KEY FEATURES & EVENTS */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -227,22 +218,24 @@ export default function LandingPage() {
           transition={{ duration: 0.5 }}
           className="bg-[#2a2a2a] p-6 sm:p-8 rounded-xl shadow-lg backdrop-blur-md text-gray-100"
         >
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Features</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Key Points & Events</h2>
           <ul className="list-disc list-inside space-y-2 pl-2 text-gray-200 text-sm sm:text-base leading-relaxed">
-            <li>Track House Points in real-time—scoreboard for your life choices.</li>
             <li>
-              Weekly & surprise events (<strong>House Events</strong>, <strong>Gambits</strong>) 
-              awarding points if you don’t cheat.
+              <strong>Weekly House Events:</strong> Earn points (1st to 4th place). Missing an event costs your House points.
             </li>
             <li>
-              <strong>Super Gambits</strong> (Sec. 12a) multiply your points—and your risk 
-              of humiliation.
+              <strong>Gambits & Super Gambits:</strong> Smaller, or supersized, side-challenges to gather bonus points.
             </li>
-            <li>House Judges, Bursars, & Captains keep things “fair” (Sec. 19).</li>
+            <li>
+              <strong>Team Pride:</strong> Show up in House colors, represent in style, and rake in extra points.
+            </li>
+            <li>
+              <strong>House Roles:</strong> Captains organize, Bursars track points, and Judges settle disputes.
+            </li>
           </ul>
         </motion.div>
 
-        {/* RULES AT A GLANCE */}
+        {/* THE FOUNDING PRINCIPLE */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -250,39 +243,14 @@ export default function LandingPage() {
           transition={{ duration: 0.5 }}
           className="bg-[#2a2a2a] p-6 sm:p-8 rounded-xl shadow-lg backdrop-blur-md text-gray-100"
         >
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Rules At A Glance</h2>
-          <ul className="list-disc list-inside space-y-2 pl-2 text-gray-200 text-sm sm:text-base leading-relaxed">
-            <li>Win points in events; lose them to House Crimes or Buffalo/How’s That fiascos.</li>
-            <li>Treason is real—overthrowing event organisers is pretty dumb.</li>
-            <li>
-              Public Nudity: “discouraged,” but 30 points if documented 
-              (once each half-semester).
-            </li>
-            <li>Murder? No penalty. (Section 17 says it all.)</li>
-          </ul>
-          <p className="mt-4 text-sm leading-relaxed">
-            <em>
-              If you’re confused, blame “Constructive Feedback”—which ironically is Treason
-              (Section 10).
-            </em>
-          </p>
-        </motion.div>
-
-        {/* FOUNDING PRINCIPLE */}
-        <motion.div
-          initial={{ y: 40, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="bg-[#2a2a2a] p-6 sm:p-8 rounded-xl shadow-lg backdrop-blur-md text-gray-100"
-        >
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Founding Principle</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">The Founding Principle</h2>
           <p className="text-sm sm:text-base leading-relaxed">
-            By the final tally on the Strawberry Moon, 
-            either you <strong>win</strong> the House Cup or face 
-            <em> public hanging</em>. You might save your neck with a 
-            <strong> Yardie</strong> (Sec. 18). 
-            Such is democracy in 2025!
+            When the <strong>Strawberry Moon</strong> arrives, the House with the highest points
+            claims the <strong>House Pokal</strong>. The others must do a <em>Yardie</em> (chug a yard glass)
+            within one week to dodge… comedic “doom.”
+          </p>
+          <p className="text-sm sm:text-base mt-4 leading-relaxed">
+            It’s all in good fun—no real violence is condoned. May the best (or quirkiest) House win!
           </p>
         </motion.div>
       </div>

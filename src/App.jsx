@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom"
 import Layout from "./components/Layout"
 import LandingPage from "./pages/LandingPage"
 import LeaderboardPage from "./pages/LeaderboardPage"
+import HouseCupRulesPage from "./pages/HouseCupRulesPage"
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<LandingPage />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
+          <Route path="/housecup-rules" element={<HouseCupRulesPage />} />
         </Route>
       </Routes>
     </div>
