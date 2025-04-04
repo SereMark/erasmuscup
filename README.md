@@ -20,10 +20,10 @@ When you join, our apparently foolproof **16Personalities Test** sorts you into 
 
 | House            | Mascot     | Motto                                     |
 |------------------|------------|-------------------------------------------|
-| 🐊 **House Brew**   | Alligator  | "Relax Hard. Fight Harder."                |
-| 🦉 **House Hoo**    | Owl        | "Wisdom Comes Loudly—Especially at 3 AM."  |
+| 🐊 **House Brew**   | Alligator  | "Veni, Vidi, Bibi – we came, we saw, we drank."                |
+| 🦉 **House Hoo**    | Owl        | "Mentes acutæ, unguibus acutioribus."  |
 | 🐅 **House Tiger**  | Tiger      | "Victory Through Vibes."                   |
-| 🦝 **House Jungle** | Raccoon    | "Embrace the Chaos (and Possibly the Trash)." |
+| 🦝 **House Jungle** | Raccoon    | "Smart lemurs, clever play. Think first, then slay." |
 
 **Founding Principle**: If your House is losing at the final tally, you will be *hanged publicly* unless you chug a yard of beer in time. Democracy at its finest.
 
