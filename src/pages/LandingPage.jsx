@@ -1,22 +1,20 @@
-import React from "react"
-import { motion } from "framer-motion"
+import React, { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { Link } from "react-router-dom"
 
 export default function LandingPage() {
+  const [showNextEvent, setShowNextEvent] = useState(true)
+
   return (
     <section className="p-4 sm:p-6">
-      {/* HERO SECTION */}
       <div className="relative w-full h-[70vh] overflow-hidden rounded-xl shadow-xl mb-10">
-        {/* Background Image */}
         <img
-          src="/assets/logos/house-cup-logo.png"
+          src="/assets/logos/house-cup-cover.png"
           alt="Hero background"
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
         />
-        {/* Dark gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-brand-gradient-start to-brand-gradient-end opacity-90" />
 
-        {/* Hero Content */}
         <div className="relative w-full h-full flex flex-col items-center justify-center text-center">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -28,11 +26,9 @@ export default function LandingPage() {
               House Cup 2025
             </h1>
             <p className="text-base sm:text-lg md:text-xl font-light mb-6 text-gray-200 leading-relaxed">
-              A friendly, house-based contest among Erasmus students –
-              <em> governed by the House Cup Rules 2025.</em>
+              Join us for a definitely-not-a-cult competition among eager Erasmus students,
+              <em> lovingly guided by the House Cup Rules 2025.</em>
             </p>
-
-            {/* Call To Actions */}
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <Link
                 to="/leaderboard"
@@ -46,18 +42,11 @@ export default function LandingPage() {
               >
                 Read the Full Rules
               </Link>
-              <Link
-                to="/events"
-                className="inline-block bg-white text-black font-semibold px-6 py-3 rounded-md hover:opacity-90 transition-opacity text-sm sm:text-base"
-              >
-                Find an Event
-              </Link>
             </div>
           </motion.div>
         </div>
       </div>
 
-      {/* INSTAGRAM SECTION */}
       <motion.div
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -67,7 +56,7 @@ export default function LandingPage() {
         <div className="mb-6 sm:mb-0 space-y-2 sm:space-y-4">
           <h2 className="text-2xl sm:text-3xl font-extrabold">Follow Us on Instagram</h2>
           <p className="text-sm sm:text-base max-w-md leading-relaxed">
-            See live event updates, house rivalries, and behind-the-scenes stories.
+            Feast on behind-the-scenes stunts, impromptu “Buffaloed” fails, and the occasional “public nudity” competition.
           </p>
           <a
             href="https://www.instagram.com/house_cup_erasmus/"
@@ -90,7 +79,6 @@ export default function LandingPage() {
       </motion.div>
 
       <div className="max-w-5xl mx-auto space-y-14">
-        {/* INTRO & DISCLAIMER */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -100,36 +88,36 @@ export default function LandingPage() {
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-4">Welcome!</h2>
           <p className="text-base sm:text-lg leading-relaxed mb-6">
-            The House Cup is an entertaining competition of four Houses. 
-            Originally, the <strong>Founders used 16Personalities</strong> to form the first rosters. 
-            Now, for new members, <strong>we have our own quiz</strong> – 
-            but you can only fill it out <em>in person</em> at a House Cup event, once you’ve asked to join.
+            Each Erasmus warrior is sorted into one of four Houses. Every weekly event (and random 
+            <em> Gambit</em>) can skyrocket your points or plunge your House into comedic peril.
+            Watch out for <strong>Constructive Feedback</strong> because that’s <strong>Treason</strong>.
           </p>
           <p className="text-base sm:text-lg leading-relaxed text-gray-200 mb-4">
-            In short:
+            Key Points:
           </p>
           <ul className="list-disc list-inside space-y-1 pl-2 text-gray-200 text-sm sm:text-base mb-4">
             <li>
-              <strong>Attend an Event:</strong> Check our event schedule, show up, 
-              and let the organizers know you’d like to join the House Cup.
+              No, it’s not a cult (section 2(3)). We promise!
             </li>
             <li>
-              <strong>Take Our Custom Quiz (On-site):</strong> Once you’re there, you’ll fill 
-              out a short quiz to be assigned a House.
+              <em>Murder</em> is not punished (section 17), but missing an event is a mortal sin 
+              that costs 50 points.
             </li>
             <li>
-              <strong>Earn or Lose Points:</strong> Weekly events, surprise Gambits, and comedic 
-              “House Crimes” will make or break your House’s chances at the Pokal.
+              If your House flunks, you’ll have one last chance to do a <em>Yardie</em> (beer-chug) 
+              or face <em>public hanging</em> (section 18).
+            </li>
+            <li>
+              Public Nudity can net you 30 points. Ten or more in the buff at once is worth 1000. 
+              We’re not joking (section 16).
             </li>
           </ul>
           <p className="text-sm sm:text-base leading-relaxed text-gray-200">
-            Ready to dive in? Grab your Housemates, try new challenges, and if you want the legal 
-            nitty-gritty (like how <em>Public Nudity</em> might net you extra points),
-            be sure to <strong>read the Full Rules</strong>!
+            Sound insane enough? Peek at the <strong>Full Rules</strong> to discover how 
+            “Buffaloed” can drain your points and “Constructive Feedback” can get you executed.
           </p>
         </motion.div>
 
-        {/* THE FOUR HOUSES */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -138,12 +126,11 @@ export default function LandingPage() {
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-100">Meet The Four Houses</h2>
           <p className="text-sm sm:text-base mb-6 text-gray-100 leading-relaxed">
-            Each House boasts its own theme, motto, and anthem. 
-            <strong> You don’t pick the House</strong>—the on-site quiz does!
+            Our Founders sorted themselves via 16Personalities Test (section 3).
+            Now, you do it on-site. If you skip events, your House suffers (section 5).
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Brew Crew */}
             <div
               className="rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100 flex flex-col"
               style={{ background: "linear-gradient(to bottom right, #d4af37, #228B22)" }}
@@ -159,12 +146,11 @@ export default function LandingPage() {
               <ul className="space-y-1 text-sm mt-4 leading-relaxed">
                 <li><strong>Colors:</strong> Gold & Green</li>
                 <li><strong>Animal:</strong> Alligator</li>
-                <li><strong>Motto:</strong> “Veni, Vidi, Bibi.”</li>
+                <li><strong>Motto:</strong> “Veni, Vidi, Bibi.” (We came, we saw, we drank.)</li>
                 <li><strong>Captain:</strong> Viky</li>
               </ul>
             </div>
 
-            {/* House Hoo */}
             <div
               className="rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100 flex flex-col"
               style={{ background: "linear-gradient(to bottom right, #5e2e9a, #ffdb00)" }}
@@ -185,7 +171,6 @@ export default function LandingPage() {
               </ul>
             </div>
 
-            {/* House Tiger */}
             <div
               className="rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100 flex flex-col"
               style={{ background: "linear-gradient(to bottom right, #ff8300, #a83232)" }}
@@ -199,11 +184,14 @@ export default function LandingPage() {
                 />
               </div>
               <p className="text-sm mt-4 leading-relaxed">
-                <strong>Info:</strong> Currently “finding itself.”
+                <strong>Colors:</strong> Orange & Crimson
+                <br />
+                <strong>Motto:</strong> “Roar like a Tiger, chill like a Panda.”
+                <br />
+                <strong>Captain:</strong> Elise
               </p>
             </div>
 
-            {/* Deep Jungle */}
             <div
               className="rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100 flex flex-col"
               style={{ background: "linear-gradient(to bottom right, #0a3618, #d49a13)" }}
@@ -226,7 +214,6 @@ export default function LandingPage() {
           </div>
         </motion.div>
 
-        {/* KEY FEATURES & EVENTS */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -234,24 +221,30 @@ export default function LandingPage() {
           transition={{ duration: 0.5 }}
           className="bg-[#2a2a2a] p-6 sm:p-8 rounded-xl shadow-lg backdrop-blur-md text-gray-100"
         >
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Key Points & Events</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Key Features & Events</h2>
           <ul className="list-disc list-inside space-y-2 pl-2 text-gray-200 text-sm sm:text-base leading-relaxed">
             <li>
-              <strong>Weekly House Events:</strong> Earn up to 100 points for your House. Missing an event will cost points.
+              <strong>Mandatory Weekly House Events:</strong> Miss one, lose 50 points.
             </li>
             <li>
-              <strong>Gambits & Super Gambits:</strong> Sneak in extra or larger side-challenges to leap ahead in points.
+              <strong>Gambits & Super Gambits:</strong> Score extra points, or get penalized
+              if you cheat thrice before midnight.
             </li>
             <li>
-              <strong>Team Pride:</strong> Dressing in House colors—or just being loud—can net big bonuses.
+              <strong>Team Pride:</strong> Earn bonus points by wearing House colors 
+              or screaming louder than the other Houses.
             </li>
             <li>
-              <strong>House Roles:</strong> Captains, Bursars, and Judges keep you on track (or in trouble).
+              <strong>Armistices:</strong> Make alliances with 2 or 3 Houses to share points, 
+              but not with all 4 (that’s suspicious).
+            </li>
+            <li>
+              <strong>Public Nudity Quests:</strong> 30 points each, 1000 for a big group. 
+              Bring sunscreen?
             </li>
           </ul>
         </motion.div>
 
-        {/* THE FOUNDING PRINCIPLE */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -261,15 +254,62 @@ export default function LandingPage() {
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-4">The Founding Principle</h2>
           <p className="text-sm sm:text-base leading-relaxed">
-            When the <strong>Strawberry Moon</strong> arrives, the House with the highest points
-            claims the <strong>House Pokal</strong>. Every other House must perform a
-            <em> Yardie</em> (chug a yard glass) within one week to avoid comedic “doom.”
+            On the sacred night of the <strong>Strawberry Moon</strong>, whichever House sits 
+            atop the leaderboard seizes the <strong>House Pokal</strong>. Everyone else has a 
+            week to conquer a <em>Yardie</em> (a yard of beer) or accept comedic doom.
           </p>
           <p className="text-sm sm:text-base mt-4 leading-relaxed">
-            It’s all in good fun—no real violence is condoned. May the quirkiest House prevail!
+            Yes, there’s no penalty for murder—but skip an event or commit Treason, 
+            and you’ll learn the real meaning of “house loyalty.” Good luck.
           </p>
         </motion.div>
       </div>
+
+      <AnimatePresence>
+        {showNextEvent && (
+          <motion.div
+            className="
+              fixed bottom-6 right-6 
+              w-[90%] sm:w-96 max-w-full
+              bg-[#2a2a2a] text-white 
+              rounded-xl shadow-xl p-4 z-50 
+              flex flex-col gap-3
+            "
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 50, opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <button
+              onClick={() => setShowNextEvent(false)}
+              className="ml-auto text-gray-400 hover:text-gray-200 transition-colors"
+            >
+              ✕
+            </button>
+            <h4 className="text-lg sm:text-xl font-bold text-center mb-2">
+              Next Event
+            </h4>
+            <div className="flex items-center justify-center">
+              <motion.img
+                src="/assets/logos/next-event.png"
+                alt="The Actual Cup Game Logo"
+                className="w-24 h-auto object-contain rounded-md"
+              />
+            </div>
+            <p className="text-base sm:text-lg font-semibold text-center mt-1">
+              The Actual Cup Game
+            </p>
+            <p className="text-sm text-center">
+              <strong>When:</strong> Saturday, 5 April @ 7:30 PM
+              <br />
+              <strong>Where:</strong> In A Common Room
+            </p>
+            <p className="text-xs text-gray-300 leading-snug text-center">
+              Expect loud chants, minor humiliations, and hopefully no Buffalo fiascos.
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

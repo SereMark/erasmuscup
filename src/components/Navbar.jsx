@@ -13,7 +13,6 @@ export default function Navbar() {
       className="fixed w-full z-50 bg-[#1a1a1a]/80 backdrop-blur-md shadow-md"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 flex items-center justify-between">
-        {/* Logo + Title link */}
         <Link
           to="/"
           className="flex items-center space-x-3 hover:opacity-90 transition-opacity"
@@ -29,14 +28,12 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden text-gray-200 focus:outline-none p-3"
           onClick={() => setOpen(!open)}
           aria-label="Toggle navigation menu"
         >
           {open ? (
-            /* Close (X) icon */
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -44,15 +41,9 @@ export default function Navbar() {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
             </svg>
           ) : (
-            /* Hamburger icon */
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -60,34 +51,21 @@ export default function Navbar() {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
           )}
         </button>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex space-x-6 text-base lg:text-lg">
-          <Link
-            to="/"
-            className="hover:text-brand-gradient-end transition-colors duration-300"
-          >
+          <Link to="/" className="hover:text-brand-gradient-end transition-colors duration-300">
             Home
           </Link>
-          <Link
-            to="/leaderboard"
-            className="hover:text-brand-gradient-end transition-colors duration-300"
-          >
+          <Link to="/leaderboard" className="hover:text-brand-gradient-end transition-colors duration-300">
             Leaderboard
           </Link>
         </div>
       </div>
       
-      {/* Mobile Dropdown */}
       {open && (
         <motion.div
           initial={{ y: -10, opacity: 0 }}

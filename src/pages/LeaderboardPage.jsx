@@ -9,10 +9,8 @@ export default function LeaderboardPage() {
     { house: "Deep Jungle", points: 182 }
   ])
 
-  // Sort scores in descending order
   const sortedScores = [...scores].sort((a, b) => b.points - a.points)
 
-  // Assign rank-based styling for top 3
   const getRankStyles = (rank) => {
     if (rank === 1) return "bg-gradient-to-r from-yellow-400 to-yellow-600 text-black"
     if (rank === 2) return "bg-gradient-to-r from-gray-300 to-gray-500 text-black"
@@ -22,17 +20,14 @@ export default function LeaderboardPage() {
 
   return (
     <section className="pb-12">
-      {/* Hero Header */}
       <div className="relative w-full h-[40vh] overflow-hidden rounded-xl shadow-xl mb-10 mx-auto max-w-5xl">
-        {/* Background Image */}
         <img
-          src="/assets/logos/house-cup-logo.png"
+          src="/assets/logos/house-cup-cover.png"
           alt="Leaderboard background"
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-brand-gradient-start to-brand-gradient-end opacity-90" />
         
-        {/* Hero Content */}
         <div className="relative w-full h-full flex items-center justify-center">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -44,9 +39,9 @@ export default function LeaderboardPage() {
               Who Rules Them All?
             </h1>
             <p className="text-base sm:text-lg md:text-xl font-light text-gray-200 leading-relaxed">
-              The House Cup scoreboard updated in real-time.
+              The scoreboard refreshes live with every event, Buffalo call, and stealthy Nudity Challenge. 
               <br className="hidden sm:block" />
-              Check your House ranking and climb to the top… or face the consequences.
+              Will your House reign supreme, or end up yard-chugging your way to freedom?
             </p>
           </motion.div>
         </div>
@@ -94,7 +89,6 @@ export default function LeaderboardPage() {
                     transition={{ duration: 0.4, delay: i * 0.1 }}
                     className="border-b border-gray-600 last:border-0 hover:bg-[#3a3a3a]/50 transition-colors"
                   >
-                    {/* Rank Badge */}
                     <td className="px-4 py-3 text-center">
                       <span
                         className={`flex w-10 h-10 rounded-full items-center justify-center font-bold text-sm sm:text-base ${getRankStyles(rank)}`}
@@ -103,8 +97,8 @@ export default function LeaderboardPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3 text-xs sm:text-base flex items-center space-x-3">
-                      {rank === 1 && <span className="text-brand-gradient-end">🏆</span>}
                       <span>{s.house}</span>
+                      {rank === 1 && <span className="text-brand-gradient-end">🏆</span>}
                     </td>
                     <td className="px-4 py-3 text-xs sm:text-base">
                       {s.points}
@@ -117,9 +111,10 @@ export default function LeaderboardPage() {
         </motion.div>
 
         <p className="text-center text-gray-400 mt-4 text-xs sm:text-sm leading-relaxed">
-          Don’t see your House on top?
-          Try a <em>Super Gambit</em> or snag some <em>Public Nudity</em> points.
-          The Strawberry Moon won’t wait!
+          Think your House is unbeatable? Or too far behind to care?
+          <br />
+          Try a <em>Super Gambit</em> (sec. 12a) for that sweet multiplier, 
+          or go for some <em>Public Nudity</em> (sec. 16) if your neighbors can handle it!
         </p>
       </div>
     </section>
