@@ -22,7 +22,7 @@ export default function Navbar() {
           <img
             src="assets/logos/house-cup-logo.png"
             alt="House Cup Logo"
-            className="h-8 w-auto hidden sm:block"
+            className="h-8 w-auto"
           />
           <span className="font-extrabold text-lg xs:text-xl sm:text-2xl tracking-tight text-gray-100">
             House Cup
