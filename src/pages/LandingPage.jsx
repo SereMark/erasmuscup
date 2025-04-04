@@ -32,7 +32,7 @@ export default function LandingPage() {
               <em> governed by the House Cup Rules 2025.</em>
             </p>
 
-            {/* Call To Action */}
+            {/* Call To Actions */}
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <Link
                 to="/leaderboard"
@@ -45,6 +45,12 @@ export default function LandingPage() {
                 className="inline-block bg-white text-black font-semibold px-6 py-3 rounded-md hover:opacity-90 transition-opacity text-sm sm:text-base"
               >
                 Read the Full Rules
+              </Link>
+              <Link
+                to="/events"
+                className="inline-block bg-white text-black font-semibold px-6 py-3 rounded-md hover:opacity-90 transition-opacity text-sm sm:text-base"
+              >
+                Find an Event
               </Link>
             </div>
           </motion.div>
@@ -93,23 +99,33 @@ export default function LandingPage() {
           className="bg-[#2a2a2a] p-6 sm:p-8 rounded-xl shadow-lg backdrop-blur-md text-gray-100"
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-4">Welcome!</h2>
-          <p className="text-base sm:text-lg leading-relaxed mb-4">
-            The House Cup is an entertaining competition of four Houses formed via the
-            <strong> 16Personalities Test</strong>. It’s absolutely not a cult — just a way
-            to gather, have fun, and earn (or lose) points for your House.
+          <p className="text-base sm:text-lg leading-relaxed mb-6">
+            The House Cup is an entertaining competition of four Houses. 
+            Originally, the <strong>Founders used 16Personalities</strong> to form the first rosters. 
+            Now, for new members, <strong>we have our own quiz</strong> – 
+            but you can only fill it out <em>in person</em> at a House Cup event, once you’ve asked to join.
           </p>
-          <p className="text-sm sm:text-base leading-relaxed text-gray-200">
-            How it works in a nutshell:
+          <p className="text-base sm:text-lg leading-relaxed text-gray-200 mb-4">
+            In short:
           </p>
           <ul className="list-disc list-inside space-y-1 pl-2 text-gray-200 text-sm sm:text-base mb-4">
-            <li>Join your assigned House after the personality quiz.</li>
-            <li>Attend weekly events or spontaneous challenges to earn House Points.</li>
-            <li>Avoid losing points by skipping events or committing “House Crimes.”</li>
-            <li>By the <strong>Strawberry Moon</strong>, the highest-scoring House takes the <em>House Pokal</em>. Others must do a <em>Yardie</em> or face comedic doom.</li>
+            <li>
+              <strong>Attend an Event:</strong> Check our event schedule, show up, 
+              and let the organizers know you’d like to join the House Cup.
+            </li>
+            <li>
+              <strong>Take Our Custom Quiz (On-site):</strong> Once you’re there, you’ll fill 
+              out a short quiz to be assigned a House.
+            </li>
+            <li>
+              <strong>Earn or Lose Points:</strong> Weekly events, surprise Gambits, and comedic 
+              “House Crimes” will make or break your House’s chances at the Pokal.
+            </li>
           </ul>
           <p className="text-sm sm:text-base leading-relaxed text-gray-200">
-            Want detailed legalese (featuring yard-glass beer stunts and odd rules)? 
-            <strong> Read the Full Rules</strong> to see it all.
+            Ready to dive in? Grab your Housemates, try new challenges, and if you want the legal 
+            nitty-gritty (like how <em>Public Nudity</em> might net you extra points),
+            be sure to <strong>read the Full Rules</strong>!
           </p>
         </motion.div>
 
@@ -122,8 +138,8 @@ export default function LandingPage() {
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-100">Meet The Four Houses</h2>
           <p className="text-sm sm:text-base mb-6 text-gray-100 leading-relaxed">
-            Each House has a unique style and anthem. You don’t pick the House—
-            <strong> the test picks it for you</strong>.
+            Each House boasts its own theme, motto, and anthem. 
+            <strong> You don’t pick the House</strong>—the on-site quiz does!
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -164,7 +180,7 @@ export default function LandingPage() {
               <ul className="space-y-1 text-sm mt-4 leading-relaxed">
                 <li><strong>Colors:</strong> Purple & Yellow</li>
                 <li><strong>Animal:</strong> Owl</li>
-                <li><strong>Motto:</strong> “Mentes acutæ, unguibus acutioribus.”</li>
+                <li><strong>Motto:</strong> Sharp minds sharper claws.”</li>
                 <li><strong>Captain:</strong> Alex</li>
               </ul>
             </div>
@@ -221,16 +237,16 @@ export default function LandingPage() {
           <h2 className="text-2xl sm:text-3xl font-bold mb-4">Key Points & Events</h2>
           <ul className="list-disc list-inside space-y-2 pl-2 text-gray-200 text-sm sm:text-base leading-relaxed">
             <li>
-              <strong>Weekly House Events:</strong> Earn points (1st to 4th place). Missing an event costs your House points.
+              <strong>Weekly House Events:</strong> Earn up to 100 points for your House. Missing an event will cost points.
             </li>
             <li>
-              <strong>Gambits & Super Gambits:</strong> Smaller, or supersized, side-challenges to gather bonus points.
+              <strong>Gambits & Super Gambits:</strong> Sneak in extra or larger side-challenges to leap ahead in points.
             </li>
             <li>
-              <strong>Team Pride:</strong> Show up in House colors, represent in style, and rake in extra points.
+              <strong>Team Pride:</strong> Dressing in House colors—or just being loud—can net big bonuses.
             </li>
             <li>
-              <strong>House Roles:</strong> Captains organize, Bursars track points, and Judges settle disputes.
+              <strong>House Roles:</strong> Captains, Bursars, and Judges keep you on track (or in trouble).
             </li>
           </ul>
         </motion.div>
@@ -246,11 +262,11 @@ export default function LandingPage() {
           <h2 className="text-2xl sm:text-3xl font-bold mb-4">The Founding Principle</h2>
           <p className="text-sm sm:text-base leading-relaxed">
             When the <strong>Strawberry Moon</strong> arrives, the House with the highest points
-            claims the <strong>House Pokal</strong>. The others must do a <em>Yardie</em> (chug a yard glass)
-            within one week to dodge… comedic “doom.”
+            claims the <strong>House Pokal</strong>. Every other House must perform a
+            <em> Yardie</em> (chug a yard glass) within one week to avoid comedic “doom.”
           </p>
           <p className="text-sm sm:text-base mt-4 leading-relaxed">
-            It’s all in good fun—no real violence is condoned. May the best (or quirkiest) House win!
+            It’s all in good fun—no real violence is condoned. May the quirkiest House prevail!
           </p>
         </motion.div>
       </div>
