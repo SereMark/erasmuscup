@@ -81,20 +81,22 @@ export default function LandingPage() {
             
             {/* Brew Crew */}
             <div
-              className="
-                rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100
-                flex flex-col
-              "
-              style={{
-                background: "linear-gradient(to bottom right, #228B22, #d4af37)"
-              }}
+              className="rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100 flex flex-col"
+              style={{ background: "linear-gradient(to bottom right, #d4af37, #228B22)" }}
             >
-              <h3 className="text-2xl font-bold mb-2 drop-shadow-lg">Brew Crew</h3>
-              <ul className="space-y-1 text-sm">
-                <li><strong>Colors:</strong> Green & Gold</li>
-                <li><strong>Animal:</strong> Alligator</li>
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-bold drop-shadow-lg">Brew Crew</h3>
+                <img 
+                  src="/assets/logos/brew-crew-logo.png" 
+                  alt="Brew Crew Logo" 
+                  className="w-16 h-16" 
+                />
+              </div>
+              <ul className="space-y-1 text-sm mt-4">
+                <li><strong>Colors:</strong> Gold with Green trim</li>
+                <li><strong>Animal:</strong> The Alligator – cold-blooded, cold-beered</li>
                 <li><strong>Anthem:</strong> National Anthem of USSR</li>
-                <li><strong>Motto:</strong> “Veni vidi vici”</li>
+                <li><strong>Motto:</strong> “Veni, Vidi, Bibi – we came, we saw, we drank.”</li>
                 <li>
                   <strong>Values:</strong> Communism, Beer, zero penalty for <em>Murder</em>
                 </li>
@@ -104,16 +106,18 @@ export default function LandingPage() {
 
             {/* House Hoo */}
             <div
-              className="
-                rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100
-                flex flex-col
-              "
-              style={{
-                background: "linear-gradient(to bottom right, #5e2e9a, #ffdb00)"
-              }}
+              className="rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100 flex flex-col"
+              style={{ background: "linear-gradient(to bottom right, #5e2e9a, #ffdb00)" }}
             >
-              <h3 className="text-2xl font-bold mb-2 drop-shadow-lg">House Hoo</h3>
-              <ul className="space-y-1 text-sm">
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-bold drop-shadow-lg">House Hoo</h3>
+                <img 
+                  src="/assets/logos/house-hoo-logo.png" 
+                  alt="House Hoo Logo" 
+                  className="w-16 h-16" 
+                />
+              </div>
+              <ul className="space-y-1 text-sm mt-4">
                 <li><strong>Colors:</strong> Purple & Yellow</li>
                 <li><strong>Animal:</strong> Owl</li>
                 <li><strong>Anthem:</strong> “Who Are You” by The Who</li>
@@ -130,16 +134,18 @@ export default function LandingPage() {
 
             {/* House Tiger */}
             <div
-              className="
-                rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100
-                flex flex-col
-              "
-              style={{
-                background: "linear-gradient(to bottom right, #ff8300, #a83232)"
-              }}
+              className="rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100 flex flex-col"
+              style={{ background: "linear-gradient(to bottom right, #ff8300, #a83232)" }}
             >
-              <h3 className="text-2xl font-bold mb-2 drop-shadow-lg">House Tiger</h3>
-              <p className="text-sm">
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-bold drop-shadow-lg">House Tiger</h3>
+                <img 
+                  src="/assets/logos/house-tiger-logo.png" 
+                  alt="House Tiger Logo" 
+                  className="w-16 h-16" 
+                />
+              </div>
+              <p className="text-sm mt-4">
                 <strong>Info:</strong> Not Available  
                 <br />
                 (16Personalities quiz stuck loading?)
@@ -148,16 +154,18 @@ export default function LandingPage() {
 
             {/* Deep Jungle */}
             <div
-              className="
-                rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100
-                flex flex-col
-              "
-              style={{
-                background: "linear-gradient(to bottom right, #0a3618, #d49a13)"
-              }}
+              className="rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100 flex flex-col"
+              style={{ background: "linear-gradient(to bottom right, #0a3618, #d49a13)" }}
             >
-              <h3 className="text-2xl font-bold mb-2 drop-shadow-lg">Deep Jungle</h3>
-              <ul className="space-y-1 text-sm">
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-bold drop-shadow-lg">Deep Jungle</h3>
+                <img 
+                  src="/assets/logos/deep-jungle-logo.png" 
+                  alt="Deep Jungle Logo" 
+                  className="w-16 h-16" 
+                />
+              </div>
+              <ul className="space-y-1 text-sm mt-4">
                 <li><strong>Colors:</strong> Deep Green & Mustard</li>
                 <li><strong>Animal:</strong> Raccoon</li>
                 <li><strong>Anthem:</strong> “Once upon a time in Africa”</li>

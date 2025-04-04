@@ -20,7 +20,7 @@ export default function Navbar() {
           onClick={() => setOpen(false)}
         >
           <img
-            src="assets/house-cup-logo.png"
+            src="assets/logos/house-cup-logo.png"
             alt="House Cup Logo"
             className="h-10 w-auto hidden sm:block"
           />
