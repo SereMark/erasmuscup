@@ -4,6 +4,39 @@ import { motion } from "framer-motion"
 export default function LandingPage() {
   return (
     <section className="p-4 sm:p-6">
+      {/* Instagram Section */}
+      <motion.div
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="mb-10 bg-gradient-to-r from-pink-500 to-purple-600 p-8 rounded-xl shadow-xl flex flex-col sm:flex-row items-center sm:justify-between text-white"
+      >
+        <div className="mb-6 sm:mb-0 space-y-2 sm:space-y-4">
+          <h2 className="text-2xl sm:text-3xl font-extrabold">
+            Follow Us on Instagram
+          </h2>
+          <p className="text-sm sm:text-base max-w-md leading-relaxed">
+            Get exclusive behind-the-scenes action, live event updates, 
+            and witness House rivalry in glorious detail.
+          </p>
+          <a
+            href="https://www.instagram.com/house_cup_erasmus/"
+            className="inline-block bg-white text-pink-600 font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity text-sm sm:text-base"
+          >
+            Go to Instagram
+          </a>
+        </div>
+        
+        <motion.img
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          src="/assets/logos/house-cup-logo.png"
+          alt="Instagram Logo"
+          className="w-24 h-24 object-contain"
+        />
+      </motion.div>
+
       {/* Hero Section */}
       <div className="w-full h-[70vh] relative overflow-hidden rounded-xl shadow-xl">
         {/* Dark gradient hero overlay */}
