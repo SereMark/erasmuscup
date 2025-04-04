@@ -113,7 +113,7 @@ export default function LandingPage() {
             </li>
           </ul>
           <p className="text-sm sm:text-base leading-relaxed text-gray-200">
-            Sound insane enough? Peek at the <strong>Full Rules</strong> to discover how 
+            Sound insane enough? Peek at the <strong>Full Rules</strong> to discover how getting 
             “Buffaloed” can drain your points and “Constructive Feedback” can get you executed.
           </p>
         </motion.div>
