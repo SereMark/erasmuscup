@@ -33,7 +33,7 @@ export default function LeaderboardPage() {
                 House
               </th>
               <th className="px-4 py-3 font-semibold text-left text-sm sm:text-base w-1/3">
-                Points
+                Points (placeholder)
               </th>
             </tr>
           </thead>
