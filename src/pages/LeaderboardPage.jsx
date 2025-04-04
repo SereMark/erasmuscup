@@ -10,12 +10,12 @@ export default function LeaderboardPage() {
   ])
 
   return (
-    <section className="p-6 max-w-5xl mx-auto">
+    <section className="p-4 sm:p-6 max-w-5xl mx-auto">
       <motion.h1
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="text-5xl font-extrabold mb-6 text-center tracking-tight text-gray-100"
+        className="text-4xl sm:text-5xl font-extrabold mb-6 text-center tracking-tight text-gray-100"
       >
         Leaderboard
       </motion.h1>
@@ -29,10 +29,10 @@ export default function LeaderboardPage() {
         <table className="min-w-full">
           <thead className="bg-[#3a3a3a]/90 text-gray-100">
             <tr>
-              <th className="px-4 py-3 font-semibold text-left text-lg w-2/3">
+              <th className="px-4 py-3 font-semibold text-left text-sm sm:text-base w-2/3">
                 House
               </th>
-              <th className="px-4 py-3 font-semibold text-left text-lg w-1/3">
+              <th className="px-4 py-3 font-semibold text-left text-sm sm:text-base w-1/3">
                 Points
               </th>
             </tr>
@@ -48,13 +48,13 @@ export default function LeaderboardPage() {
                     (isFirst ? "bg-[#3a3a3a]/60" : "")
                   }
                 >
-                  <td className="px-4 py-3 text-base flex items-center space-x-3">
+                  <td className="px-4 py-3 text-xs sm:text-base flex items-center space-x-3">
                     {isFirst && (
                       <span className="text-brand-gradient-end">🏆</span>
                     )}
                     <span>{s.house}</span>
                   </td>
-                  <td className="px-4 py-3 text-base">
+                  <td className="px-4 py-3 text-xs sm:text-base">
                     {s.points}
                   </td>
                 </tr>
@@ -64,7 +64,7 @@ export default function LeaderboardPage() {
         </table>
       </motion.div>
 
-      <p className="text-center text-gray-400 mt-4 text-sm">
+      <p className="text-center text-gray-400 mt-4 text-xs sm:text-sm leading-relaxed">
         Don’t see your House on top? 
         Try a <em>Super Gambit</em> or snag some <em>Public Nudity</em> points. 
         The Strawberry Moon won’t wait!

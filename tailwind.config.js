@@ -6,6 +6,10 @@ module.exports = {
   ],
   darkMode: 'class',
   theme: {
+    screens: {
+      xs: '480px',
+      ...require('tailwindcss/defaultTheme').screens,
+    },
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif']
