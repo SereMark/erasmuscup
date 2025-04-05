@@ -52,10 +52,9 @@ export default function LeaderboardPage() {
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 text-white drop-shadow-lg">
               Who Rules Them All?
             </h1>
-            <p className="text-base sm:text-lg md:text-xl font-light text-gray-200 leading-relaxed">
-              The scoreboard refreshes live with every event, Buffalo call, and stealthy Nudity Challenge. 
-              <br className="hidden sm:block" />
-              Will your House reign supreme, or end up yard-chugging your way to freedom?
+            <p className="text-base sm:text-lg md:text-xl font-light text-gray-200 leading-relaxed space-y-2">
+              <span className="block mb-2">The scoreboard refreshes live with every event, Buffalo call, and stealthy Nudity Challenge.</span>
+              <span className="block">Will your House reign supreme, or end up yard-chugging your way to freedom?</span>
             </p>
           </motion.div>
         </div>
