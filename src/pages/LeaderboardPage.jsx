@@ -29,7 +29,7 @@ export default function LeaderboardPage() {
     const rank = rankMapping[key]
     if (rank === 1) return "bg-gradient-to-r from-yellow-500 to-yellow-600 text-black"
     if (rank === 2) return "bg-gradient-to-r from-gray-400 to-gray-500 text-black"
-    if (rank === 3) return "bg-gradient-to-r from-[#CD7F32] to-[#A97142] text-white"
+    if (rank === 3) return "bg-gradient-to-r from-[#CD7F32] to-[#A97142] text-black"
     return "bg-gray-800 text-white"
   }
 
