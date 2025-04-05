@@ -132,6 +132,26 @@ export default function LeaderboardPage() {
           {scoreboardData.map((row, index) => {
             const dateDisplay = row.date ? row.date : row.adjustment ? "Adjustment" : ""
             const eventDisplay = row.event || row.adjustment
+
+            const sortedRowHouses = [...houses].sort((a, b) => {
+              const aVal = row[a.key] !== null && row[a.key] !== undefined ? row[a.key] : -Infinity
+              const bVal = row[b.key] !== null && row[b.key] !== undefined ? row[b.key] : -Infinity
+              return bVal - aVal
+            })
+
+            const rowRankMapping = {}
+            sortedRowHouses.forEach((house, idx) => {
+              rowRankMapping[house.key] = idx + 1
+            })
+
+            const getRowColumnStyle = (key) => {
+              const rank = rowRankMapping[key]
+              if (rank === 1) return "bg-gradient-to-r from-yellow-500 to-yellow-600 text-black"
+              if (rank === 2) return "bg-gradient-to-r from-gray-400 to-gray-500 text-black"
+              if (rank === 3) return "bg-gradient-to-r from-[#CD7F32] to-[#A97142] text-black"
+              return "bg-gray-800 text-white"
+            }
+
             return (
               <motion.div
                 key={row.id}
@@ -146,10 +166,10 @@ export default function LeaderboardPage() {
                   <p className="text-xl font-bold text-white">{eventDisplay}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {sortedHouseTotals.map(house => (
+                  {sortedRowHouses.map(house => (
                     <div key={house.key} className="flex flex-col items-center flex-1">
                       <span className="text-xs text-gray-400">{house.label}</span>
-                      <span className={`mt-1 w-full text-center rounded-full py-1 text-sm ${getColumnStyle(house.key)}`}>
+                      <span className={`mt-1 w-full text-center rounded-full py-1 text-sm ${getRowColumnStyle(house.key)}`}>
                         {row[house.key] !== null && row[house.key] !== undefined ? row[house.key] : "-"}
                       </span>
                     </div>
