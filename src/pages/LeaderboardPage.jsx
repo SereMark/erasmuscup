@@ -1,21 +1,36 @@
-import React, { useState } from "react"
+import React from "react"
 import { motion } from "framer-motion"
 
 export default function LeaderboardPage() {
-  const [scores] = useState([
-    { house: "Brew Crew", points: 141 },
-    { house: "Red Storm", points: 110 },
-    { house: "The Hoo", points: 107 },
-    { house: "Deep Jungle", points: 182 }
-  ])
+  const houses = [
+    { key: "theHoo", label: "The Hoo" },
+    { key: "brewCrew", label: "Brew Crew" },
+    { key: "redStorm", label: "Red Storm" },
+    { key: "deepJungle", label: "Deep Jungle" }
+  ]
 
-  const sortedScores = [...scores].sort((a, b) => b.points - a.points)
+  const scoreboardData = [
+    { id: 1, date: "21.03.2025", event: "Jackbox", theHoo: 50, brewCrew: 75, redStorm: 25, deepJungle: 100 },
+    { id: 2, date: "28.03.2025", event: "Petanque", theHoo: 27, brewCrew: 76, redStorm: 55, deepJungle: 102 },
+    { id: 3, adjustment: "Public Nudity", theHoo: 30, brewCrew: null, redStorm: 30, deepJungle: null },
+    { id: 4, adjustment: "Buffaloes", theHoo: null, brewCrew: -10, redStorm: null, deepJungle: -20 },
+    { id: 5, total: true, event: "Total", theHoo: 107, brewCrew: 141, redStorm: 110, deepJungle: 182 }
+  ]
 
-  const getRankStyles = (rank) => {
-    if (rank === 1) return "bg-gradient-to-r from-yellow-400 to-yellow-600 text-black"
-    if (rank === 2) return "bg-gradient-to-r from-gray-300 to-gray-500 text-black"
-    if (rank === 3) return "bg-gradient-to-r from-amber-700 to-amber-900 text-white"
-    return "bg-[#3a3a3a]"
+  const totalRow = scoreboardData.find(row => row.total)
+  const houseTotals = houses.map(h => ({ ...h, points: totalRow[h.key] }))
+  const sortedHouseTotals = [...houseTotals].sort((a, b) => b.points - a.points)
+  const rankMapping = {}
+  sortedHouseTotals.forEach((house, index) => {
+    rankMapping[house.key] = index + 1
+  })
+
+  const getColumnStyle = (key) => {
+    const rank = rankMapping[key]
+    if (rank === 1) return "bg-gradient-to-r from-yellow-500 to-yellow-600 text-black"
+    if (rank === 2) return "bg-gradient-to-r from-gray-400 to-gray-500 text-black"
+    if (rank === 3) return "bg-gradient-to-r from-[#CD7F32] to-[#A97142] text-white"
+    return "bg-gray-800 text-white"
   }
 
   return (
@@ -66,43 +81,46 @@ export default function LeaderboardPage() {
           <table className="min-w-full">
             <thead className="bg-[#3a3a3a]/90 text-gray-100">
               <tr>
-                <th className="px-4 py-3 font-semibold text-left text-sm sm:text-base w-16">
-                  Rank
-                </th>
-                <th className="px-4 py-3 font-semibold text-left text-sm sm:text-base w-2/3">
-                  House
-                </th>
-                <th className="px-4 py-3 font-semibold text-left text-sm sm:text-base w-1/3">
-                  Points
-                </th>
+                <th className="px-4 py-3 text-left text-sm sm:text-base">Date</th>
+                <th className="px-4 py-3 text-left text-sm sm:text-base">Event / Adjustment</th>
+                {sortedHouseTotals.map(house => (
+                  <th
+                    key={house.key}
+                    className={`px-4 py-3 text-center text-sm sm:text-base ${getColumnStyle(house.key)}`}
+                  >
+                    {house.label}
+                  </th>
+                ))}
               </tr>
             </thead>
-            <tbody>
-              {sortedScores.map((s, i) => {
-                const rank = i + 1
+            <tbody className="divide-y divide-gray-600">
+              {scoreboardData.map((row, index) => {
+                const dateDisplay = row.date ? row.date : row.adjustment ? "Adjustment" : ""
+                const eventDisplay = row.event || row.adjustment
+                const rowClasses = row.total
+                  ? "font-bold border-t-4 border-t-indigo-500"
+                  : "hover:bg-[#3a3a3a]/50 transition-colors"
                 return (
                   <motion.tr
-                    key={s.house}
+                    key={row.id}
                     initial={{ y: 20, opacity: 0 }}
                     whileInView={{ y: 0, opacity: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.1 }}
-                    className="border-b border-gray-600 last:border-0 hover:bg-[#3a3a3a]/50 transition-colors"
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    className={rowClasses}
                   >
-                    <td className="px-4 py-3 text-center">
-                      <span
-                        className={`flex w-10 h-10 rounded-full items-center justify-center font-bold text-sm sm:text-base ${getRankStyles(rank)}`}
+                    <td className="px-4 py-3 text-left text-sm sm:text-base">{dateDisplay}</td>
+                    <td className="px-4 py-3 text-left text-sm sm:text-base">{eventDisplay}</td>
+                    {sortedHouseTotals.map(house => (
+                      <td
+                        key={house.key}
+                        className={`px-4 py-3 text-center text-sm sm:text-base ${getColumnStyle(house.key)}`}
                       >
-                        {rank}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-xs sm:text-base flex items-center space-x-3">
-                      <span>{s.house}</span>
-                      {rank === 1 && <span className="text-brand-gradient-end">🏆</span>}
-                    </td>
-                    <td className="px-4 py-3 text-xs sm:text-base">
-                      {s.points}
-                    </td>
+                        {row[house.key] !== null && row[house.key] !== undefined
+                          ? row[house.key]
+                          : "-"}
+                      </td>
+                    ))}
                   </motion.tr>
                 )
               })}
