@@ -1,59 +1,72 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const panelVariants = {
-  open: {
-    width: 400,
-    height: 360,
-    transition: { type: "spring", stiffness: 150, damping: 25 }
-  },
-  closed: {
-    width: 40,
-    height: 48,
-    transition: { type: "spring", stiffness: 250, damping: 30 }
-  }
-};
-
-const arrowVariants = {
-  open: {
-    rotate: 0,
-    transition: { type: "spring", stiffness: 300, damping: 30 }
-  },
-  closed: {
-    rotate: 180,
-    transition: { type: "spring", stiffness: 300, damping: 30 }
-  }
-};
-
-const contentVariants = {
-  hidden: {
-    opacity: 0,
-    x: 20,
-    transition: { type: "spring", stiffness: 300, damping: 30 }
-  },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { delay: 0.1, type: "spring", stiffness: 120, damping: 20 }
-  }
-};
-
 const NextEventNotification = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const storedState = localStorage.getItem("nextEventNotificationOpen");
     setIsOpen(storedState === "false" ? false : true);
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
     setTimeout(() => {
       setInitialLoad(false);
     }, 0);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const openWidth = isMobile ? 300 : 400;
+  const openHeight = isMobile ? 240 : 360;
+
+  const panelVariants = {
+    open: {
+      width: openWidth,
+      height: openHeight,
+      transition: { type: "spring", stiffness: 150, damping: 25 }
+    },
+    closed: {
+      width: 40,
+      height: 48,
+      transition: { type: "spring", stiffness: 250, damping: 30 }
+    }
+  };
+
+  const arrowVariants = {
+    open: {
+      rotate: 0,
+      transition: { type: "spring", stiffness: 300, damping: 30 }
+    },
+    closed: {
+      rotate: 180,
+      transition: { type: "spring", stiffness: 300, damping: 30 }
+    }
+  };
+
+  const contentVariants = {
+    hidden: {
+      opacity: 0,
+      x: 20,
+      transition: { type: "spring", stiffness: 300, damping: 30 }
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { delay: 0.1, type: "spring", stiffness: 120, damping: 20 }
+    }
+  };
 
   const togglePanel = () => {
     if (!hasInteracted) setHasInteracted(true);
-    setIsOpen(prev => {
+    setIsOpen((prev) => {
       const newState = !prev;
       localStorage.setItem("nextEventNotificationOpen", newState);
       return newState;
