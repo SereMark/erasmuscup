@@ -178,7 +178,7 @@ export default function LandingPage() {
               <div className="flex justify-between items-center">
                 <h3 className="text-xl sm:text-2xl font-bold drop-shadow-lg">House Tiger</h3>
                 <img
-                  src="/assets/logos/not-available.png"
+                  src="/assets/logos/house-tiger-logo.png"
                   alt="House Tiger Logo"
                   className="w-14 h-14 sm:w-16 sm:h-16"
                 />
