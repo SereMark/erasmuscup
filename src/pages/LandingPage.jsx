@@ -184,7 +184,7 @@ export default function LandingPage() {
                 />
               </div>
               <ul className="space-y-1 text-sm mt-4 leading-relaxed">
-                <li><strong>Colors:</strong> Orange & Crimson</li>
+                <li><strong>Colors:</strong> Red & Black</li>
                 <li><strong>Animal:</strong> Tiger</li>
                 <li><strong>Motto:</strong> “Roar like a Tiger, chill like a Panda.”</li>
                 <li><strong>Captain:</strong> Elise</li>
