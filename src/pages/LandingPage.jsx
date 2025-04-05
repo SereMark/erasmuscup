@@ -1,10 +1,9 @@
-import React, { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Link } from "react-router-dom"
+import React from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import NextEventNotification from "../components/NextEventNotification";
 
 export default function LandingPage() {
-  const [showNextEvent, setShowNextEvent] = useState(true)
-
   return (
     <section className="p-4 sm:p-6">
       <div className="relative w-full h-[70vh] overflow-hidden rounded-xl shadow-xl mb-10">
@@ -264,51 +263,7 @@ export default function LandingPage() {
         </motion.div>
       </div>
 
-      <AnimatePresence>
-        {showNextEvent && (
-          <motion.div
-            className="
-              fixed bottom-6 right-6 
-              w-[90%] sm:w-96 max-w-full
-              bg-[#2a2a2a] text-white 
-              rounded-xl shadow-xl p-4 z-50 
-              flex flex-col gap-3
-            "
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 50, opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <button
-              onClick={() => setShowNextEvent(false)}
-              className="ml-auto text-gray-400 hover:text-gray-200 transition-colors"
-            >
-              ✕
-            </button>
-            <h4 className="text-lg sm:text-xl font-bold text-center mb-2">
-              Next Event
-            </h4>
-            <div className="flex items-center justify-center">
-              <motion.img
-                src="/assets/logos/next-event.png"
-                alt="The Actual Cup Game Logo"
-                className="w-24 h-auto object-contain rounded-md"
-              />
-            </div>
-            <p className="text-base sm:text-lg font-semibold text-center mt-1">
-              The Actual Cup Game
-            </p>
-            <p className="text-sm text-center">
-              <strong>When:</strong> Saturday, 5 April @ 7:30 PM
-              <br />
-              <strong>Where:</strong> In Common Room 4
-            </p>
-            <p className="text-xs text-gray-300 leading-snug text-center">
-              Expect loud chants, minor humiliations, and hopefully no Buffalo fiascos.
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <NextEventNotification />
     </section>
-  )
+  );
 }
