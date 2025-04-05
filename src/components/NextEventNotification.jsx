@@ -25,12 +25,10 @@ const NextEventNotification = () => {
   }, []);
 
   const openWidth = isMobile ? 300 : 400;
-  const openHeight = isMobile ? 240 : 360;
 
   const panelVariants = {
     open: {
       width: openWidth,
-      height: openHeight,
       transition: { type: "spring", stiffness: 150, damping: 25 }
     },
     closed: {
@@ -75,48 +73,53 @@ const NextEventNotification = () => {
 
   return (
     <motion.div
+      layout
       className="fixed bottom-6 right-0 z-50 overflow-hidden"
       variants={panelVariants}
       initial={initialLoad ? (isOpen ? "open" : "closed") : undefined}
       animate={isOpen ? "open" : "closed"}
       transition={initialLoad ? { duration: 0 } : undefined}
     >
-      <div className="bg-[#2a2a2a] rounded-l-xl shadow-xl flex flex-col h-full">
+      <div className="bg-[#2a2a2a] rounded-l-xl shadow-xl flex flex-col">
         {isOpen ? (
           <div className="flex items-center justify-between px-4 py-2">
             <h4 className="text-base font-bold text-gray-100">Next Event</h4>
-            <button onClick={togglePanel} className="focus:outline-none">
-              <motion.svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="h-6 w-6 text-gray-100"
-                variants={arrowVariants}
-                initial={initialLoad ? "open" : undefined}
-                animate="open"
-                transition={initialLoad ? { duration: 0 } : undefined}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </motion.svg>
-            </button>
+            <div className="w-12 h-12 flex-none flex items-center justify-center">
+              <button onClick={togglePanel} className="focus:outline-none">
+                <motion.svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="h-6 w-6 text-gray-100"
+                  variants={arrowVariants}
+                  initial={initialLoad ? "open" : undefined}
+                  animate="open"
+                  transition={initialLoad ? { duration: 0 } : undefined}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </motion.svg>
+              </button>
+            </div>
           </div>
         ) : (
-          <div className="flex items-center justify-center h-full">
+          <div className="flex items-center justify-center h-12 w-12">
             <button onClick={togglePanel} className="focus:outline-none">
-              <motion.svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="h-6 w-6 text-gray-100"
-                variants={arrowVariants}
-                initial={initialLoad ? "closed" : undefined}
-                animate="closed"
-                transition={initialLoad ? { duration: 0 } : undefined}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </motion.svg>
+              <div className="w-12 h-12 flex items-center justify-center">
+                <motion.svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="h-6 w-6 text-gray-100"
+                  variants={arrowVariants}
+                  initial={initialLoad ? "closed" : undefined}
+                  animate="closed"
+                  transition={initialLoad ? { duration: 0 } : undefined}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </motion.svg>
+              </div>
             </button>
           </div>
         )}
