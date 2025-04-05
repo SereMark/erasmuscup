@@ -301,7 +301,7 @@ export default function LandingPage() {
             <p className="text-sm text-center">
               <strong>When:</strong> Saturday, 5 April @ 7:30 PM
               <br />
-              <strong>Where:</strong> In a Common Room
+              <strong>Where:</strong> In Common Room 4
             </p>
             <p className="text-xs text-gray-300 leading-snug text-center">
               Expect loud chants, minor humiliations, and hopefully no Buffalo fiascos.
