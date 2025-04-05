@@ -4,8 +4,8 @@ import { motion } from "framer-motion"
 export default function LeaderboardPage() {
   const [scores] = useState([
     { house: "Brew Crew", points: 141 },
-    { house: "House Tiger", points: 110 },
-    { house: "House Hoo", points: 107 },
+    { house: "Red Storm", points: 110 },
+    { house: "The Hoo", points: 107 },
     { house: "Deep Jungle", points: 182 }
   ])
 

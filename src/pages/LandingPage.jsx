@@ -156,7 +156,7 @@ export default function LandingPage() {
               style={{ background: "linear-gradient(to bottom right, #5e2e9a, #ffdb00)" }}
             >
               <div className="flex justify-between items-center">
-                <h3 className="text-xl sm:text-2xl font-bold drop-shadow-lg">House Hoo</h3>
+                <h3 className="text-xl sm:text-2xl font-bold drop-shadow-lg">The Hoo</h3>
                 <img
                   src="/assets/logos/house-hoo-logo.png"
                   alt="House Hoo Logo"
@@ -176,7 +176,7 @@ export default function LandingPage() {
               style={{ background: "linear-gradient(to bottom right, #000000, #ff0000)" }}
             >
               <div className="flex justify-between items-center">
-                <h3 className="text-xl sm:text-2xl font-bold drop-shadow-lg">House Tiger</h3>
+                <h3 className="text-xl sm:text-2xl font-bold drop-shadow-lg">Red Storm</h3>
                 <img
                   src="/assets/logos/house-tiger-logo.png"
                   alt="House Tiger Logo"
