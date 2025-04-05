@@ -74,7 +74,7 @@ const NextEventNotification = () => {
   return (
     <motion.div
       layout
-      className="fixed bottom-6 right-0 z-50 overflow-hidden"
+      className={`fixed bottom-6 right-0 z-50 ${!isOpen ? "overflow-hidden" : ""}`}
       variants={panelVariants}
       initial={initialLoad ? (isOpen ? "open" : "closed") : undefined}
       animate={isOpen ? "open" : "closed"}
@@ -126,7 +126,7 @@ const NextEventNotification = () => {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="px-4 pb-4"
+              className="px-4 pt-2 pb-4"
               variants={contentVariants}
               initial={initialLoad ? "visible" : "hidden"}
               animate="visible"
