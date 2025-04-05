@@ -134,9 +134,15 @@ export default function LeaderboardPage() {
             const eventDisplay = row.event || row.adjustment
 
             const sortedRowHouses = [...houses].sort((a, b) => {
-              const aVal = row[a.key] !== null && row[a.key] !== undefined ? row[a.key] : -Infinity
-              const bVal = row[b.key] !== null && row[b.key] !== undefined ? row[b.key] : -Infinity
-              return bVal - aVal
+              if (row.adjustment === "Buffaloes") {
+                const aVal = row[a.key] !== null && row[a.key] !== undefined ? row[a.key] : 0
+                const bVal = row[b.key] !== null && row[b.key] !== undefined ? row[b.key] : 0
+                return bVal - aVal
+              } else {
+                const aVal = row[a.key] !== null && row[a.key] !== undefined ? row[a.key] : -Infinity
+                const bVal = row[b.key] !== null && row[b.key] !== undefined ? row[b.key] : -Infinity
+                return bVal - aVal
+              }
             })
 
             const rowRankMapping = {}
