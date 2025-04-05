@@ -173,7 +173,7 @@ export default function LandingPage() {
 
             <div
               className="rounded-lg p-6 transition-all hover:shadow-2xl hover:-translate-y-1 text-gray-100 flex flex-col"
-              style={{ background: "linear-gradient(to bottom right, #ff8300, #a83232)" }}
+              style={{ background: "linear-gradient(to bottom right, #000000, #ff0000)" }}
             >
               <div className="flex justify-between items-center">
                 <h3 className="text-xl sm:text-2xl font-bold drop-shadow-lg">House Tiger</h3>
