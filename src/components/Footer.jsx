@@ -58,11 +58,6 @@ function QuickLinks() {
           </Link>
         </li>
         <li>
-          <Link to="/events" className="text-sm hover:text-purple-300 transition-colors">
-            Upcoming Events
-          </Link>
-        </li>
-        <li>
           <Link to="/housecup-rules" className="text-sm hover:text-purple-300 transition-colors">
             Rules & Guidelines
           </Link>

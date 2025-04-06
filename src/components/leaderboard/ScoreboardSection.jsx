@@ -1,7 +1,6 @@
 import React, { forwardRef } from "react";
 import { motion } from "framer-motion";
 import { containerVariants, fadeInUpVariant } from "../../constants/animations";
-import { ViewToggle } from "./ViewToggle";
 import { TableView } from "./TableView";
 import { CardView } from "./CardView";
 import ScoreboardFooter from "./ScoreboardFooter";
@@ -23,14 +22,11 @@ const ScoreboardSection = forwardRef(({ viewMode, setViewMode, isMobile, sortedH
           Scoreboard Details
         </motion.h2>
         
-        {!isMobile && (
-          <ViewToggle viewMode={viewMode} setViewMode={setViewMode} />
-        )}
       </motion.div>
 
       {/* Conditionally render table or card view */}
       <motion.div>
-        {viewMode === "table" && !isMobile ? (
+        {!isMobile ? (
           <TableView 
             sortedHouseTotals={sortedHouseTotals} 
             rankMapping={rankMapping} 
