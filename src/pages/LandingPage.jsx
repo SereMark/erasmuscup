@@ -24,7 +24,7 @@ export default function LandingPage() {
 
   return (
     <section className="min-h-screen bg-[#121212] text-white overflow-hidden">
-      <div className="relative w-full h-screen overflow-hidden">
+      <div className="relative w-full h-[90vh] sm:h-screen overflow-hidden">
         <motion.div style={{ y }} className="absolute inset-0">
           <img
             src="/assets/logos/house-cup-cover.png"
@@ -38,13 +38,13 @@ export default function LandingPage() {
             initial={{ opacity: 0, scale: 0.9, x: -30 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="max-w-3xl p-8 md:p-10 bg-black/50 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl text-center"
+            className="max-w-3xl p-6 md:p-10 bg-black/50 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl text-center"
           >
             <motion.h1 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight mb-6 text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400 drop-shadow-2xl"
+              className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400 drop-shadow-2xl"
             >
               House Cup 2025
             </motion.h1>
@@ -52,7 +52,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="text-lg sm:text-xl md:text-2xl font-light mb-8 text-gray-200 leading-relaxed"
+              className="text-base sm:text-xl md:text-2xl font-light mb-6 sm:mb-8 text-gray-200 leading-relaxed"
             >
               Join us for a definitely-not-a-cult competition among eager Erasmus students,{" "}
               <em className="font-medium">lovingly guided by the House Cup Rules 2025.</em>
@@ -61,11 +61,11 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
-              className="flex flex-col sm:flex-row gap-5 items-center justify-center"
+              className="flex flex-col sm:flex-row gap-4 items-center justify-center"
             >
               <Link
                 to="/leaderboard"
-                className="group w-full sm:w-auto bg-gradient-to-r from-white to-gray-200 text-black font-bold px-8 py-4 rounded-full transition-transform duration-300 transform hover:scale-105 active:scale-95 shadow-lg flex items-center justify-center"
+                className="group w-full sm:w-auto bg-gradient-to-r from-white to-gray-200 text-black font-bold px-6 py-3 sm:px-8 sm:py-4 rounded-full transition-transform duration-300 transform hover:scale-105 active:scale-95 shadow-lg flex items-center justify-center"
               >
                 <span>Check Leaderboard</span>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
@@ -74,7 +74,7 @@ export default function LandingPage() {
               </Link>
               <Link
                 to="/housecup-rules"
-                className="group w-full sm:w-auto bg-transparent border-2 border-white text-white font-bold px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg flex items-center justify-center hover:bg-white hover:text-black"
+                className="group w-full sm:w-auto bg-transparent border-2 border-white text-white font-bold px-6 py-3 sm:px-8 sm:py-4 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg flex items-center justify-center hover:bg-white hover:text-black"
               >
                 <span>Read the Full Rules</span>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
@@ -88,17 +88,19 @@ export default function LandingPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2, delay: 1 }}
-          className="absolute bottom-8 left-0 right-0 flex justify-center"
+          className="absolute bottom-4 sm:bottom-8 left-0 right-0 flex justify-center"
         >
           <div className="animate-bounce">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 sm:h-10 sm:w-10 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </div>
         </motion.div>
       </div>
+      
       <InstagramSection />
-      <div className="max-w-6xl mx-auto space-y-24 px-4 sm:px-6 py-16">
+      
+      <div className="max-w-6xl mx-auto space-y-16 sm:space-y-24 px-4 sm:px-6 py-12 sm:py-16">
         <WelcomeSection />
         <HousesSection />
         <FeaturesSection />
@@ -125,18 +127,18 @@ function InstagramSection() {
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.8 }}
-      className="relative max-w-6xl mx-auto px-4 sm:px-6 py-16"
+      className="relative max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16"
     >
       <div className="bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600 p-1 rounded-2xl shadow-[0_20px_50px_rgba(131,56,236,0.5)]">
-        <div className="bg-[#1a1a1a]/90 backdrop-blur-sm rounded-2xl p-8 md:p-10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-10">
+        <div className="bg-[#1a1a1a]/90 backdrop-blur-sm rounded-2xl p-6 md:p-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-10">
             <div className="space-y-6 max-w-xl">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <h2 className="text-3xl md:text-4xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-300">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-300">
                   Follow Our Wild Journey
                 </h2>
                 <div className="h-1 w-20 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full mb-4"></div>
@@ -179,14 +181,14 @@ function InstagramSection() {
               initial={{ opacity: 0, y: 30, rotate: -5 }}
               animate={inView ? { opacity: 1, y: 0, rotate: 0 } : { opacity: 0, y: 30, rotate: -5 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative"
+              className="relative mx-auto md:mx-0"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-transparent via-black/20 to-transparent rounded-3xl blur-xl opacity-40 transform rotate-3"></div>
               <div className="relative bg-transparent p-2 rounded-3xl transform hover:rotate-3 transition-transform duration-500">
                 <img
                   src="/assets/logos/house-cup-logo.png"
                   alt="Instagram Preview"
-                  className="w-56 h-56 sm:w-64 sm:h-64 object-contain rounded-2xl"
+                  className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 object-contain rounded-2xl"
                 />
               </div>
             </motion.div>
@@ -209,13 +211,13 @@ function WelcomeSection() {
       className="relative"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-purple-800 to-indigo-900 opacity-10 rounded-3xl blur-2xl transform -rotate-1"></div>
-      <div className="relative bg-gradient-to-br from-[#1c1c1c] to-[#2a2a2a] p-8 sm:p-10 rounded-3xl border border-purple-900/30 shadow-2xl backdrop-blur-lg">
+      <div className="relative bg-gradient-to-br from-[#1c1c1c] to-[#2a2a2a] p-6 sm:p-10 rounded-3xl border border-purple-900/30 shadow-2xl backdrop-blur-lg">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-pink-300">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-pink-300">
             Welcome to the Madness!
           </h2>
         </motion.div>
@@ -223,7 +225,7 @@ function WelcomeSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-lg leading-relaxed mb-8 text-gray-200"
+          className="text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 text-gray-200"
         >
           Each Erasmus warrior is sorted into one of four Houses. Every weekly event (and random 
           <em className="text-purple-300"> Gambit</em>) can skyrocket your points or plunge your House into comedic peril.
@@ -233,7 +235,7 @@ function WelcomeSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-xl font-semibold mb-4 text-purple-200"
+          className="text-xl font-semibold mb-3 sm:mb-4 text-purple-200"
         >
           Key Points:
         </motion.h3>
@@ -241,45 +243,45 @@ function WelcomeSection() {
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={staggerContainerVariants}
-          className="space-y-4 pl-4 mb-6"
+          className="space-y-3 sm:space-y-4 pl-2 sm:pl-4 mb-6"
         >
           <motion.li variants={staggerItemVariants} className="flex items-start">
-            <span className="inline-block bg-purple-800 rounded-full p-1 mr-3 mt-1">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-200" viewBox="0 0 20 20" fill="currentColor">
+            <span className="inline-block bg-purple-800 rounded-full p-1 mr-3 mt-1 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 text-purple-200" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
             </span>
-            <p className="text-base text-gray-300">
+            <p className="text-sm sm:text-base text-gray-300">
               No, it's not a cult <span className="text-gray-400">(section 2(3))</span>. We promise!
             </p>
           </motion.li>
           <motion.li variants={staggerItemVariants} className="flex items-start">
-            <span className="inline-block bg-purple-800 rounded-full p-1 mr-3 mt-1">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-200" viewBox="0 0 20 20" fill="currentColor">
+            <span className="inline-block bg-purple-800 rounded-full p-1 mr-3 mt-1 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 text-purple-200" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
             </span>
-            <p className="text-base text-gray-300">
+            <p className="text-sm sm:text-base text-gray-300">
               <em className="text-pink-300">Murder</em> is not punished <span className="text-gray-400">(section 17)</span>, but missing an event is a mortal sin that costs 50 points.
             </p>
           </motion.li>
           <motion.li variants={staggerItemVariants} className="flex items-start">
-            <span className="inline-block bg-purple-800 rounded-full p-1 mr-3 mt-1">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-200" viewBox="0 0 20 20" fill="currentColor">
+            <span className="inline-block bg-purple-800 rounded-full p-1 mr-3 mt-1 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 text-purple-200" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
             </span>
-            <p className="text-base text-gray-300">
+            <p className="text-sm sm:text-base text-gray-300">
               If your House flunks, you'll have one last chance to do a <em className="text-pink-300">Yardie</em> (beer-chug) or face <em className="text-pink-300">public hanging</em> <span className="text-gray-400">(section 18)</span>.
             </p>
           </motion.li>
           <motion.li variants={staggerItemVariants} className="flex items-start">
-            <span className="inline-block bg-purple-800 rounded-full p-1 mr-3 mt-1">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-200" viewBox="0 0 20 20" fill="currentColor">
+            <span className="inline-block bg-purple-800 rounded-full p-1 mr-3 mt-1 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 text-purple-200" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
             </span>
-            <p className="text-base text-gray-300">
+            <p className="text-sm sm:text-base text-gray-300">
               Public Nudity can net you 30 points. Ten or more in the buff at once is worth 1000. We're not joking <span className="text-gray-400">(section 16)</span>.
             </p>
           </motion.li>
@@ -289,7 +291,7 @@ function WelcomeSection() {
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <p className="text-base leading-relaxed text-gray-300 p-4 bg-black/30 border border-purple-900/20 rounded-xl">
+          <p className="text-sm sm:text-base leading-relaxed text-gray-300 p-4 bg-black/30 border border-purple-900/20 rounded-xl">
             Sound insane enough? Peek at the <Link to="/housecup-rules" className="font-bold text-purple-300 underline hover:text-pink-300 transition-colors">Full Rules</Link> to discover how getting "Buffaloed" can drain your points and "Constructive Feedback" can get you executed.
           </p>
         </motion.div>
@@ -356,17 +358,17 @@ function HousesSection() {
       variants={fadeInVariants}
       className="relative z-10"
     >
-      <div className="text-center mb-12">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-300">
+      <div className="text-center mb-8 sm:mb-12">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-300">
           Meet The Four Houses
         </h2>
-        <div className="h-1 w-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full mx-auto mb-6"></div>
-        <p className="text-base sm:text-lg max-w-3xl mx-auto text-gray-300 leading-relaxed">
+        <div className="h-1 w-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full mx-auto mb-4 sm:mb-6"></div>
+        <p className="text-sm sm:text-base md:text-lg max-w-3xl mx-auto text-gray-300 leading-relaxed">
           Our Founders sorted themselves via 16Personalities Test (section 3).
           Now, you do it on-site. If you skip events, your House suffers (section 5).
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mt-8 sm:mt-12">
         {houses.map((house) => (
           <motion.div
             key={house.name}
@@ -376,16 +378,16 @@ function HousesSection() {
             className="group h-full relative"
           >
             <div className={`absolute inset-0 bg-gradient-to-br ${house.gradient} opacity-20 rounded-2xl blur-xl transform group-hover:scale-105 transition-all duration-700 -rotate-2`}></div>
-            <div className="relative h-full bg-[#1c1c1c] rounded-2xl p-8 border border-white/10 backdrop-blur-md overflow-hidden transform transition-all duration-500 group-hover:translate-y-[-8px] group-hover:shadow-[0_15px_30px_rgba(0,0,0,0.5)]">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br opacity-20 rounded-bl-full"></div>
+            <div className="relative h-full bg-[#1c1c1c] rounded-2xl p-5 sm:p-8 border border-white/10 backdrop-blur-md overflow-hidden transform transition-all duration-500 group-hover:translate-y-[-8px] group-hover:shadow-[0_15px_30px_rgba(0,0,0,0.5)]">
+              <div className="absolute top-0 right-0 w-24 sm:w-32 h-24 sm:h-32 bg-gradient-to-br opacity-20 rounded-bl-full"></div>
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-2xl sm:text-3xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-br drop-shadow-lg">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-transparent bg-clip-text bg-gradient-to-br drop-shadow-lg">
                     <span className={`bg-gradient-to-r ${house.gradient}`} style={{ WebkitBackgroundClip: 'text' }}>
                       {house.name}
                     </span>
                   </h3>
-                  <div className={`h-1 w-16 bg-gradient-to-r ${house.gradient} rounded-full mb-4`}></div>
+                  <div className={`h-1 w-12 sm:w-16 bg-gradient-to-r ${house.gradient} rounded-full mb-3 sm:mb-4`}></div>
                 </div>
                 <div className="relative">
                   <div className={`absolute inset-0 bg-gradient-to-br ${house.gradient} opacity-30 rounded-full blur-md transform group-hover:scale-110 transition-all duration-500`}></div>
@@ -394,34 +396,34 @@ function HousesSection() {
                     transition={{ type: "spring", stiffness: 300, damping: 15 }}
                     src={house.logo}
                     alt={`${house.name} Logo`}
-                    className="relative w-16 h-16 sm:w-20 sm:h-20 object-contain"
+                    className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain"
                   />
                 </div>
               </div>
-              <div className="relative z-10 mt-6">
-                <ul className="space-y-2.5">
-                  <li className="flex items-center text-gray-200">
-                    <div className="w-8 text-gray-400"><strong>⬤⬤</strong></div>
+              <div className="relative z-10 mt-4 sm:mt-6">
+                <ul className="space-y-2 sm:space-y-2.5">
+                  <li className="flex items-center text-gray-200 text-sm sm:text-base">
+                    <div className="w-6 sm:w-8 text-gray-400 flex-shrink-0"><strong>⬤⬤</strong></div>
                     <span><strong>Colors:</strong> {house.colors}</span>
                   </li>
-                  <li className="flex items-center text-gray-200">
-                    <div className="w-8 text-gray-400"><strong>⮑</strong></div>
+                  <li className="flex items-center text-gray-200 text-sm sm:text-base">
+                    <div className="w-6 sm:w-8 text-gray-400 flex-shrink-0"><strong>⮑</strong></div>
                     <span><strong>Animal:</strong> {house.animal}</span>
                   </li>
-                  <li className="flex items-center text-gray-200">
-                    <div className="w-8 text-gray-400"><strong>❝</strong></div>
+                  <li className="flex items-center text-gray-200 text-sm sm:text-base">
+                    <div className="w-6 sm:w-8 text-gray-400 flex-shrink-0"><strong>❝</strong></div>
                     <div>
                       <strong>Motto:</strong> "{house.motto}" 
-                      {house.caption && <span className="text-gray-400 text-sm block mt-0.5">{house.caption}</span>}
+                      {house.caption && <span className="text-gray-400 text-xs sm:text-sm block mt-0.5">{house.caption}</span>}
                     </div>
                   </li>
-                  <li className="flex items-center text-gray-200">
-                    <div className="w-8 text-gray-400"><strong>★</strong></div>
+                  <li className="flex items-center text-gray-200 text-sm sm:text-base">
+                    <div className="w-6 sm:w-8 text-gray-400 flex-shrink-0"><strong>★</strong></div>
                     <span><strong>Captain:</strong> {house.captain}</span>
                   </li>
                 </ul>
               </div>
-              <div className={`absolute bottom-0 right-0 h-40 w-40 bg-gradient-to-tl ${house.gradient} opacity-10 rounded-tl-full transform translate-y-1/4 translate-x-1/4 group-hover:scale-125 transition-all duration-700`}></div>
+              <div className={`absolute bottom-0 right-0 h-32 sm:h-40 w-32 sm:w-40 bg-gradient-to-tl ${house.gradient} opacity-10 rounded-tl-full transform translate-y-1/4 translate-x-1/4 group-hover:scale-125 transition-all duration-700`}></div>
             </div>
           </motion.div>
         ))}
@@ -475,35 +477,35 @@ function FeaturesSection() {
       className="relative"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-purple-800 to-pink-800 opacity-10 rounded-3xl blur-2xl transform rotate-2"></div>
-      <div className="relative bg-gradient-to-br from-[#1c1c1c] to-[#2a2a2a] p-8 sm:p-10 rounded-3xl border border-purple-900/30 shadow-2xl backdrop-blur-lg">
+      <div className="relative bg-gradient-to-br from-[#1c1c1c] to-[#2a2a2a] p-6 sm:p-10 rounded-3xl border border-purple-900/30 shadow-2xl backdrop-blur-lg">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
-          className="mb-10"
+          className="mb-6 sm:mb-10"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-purple-300">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-purple-300">
             Key Features & Events
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full mb-4"></div>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {features.map((feature, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: feature.delay }}
-              className="flex p-5 rounded-2xl bg-black/30 backdrop-blur-sm border border-purple-900/20 hover:border-purple-500/30 transition-all duration-300 hover:shadow-[0_5px_15px_rgba(147,51,234,0.1)] group"
+              className="flex p-4 sm:p-5 rounded-2xl bg-black/30 backdrop-blur-sm border border-purple-900/20 hover:border-purple-500/30 transition-all duration-300 hover:shadow-[0_5px_15px_rgba(147,51,234,0.1)] group"
             >
-              <div className="mr-4 p-3 rounded-xl bg-gradient-to-br from-pink-600/20 to-purple-700/20 border border-pink-700/20 text-pink-400 group-hover:text-pink-300 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="mr-3 sm:mr-4 p-2 sm:p-3 rounded-xl bg-gradient-to-br from-pink-600/20 to-purple-700/20 border border-pink-700/20 text-pink-400 group-hover:text-pink-300 transition-colors flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={feature.icon} />
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-1 text-gray-100">{feature.title}</h3>
-                <p className="text-sm text-gray-400">{feature.description}</p>
+                <h3 className="text-base sm:text-lg font-semibold mb-1 text-gray-100">{feature.title}</h3>
+                <p className="text-xs sm:text-sm text-gray-400">{feature.description}</p>
               </div>
             </motion.div>
           ))}
@@ -525,26 +527,26 @@ function FoundingPrincipleSection() {
       className="relative"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-800 to-purple-800 opacity-10 rounded-3xl blur-2xl transform -rotate-2"></div>
-      <div className="relative bg-gradient-to-br from-[#1c1c1c] to-[#2a2a2a] p-8 sm:p-10 rounded-3xl border border-indigo-900/30 shadow-2xl backdrop-blur-lg">
+      <div className="relative bg-gradient-to-br from-[#1c1c1c] to-[#2a2a2a] p-6 sm:p-10 rounded-3xl border border-indigo-900/30 shadow-2xl backdrop-blur-lg">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-300">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-300">
             The Founding Principle
           </h2>
         </motion.div>
         <div className="relative">
-          <div className="absolute -top-12 -right-12 w-40 h-40 bg-purple-800/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-indigo-800/10 rounded-full blur-3xl"></div>
+          <div className="absolute -top-8 sm:-top-12 -right-8 sm:-right-12 w-28 sm:w-40 h-28 sm:h-40 bg-purple-800/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-8 sm:-bottom-12 -left-8 sm:-left-12 w-28 sm:w-40 h-28 sm:h-40 bg-indigo-800/10 rounded-full blur-3xl"></div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="relative z-10 bg-black/30 p-6 rounded-2xl border border-indigo-900/20 mb-6"
+            className="relative z-10 bg-black/30 p-4 sm:p-6 rounded-2xl border border-indigo-900/20 mb-4 sm:mb-6"
           >
-            <p className="text-base sm:text-lg leading-relaxed text-gray-200">
+            <p className="text-sm sm:text-base md:text-lg leading-relaxed text-gray-200">
               On the sacred night of the <strong className="text-indigo-300">Strawberry Moon</strong>, whichever House sits 
               atop the leaderboard seizes the <strong className="text-indigo-300">House Pokal</strong>. Everyone else has a 
               week to conquer a <em className="text-purple-300">Yardie</em> (a yard of beer) or accept comedic doom.
@@ -556,7 +558,7 @@ function FoundingPrincipleSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative z-10"
           >
-            <p className="text-base sm:text-lg leading-relaxed text-gray-300">
+            <p className="text-sm sm:text-base md:text-lg leading-relaxed text-gray-300">
               Yes, there's no penalty for murder—but skip an event or commit Treason, 
               and you'll learn the real meaning of "house loyalty." Good luck.
             </p>
