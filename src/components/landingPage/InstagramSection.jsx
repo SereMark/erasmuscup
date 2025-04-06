@@ -50,7 +50,7 @@ export default function InstagramSection() {
                     <div key={index} className={`w-8 h-8 rounded-full border-2 border-purple-600 ${gradient}`}></div>
                   ))}
                 </div>
-                <span className="ml-4 text-gray-400 text-sm">34+ followers</span>
+                <span className="ml-4 text-gray-400 text-sm">35+ followers</span>
               </motion.div>
               <motion.a
                 initial={{ opacity: 0, y: 20 }}
