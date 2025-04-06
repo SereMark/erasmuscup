@@ -122,9 +122,8 @@ function HouseCupRulesPage() {
                       <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-300">
                         Table of Contents
                       </h2>
-                      <div className="space-y-3 max-h-[70vh] lg:max-h-[calc(100vh-240px)] overflow-y-auto pr-2 custom-scrollbar">
-                      <div className="space-y-4 max-h-[calc(100vh-240px)] overflow-y-auto pr-2 custom-scrollbar">
-                        <div>
+                      <div className="space-y-4 max-h-[calc(100vh-240px)] overflow-y-auto pr-2 scrollbar-hide">
+                      <div>
                           <ul className="space-y-1.5 text-sm">
                             <TOCItem id="section-1" label="1. Interpretation" icon="🔍" scrollToSection={scrollToSection} activeSection={activeSection} />
                             <TOCItem id="section-2" label="2. Object and Purpose" icon="🎯" scrollToSection={scrollToSection} activeSection={activeSection} />
@@ -188,7 +187,6 @@ function HouseCupRulesPage() {
                     </div>
                   </div>
                 </div>
-              </div>
               </motion.div>
             )}
           </AnimatePresence>

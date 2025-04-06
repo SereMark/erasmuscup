@@ -49,6 +49,7 @@
     "react-icons": "^5.4.0",
     "react-router-dom": "^6.22.3",
     "three": "^0.172.0",
-    "react-intersection-observer": "latest"
+    "react-intersection-observer": "latest",
+    "tailwind-scrollbar-hide": "latest"
   }
 }
