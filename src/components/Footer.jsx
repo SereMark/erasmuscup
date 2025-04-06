@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import SocialLink from "./SocialLink";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -104,5 +103,19 @@ function Copyright({ currentYear }) {
         By participating, you agree to follow the "House Cup Rules 2025" and accept that public humiliation may be a potential consequence.
       </p>
     </div>
+  );
+}
+
+function SocialLink({ href, label, children }) {
+  return (
+    <a 
+      href={href} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="text-gray-400 hover:text-purple-300 transition-colors"
+      aria-label={label}
+    >
+      {children}
+    </a>
   );
 }
