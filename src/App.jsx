@@ -4,6 +4,7 @@ import Layout from "./components/Layout"
 import LandingPage from "./pages/LandingPage"
 import LeaderboardPage from "./pages/LeaderboardPage"
 import HouseCupRulesPage from "./pages/HouseCupRulesPage"
+import EventsPage from "./pages/EventsPage"
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/housecup-rules" element={<HouseCupRulesPage />} />
+          <Route path="/events" element={<EventsPage />} />
         </Route>
       </Routes>
     </div>
