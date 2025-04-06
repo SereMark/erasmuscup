@@ -188,6 +188,7 @@ function HouseCupRulesPage() {
                     </div>
                   </div>
                 </div>
+              </div>
               </motion.div>
             )}
           </AnimatePresence>
