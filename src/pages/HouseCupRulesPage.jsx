@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 function HouseCupRulesPage() {
   const [activeSection, setActiveSection] = useState("");
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [showTOC, setShowTOC] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +21,7 @@ function HouseCupRulesPage() {
       const yOffset = -80;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
+      setShowTOC(false);
     }
   };
 
@@ -41,7 +43,7 @@ function HouseCupRulesPage() {
   };
 
   return (
-    <div className="bg-[#121212] min-h-screen pt-8 pb-20 relative">
+    <div className="bg-[#121212] min-h-screen pt-6 sm:pt-8 pb-20 relative">
       <motion.button
         onClick={scrollToTop}
         initial={{ opacity: 0, scale: 0.8 }}
@@ -51,24 +53,25 @@ function HouseCupRulesPage() {
           y: showBackToTop ? 0 : 20
         }}
         transition={{ duration: 0.3 }}
-        className="fixed bottom-8 right-8 z-50 bg-gradient-to-r from-purple-600 to-indigo-700 rounded-full p-3 shadow-lg text-white"
+        className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50 bg-gradient-to-r from-purple-600 to-indigo-700 rounded-full p-2 sm:p-3 shadow-lg text-white"
         aria-label="Back to top"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
         </svg>
       </motion.button>
-      <section className="max-w-5xl mx-auto px-4 sm:px-6">
+
+      <section className="max-w-5xl mx-auto px-3 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="mb-12 text-center"
+          className="mb-6 sm:mb-12 text-center"
         >
           <div className="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 p-1 rounded-2xl shadow-[0_10px_30px_rgba(79,70,229,0.2)]">
-            <div className="bg-[#1a1a1a]/90 backdrop-blur-sm rounded-2xl p-8 md:p-10 border border-purple-900/30">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400 drop-shadow-lg">
-                🏆 House Cup Rules 2025 🏆
+            <div className="bg-[#1a1a1a]/90 backdrop-blur-sm rounded-2xl p-4 sm:p-8 md:p-10 border border-purple-900/30">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400 drop-shadow-lg">
+                🏆 House Cup Rules 🏆
               </h1>
               <motion.div
                 initial={{ opacity: 0 }}
@@ -76,7 +79,7 @@ function HouseCupRulesPage() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="max-w-2xl mx-auto"
               >
-                <p className="text-lg text-gray-300 leading-relaxed">
+                <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
                   The official rulebook governing the definitely-not-a-cult competition among Erasmus students.
                   Read at your own peril.
                 </p>
@@ -84,101 +87,127 @@ function HouseCupRulesPage() {
             </div>
           </div>
         </motion.div>
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="lg:col-span-1"
+
+        <div className="lg:hidden mb-6 text-center">
+          <button 
+            onClick={() => setShowTOC(!showTOC)}
+            className="bg-gradient-to-r from-purple-600 to-indigo-700 px-4 py-2 rounded-lg text-white font-medium inline-flex items-center space-x-2"
           >
-            <div className="sticky top-8">
-              <div className="bg-gradient-to-br from-indigo-900/30 to-purple-900/30 p-1 rounded-xl shadow-lg">
-                <div className="bg-[#1a1a1a]/90 backdrop-blur-md p-5 rounded-xl border border-indigo-900/30">
-                  <h2 className="text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-300">
-                    Table of Contents
-                  </h2>
-                  <div className="space-y-4 max-h-[calc(100vh-240px)] overflow-y-auto pr-2 custom-scrollbar">
-                    <div>
-                      <ul className="space-y-1.5 text-sm">
-                        <TOCItem id="section-1" label="1. Interpretation" icon="🔍" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-2" label="2. Object and Purpose" icon="🎯" scrollToSection={scrollToSection} activeSection={activeSection} />
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-purple-300 mb-2">Part 1: The House Cup</h3>
-                      <ul className="space-y-1.5 text-sm">
-                        <TOCItem id="section-3" label="3. House Rules" icon="📝" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-4" label="4. Participants" icon="👥" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-5" label="5. House Events" icon="🎉" scrollToSection={scrollToSection} activeSection={activeSection} />
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-purple-300 mb-2">Part 2: House Points</h3>
-                      <ul className="space-y-1.5 text-sm">
-                        <TOCItem id="section-6" label="6. Award of House Points" icon="✨" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-7" label="7. Revocation of House Points" icon="⚠️" scrollToSection={scrollToSection} activeSection={activeSection} />
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-purple-300 mb-2">Part 3: Recommendations</h3>
-                      <ul className="space-y-1.5 text-sm">
-                        <TOCItem id="section-8" label="8. Event Selection" icon="🤝" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-9" label="9. Overthrowing Organisers" icon="💥" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-10" label="10. Constructive Feedback" icon="🧐" scrollToSection={scrollToSection} activeSection={activeSection} />
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-purple-300 mb-2">Part 4: Bonus Points</h3>
-                      <ul className="space-y-1.5 text-sm">
-                        <TOCItem id="section-11" label="11. Attendance and Pride" icon="🎖" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-12" label="12. Gambits" icon="🎲" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-12a" label="12a. Super Gambits" icon="💥" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-12b" label="12b. Armistices" icon="🤝" scrollToSection={scrollToSection} activeSection={activeSection} />
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-purple-300 mb-2">Part 5: Punishment</h3>
-                      <ul className="space-y-1.5 text-sm">
-                        <TOCItem id="section-13" label="13. House Crimes" icon="🚫" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-14" label="14. Cheating" icon="❌" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-15" label="15. Treason" icon="⚔️" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-16" label="16. Public Nudity" icon="🍑" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-17" label="17. Murder" icon="🔪" scrollToSection={scrollToSection} activeSection={activeSection} />
-                        <TOCItem id="section-18" label="18. Losing the House Cup" icon="⚰️" scrollToSection={scrollToSection} activeSection={activeSection} />
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-purple-300 mb-2">Part 6: Roles</h3>
-                      <ul className="space-y-1.5 text-sm">
-                        <TOCItem id="section-19" label="19. House Roles" icon="🎩" scrollToSection={scrollToSection} activeSection={activeSection} />
-                      </ul>
-                    </div>
-                    <div>
-                      <ul className="space-y-1.5 text-sm">
-                        <TOCItem id="schedule-1" label="Schedule 1: House Cup Register" icon="📜" scrollToSection={scrollToSection} activeSection={activeSection} />
-                      </ul>
+            <span>{showTOC ? "Hide" : "Show"} Table of Contents</span>
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className={`h-5 w-5 transition-transform duration-300 ${showTOC ? "rotate-180" : ""}`} 
+              viewBox="0 0 20 20" 
+              fill="currentColor"
+            >
+              <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8">
+          <AnimatePresence>
+            {(showTOC || window.innerWidth >= 1024) && (
+              <motion.div
+                key="toc"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="lg:col-span-1 overflow-hidden"
+              >
+                <div className={`${!showTOC && "hidden"} lg:block lg:sticky lg:top-8`}>
+                  <div className="bg-gradient-to-br from-indigo-900/30 to-purple-900/30 p-1 rounded-xl shadow-lg">
+                    <div className="bg-[#1a1a1a]/90 backdrop-blur-md p-4 sm:p-5 rounded-xl border border-indigo-900/30">
+                      <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-300">
+                        Table of Contents
+                      </h2>
+                      <div className="space-y-3 max-h-[70vh] lg:max-h-[calc(100vh-240px)] overflow-y-auto pr-2 custom-scrollbar">
+                      <div className="space-y-4 max-h-[calc(100vh-240px)] overflow-y-auto pr-2 custom-scrollbar">
+                        <div>
+                          <ul className="space-y-1.5 text-sm">
+                            <TOCItem id="section-1" label="1. Interpretation" icon="🔍" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-2" label="2. Object and Purpose" icon="🎯" scrollToSection={scrollToSection} activeSection={activeSection} />
+                          </ul>
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-semibold text-purple-300 mb-2">Part 1: The House Cup</h3>
+                          <ul className="space-y-1.5 text-sm">
+                            <TOCItem id="section-3" label="3. House Rules" icon="📝" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-4" label="4. Participants" icon="👥" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-5" label="5. House Events" icon="🎉" scrollToSection={scrollToSection} activeSection={activeSection} />
+                          </ul>
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-semibold text-purple-300 mb-2">Part 2: House Points</h3>
+                          <ul className="space-y-1.5 text-sm">
+                            <TOCItem id="section-6" label="6. Award of House Points" icon="✨" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-7" label="7. Revocation of House Points" icon="⚠️" scrollToSection={scrollToSection} activeSection={activeSection} />
+                          </ul>
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-semibold text-purple-300 mb-2">Part 3: Recommendations</h3>
+                          <ul className="space-y-1.5 text-sm">
+                            <TOCItem id="section-8" label="8. Event Selection" icon="🤝" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-9" label="9. Overthrowing Organisers" icon="💥" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-10" label="10. Constructive Feedback" icon="🧐" scrollToSection={scrollToSection} activeSection={activeSection} />
+                          </ul>
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-semibold text-purple-300 mb-2">Part 4: Bonus Points</h3>
+                          <ul className="space-y-1.5 text-sm">
+                            <TOCItem id="section-11" label="11. Attendance and Pride" icon="🎖" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-12" label="12. Gambits" icon="🎲" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-12a" label="12a. Super Gambits" icon="💥" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-12b" label="12b. Armistices" icon="🤝" scrollToSection={scrollToSection} activeSection={activeSection} />
+                          </ul>
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-semibold text-purple-300 mb-2">Part 5: Punishment</h3>
+                          <ul className="space-y-1.5 text-sm">
+                            <TOCItem id="section-13" label="13. House Crimes" icon="🚫" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-14" label="14. Cheating" icon="❌" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-15" label="15. Treason" icon="⚔️" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-16" label="16. Public Nudity" icon="🍑" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-17" label="17. Murder" icon="🔪" scrollToSection={scrollToSection} activeSection={activeSection} />
+                            <TOCItem id="section-18" label="18. Losing the House Cup" icon="⚰️" scrollToSection={scrollToSection} activeSection={activeSection} />
+                          </ul>
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-semibold text-purple-300 mb-2">Part 6: Roles</h3>
+                          <ul className="space-y-1.5 text-sm">
+                            <TOCItem id="section-19" label="19. House Roles" icon="🎩" scrollToSection={scrollToSection} activeSection={activeSection} />
+                          </ul>
+                        </div>
+                        <div>
+                          <ul className="space-y-1.5 text-sm">
+                            <TOCItem id="schedule-1" label="Schedule 1: House Cup Register" icon="📜" scrollToSection={scrollToSection} activeSection={activeSection} />
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <motion.div
             initial="hidden"
             animate="visible"
             variants={containerVariants}
-            className="lg:col-span-3 space-y-10"
+            className="lg:col-span-3 space-y-6 sm:space-y-10"
           >
-            <motion.div variants={itemVariants} className="mb-8">
+            <motion.div variants={itemVariants} className="mb-6 sm:mb-8">
               <div className="bg-gradient-to-br from-indigo-900/30 to-purple-900/30 p-1 rounded-xl shadow-lg">
-                <div className="bg-[#1a1a1a]/90 backdrop-blur-sm p-6 rounded-xl border border-indigo-900/30">
+                <div className="bg-[#1a1a1a]/90 backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-indigo-900/30">
                   <div className="flex items-center mb-3">
-                    <div className="w-10 h-10 rounded-full bg-indigo-900/40 flex items-center justify-center mr-3">
-                      <span className="text-xl">📜</span>
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-indigo-900/40 flex items-center justify-center mr-2 sm:mr-3">
+                      <span className="text-base sm:text-xl">📜</span>
                     </div>
-                    <h2 className="text-xl font-bold text-white">Official Document</h2>
+                    <h2 className="text-lg sm:text-xl font-bold text-white">Official Document</h2>
                   </div>
-                  <p className="text-sm sm:text-base leading-relaxed whitespace-pre-wrap text-gray-300">
+                  <p className="text-xs sm:text-sm leading-relaxed whitespace-pre-line sm:whitespace-pre-wrap text-gray-300">
                     <strong>Public Act:</strong> <em>2025 No 3</em>
                     {"\n"}
                     <strong>Date of Assent:</strong> <em>21 March 2025</em>
@@ -293,18 +322,18 @@ function RuleCard({ id, title, text, emoji = "👉", variants }) {
   });
 
   return (
-    <motion.div id={id} ref={ref} variants={variants} className="scroll-mt-24 mb-8">
+    <motion.div id={id} ref={ref} variants={variants} className="scroll-mt-24 mb-6 sm:mb-8">
       <div className="bg-gradient-to-br from-[#2c2c2c] to-[#1a1a1a] p-1 rounded-xl shadow-lg border border-purple-900/20 group hover:from-purple-900/20 hover:to-indigo-900/20 transition-all duration-500">
-        <div className="bg-[#1a1a1a]/80 backdrop-blur-sm p-6 rounded-xl h-full">
-          <div className="flex items-start gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-purple-900/30 flex-shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <span className="text-xl">{emoji}</span>
+        <div className="bg-[#1a1a1a]/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl h-full">
+          <div className="flex items-start gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-purple-900/30 flex-shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <span className="text-base sm:text-xl">{emoji}</span>
             </div>
             <motion.h3
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.4 }}
-              className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300"
+              className="text-lg sm:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300"
             >
               {title}
             </motion.h3>
@@ -313,7 +342,7 @@ function RuleCard({ id, title, text, emoji = "👉", variants }) {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6 }}
-            className="text-sm sm:text-base whitespace-pre-wrap leading-relaxed text-gray-300 ml-2 pl-10"
+            className="text-xs sm:text-sm md:text-base whitespace-pre-line sm:whitespace-pre-wrap leading-relaxed text-gray-300 ml-1 sm:ml-2 pl-8 sm:pl-10"
             dangerouslySetInnerHTML={{ __html: enhancedText }}
           />
         </div>
