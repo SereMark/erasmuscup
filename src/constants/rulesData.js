@@ -7,25 +7,6 @@ export const SCROLL_THRESHOLD = 500;
 export const SCROLL_OFFSET = -80;
 export const TOC_DELAY = 600;
 
-// Animation variants
-export const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
-export const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-};
-
-export const fadeInUpVariant = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-};
-
 // Term highlighting map for rule cards
 export const HIGHLIGHT_MAP = [
   { term: "Basic Rules", replacement: "<strong class='text-purple-300'>Basic Rules</strong>" },
