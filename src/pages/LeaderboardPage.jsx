@@ -6,9 +6,9 @@ import { HOUSES } from "../constants/houseData";
 import { SCOREBOARD_DATA, MOBILE_BREAKPOINT } from "../constants/scoreboardData";
 
 // Import components
-import HeroSection from "../components/leaderboard/HeroSection";
-import PodiumSection from "../components/leaderboard/PodiumSection";
-import ScoreboardSection from "../components/leaderboard/ScoreboardSection";
+import HeroSection from "../components/sections/leaderboard/HeroSection";
+import PodiumSection from "../components/sections/leaderboard/PodiumSection";
+import ScoreboardSection from "../components/sections/leaderboard/ScoreboardSection";
 
 export default function LeaderboardPage() {
   const [viewMode, setViewMode] = useState("cards");

@@ -1,11 +1,11 @@
 import React from "react";
 import { useScroll } from "framer-motion";
-import HeroSection from "../components/landingPage/HeroSection";
-import WelcomeSection from "../components/landingPage/WelcomeSection";
-import HousesSection from "../components/landingPage/HousesSection";
-import FeaturesSection from "../components/landingPage/FeaturesSection";
-import FoundingPrincipleSection from "../components/landingPage/FoundingPrincipleSection";
-import InstagramSection from "../components/landingPage/InstagramSection";
+import HeroSection from "../components/sections/landing/HeroSection";
+import WelcomeSection from "../components/sections/landing/WelcomeSection";
+import HousesSection from "../components/sections/landing/HousesSection";
+import FeaturesSection from "../components/sections/landing/FeaturesSection";
+import FoundingPrincipleSection from "../components/sections/landing/FoundingPrincipleSection";
+import InstagramSection from "../components/sections/landing/InstagramSection";
 
 export default function LandingPage() {
   const { scrollY } = useScroll();

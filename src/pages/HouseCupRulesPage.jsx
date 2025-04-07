@@ -1,81 +1,38 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { SCROLL_THRESHOLD, SCROLL_OFFSET, TOC_DELAY } from "../constants/rulesData";
+import { useResponsive } from "../hooks/useResponsive";
+import { useActiveSection } from "../hooks/useActiveSection";
 
 // UI Components
-import BackToTopButton from "../components/ui/BackToTopButton";
+import BackToTopButton from "../components/common/ui/BackToTopButton";
 
 // Rules Page Components
-import PageHeader from "../components/rules/PageHeader";
-import MobileTableOfContentsToggle from "../components/rules/MobileTableOfContentsToggle";
-import TableOfContents from "../components/rules/TableOfContents";
-import RulesContent from "../components/rules/RulesContent";
+import PageHeader from "../components/sections/rules/PageHeader";
+import MobileTableOfContentsToggle from "../components/features/navigation/MobileTableOfContentsToggle";
+import TableOfContents from "../components/features/navigation/TableOfContents";
+import RulesContent from "../components/sections/rules/RulesContent";
 
 /**
  * House Cup Rules page component
  * Displays the complete rulebook with table of contents navigation
  */
 function HouseCupRulesPage() {
-  const [activeSection, setActiveSection] = useState("");
+  const activeSection = useActiveSection();
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showTOC, setShowTOC] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
+  const { isDesktop } = useResponsive(1024);
 
-  // Check screen size on mount and resize
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-    
-    // Initial check
-    checkScreenSize();
-    
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
-
-  // Handle scroll events
+  // Handle scroll events for back to top button
   useEffect(() => {
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > SCROLL_THRESHOLD);
-      
-      const sectionElements = document.querySelectorAll('[id]');
-      
-      let newActiveSection = '';
-      
-      for (const section of sectionElements) {
-        const rect = section.getBoundingClientRect();
-        const topPosition = rect.top - SCROLL_OFFSET;
-        
-        if (topPosition <= 10) {
-          newActiveSection = section.id;
-        } else {
-          break;
-        }
-      }
-      
-      if (newActiveSection && newActiveSection !== activeSection) {
-        setActiveSection(newActiveSection);
-      }
     };
     
-    let isScrolling = false;
-    const throttledScroll = () => {
-      if (!isScrolling) {
-        isScrolling = true;
-        
-        window.requestAnimationFrame(() => {
-          handleScroll();
-          isScrolling = false;
-        });
-      }
-    };
-    
-    window.addEventListener("scroll", throttledScroll);
-    
+    window.addEventListener("scroll", handleScroll);
     handleScroll();
     
-    return () => window.removeEventListener("scroll", throttledScroll);
-  }, [activeSection]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Scroll to section helper
   const scrollToSection = useCallback((sectionId) => {
