@@ -187,46 +187,46 @@ function MobileNavigation({ open, setOpen, location }) {
       {open && (
         <motion.div
           key="mobile-menu"
-          initial={{ opacity: 0, y: -20, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -20, scale: 0.98 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="md:hidden absolute inset-x-0 top-full z-40 shadow-[0_15px_40px_rgba(0,0,0,0.6)]"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="md:hidden fixed inset-x-0 top-[calc(100%-1px)] z-40 overflow-hidden"
         >
-          <div className="mx-4 my-2 rounded-2xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-indigo-900/20 p-[1px]">
-            <div className="glass-effect rounded-2xl backdrop-blur-lg">
-              {/* Navigation items */}
+          <div className="mx-4 my-2 overflow-hidden rounded-2xl shadow-[0_10px_50px_rgba(88,28,135,0.3)]">
+            <div className="relative bg-black/60 backdrop-blur-md border border-purple-800/30">
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-600/80 via-brand-500/60 to-purple-600/80"></div>
               <div className="p-5 space-y-3">
-                <h3 className="text-sm font-medium text-gray-400 mb-3 border-b border-gray-700/50 pb-2">NAVIGATION</h3>
+                <h3 className="text-sm font-medium text-gray-300 mb-3 border-b border-purple-800/30 pb-2">NAVIGATION</h3>
                 
                 {NAV_LINKS.map((link, index) => {
                   const isActive = location.pathname === link.path;
                   return (
                     <motion.div 
                       key={link.path} 
-                      initial={{ opacity: 0, x: -10 }}
+                      initial={{ opacity: 0, x: -5 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                      whileTap={{ scale: 0.97 }}
+                      transition={{ duration: 0.3, delay: index * 0.05 }}
+                      whileTap={{ scale: 0.98 }}
                     >
                       <Link
                         to={link.path}
                         onClick={() => setOpen(false)}
-                        className={`relative block px-4 py-3.5 rounded-xl transition-all duration-300 ${
+                        className={`relative block px-4 py-3.5 rounded-xl transition-all duration-200 ${
                           isActive
-                            ? "bg-gradient-to-r from-purple-600/80 to-purple-500/80 text-white font-semibold shadow-md"
-                            : "hover:bg-purple-900/20 text-gray-200 hover:text-white"
+                            ? "bg-gradient-to-r from-purple-700/90 to-purple-600/90 text-white font-semibold shadow-[0_4px_12px_rgba(88,28,135,0.5)]"
+                            : "text-gray-200 hover:text-white hover:bg-purple-800/30"
                         }`}
                         aria-current={isActive ? "page" : undefined}
                       >
                         <div className="flex items-center">
-                          <span className="text-xl mr-3">{link.icon}</span>
+                          <span className="text-lg mr-3">{link.icon}</span>
                           <span className="font-medium">{link.title}</span>
                           
                           {isActive && (
                             <motion.span
                               layoutId="active-mobile-indicator"
-                              className="ml-auto h-2 w-2 rounded-full bg-white"
+                              className="ml-auto h-2 w-2 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.7)]"
                               initial={{ scale: 0 }}
                               animate={{ scale: 1 }}
                               transition={{ duration: 0.2 }}
@@ -240,15 +240,15 @@ function MobileNavigation({ open, setOpen, location }) {
               </div>
               
               {/* Social section */}
-              <div className="bg-black/40 backdrop-blur-md px-5 py-6 rounded-b-2xl">
+              <div className="px-5 py-6 bg-gradient-to-b from-black/40 to-purple-950/40 border-t border-purple-800/20">
                 <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
                 >
                   <h3 className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-300 mb-4">CONNECT WITH US</h3>
                   <div className="flex justify-between items-center">
-                    <div className="flex space-x-3">
+                    <div className="flex space-x-4">
                       <SocialButton icon="facebook" href="https://facebook.com" />
                       <SocialButton icon="instagram" href="https://instagram.com" />
                       <SocialButton icon="email" href="mailto:contact@example.com" />
@@ -257,7 +257,7 @@ function MobileNavigation({ open, setOpen, location }) {
                     <motion.button
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setOpen(false)}
-                      className="text-sm font-medium px-4 py-2 rounded-lg bg-purple-800/50 text-white hover:bg-purple-700/60 transition-colors flex items-center"
+                      className="text-sm font-medium px-4 py-2 rounded-lg bg-purple-700/60 text-white hover:bg-purple-600/70 transition-colors flex items-center shadow-[0_2px_10px_rgba(88,28,135,0.3)]"
                     >
                       <span>Close</span>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -301,10 +301,9 @@ function SocialButton({ icon, href }) {
       rel="noopener noreferrer"
       whileHover={{ scale: 1.1, y: -2 }}
       whileTap={{ scale: 0.95 }}
-      className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-brand-800 to-brand-900 text-gray-200 hover:text-white transition-colors shadow-lg"
+      className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-brand-700 to-brand-900 text-gray-200 hover:text-white transition-colors shadow-[0_4px_12px_rgba(88,28,135,0.3)]"
     >
       <div className="relative">
-        <div className="absolute inset-0 bg-white/10 rounded-full blur-sm opacity-0 group-hover:opacity-50 transition-opacity"></div>
         {icons[icon]}
       </div>
     </motion.a>
