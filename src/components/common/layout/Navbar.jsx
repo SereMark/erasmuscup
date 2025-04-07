@@ -201,7 +201,7 @@ function MobileNavigation({ open, setOpen, location }) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden fixed top-0 right-0 bottom-0 w-4/5 max-w-sm z-50 bg-black/90 shadow-xl border-l border-brand-900/50"
+            className="md:hidden fixed top-0 right-0 bottom-0 w-4/5 max-w-sm z-50 bg-black/90 shadow-xl"
           >
             <div className="p-6 h-full flex flex-col">
               <div className="flex justify-between items-center mb-8">
@@ -228,7 +228,7 @@ function MobileNavigation({ open, setOpen, location }) {
                         className={`flex items-center space-x-3 p-4 rounded-lg transition-colors ${
                           isActive
                             ? "bg-gradient-to-r from-brand-900/40 to-brand-800/40 text-white font-medium border-l-4 border-brand-500"
-                            : "text-white hover:bg-brand-900/50 hover:text-white bg-brand-900/30"
+                            : "text-gray-300 hover:bg-brand-900/20 hover:text-white"
                         }`}
                         aria-current={isActive ? "page" : undefined}
                         onClick={() => setOpen(false)}
@@ -241,8 +241,8 @@ function MobileNavigation({ open, setOpen, location }) {
                 })}
               </div>
               
-              <div className="pt-6 mt-auto border-t border-brand-900/30 bg-black/30 p-4 rounded-lg">
-                <p className="text-sm text-white mb-4">Follow us on social media:</p>
+              <div className="pt-6 mt-auto border-t border-brand-900/30">
+                <p className="text-sm text-gray-400 mb-4">Follow us on social media:</p>
                 <div className="flex space-x-4">
                   <SocialButton icon="instagram" href="https://www.instagram.com/house_cup_erasmus/" />
                   <SocialButton icon="facebook" href="#" />
