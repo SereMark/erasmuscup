@@ -201,7 +201,7 @@ function MobileNavigation({ open, setOpen, location }) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden fixed top-0 right-0 bottom-0 w-4/5 max-w-sm z-50 bg-black/90 shadow-xl"
+            className="md:hidden fixed top-0 right-0 bottom-0 w-4/5 max-w-sm z-50 glass-effect shadow-xl"
           >
             <div className="p-6 h-full flex flex-col">
               <div className="flex justify-between items-center mb-8">
