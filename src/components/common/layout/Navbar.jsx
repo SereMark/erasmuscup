@@ -9,6 +9,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navRef = useRef(null);
+  const navItemsRef = useRef(new Map());
 
   // Reset mobile menu on route change
   useEffect(() => {
@@ -69,7 +70,10 @@ export default function Navbar() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 flex items-center justify-between">
           <BrandLogo setOpen={setOpen} />
           <MobileMenuButton open={open} setOpen={setOpen} />
-          <DesktopNavigation location={location} />
+          <DesktopNavigation 
+            location={location} 
+            navItemsRef={navItemsRef} 
+          />
         </div>
         
         <MobileNavigation open={open} setOpen={setOpen} location={location} />
@@ -138,40 +142,100 @@ function MobileMenuButton({ open, setOpen }) {
   );
 }
 
-function DesktopNavigation({ location }) {
+function DesktopNavigation({ location, navItemsRef }) {
+  const navContainerRef = useRef(null);
+  const [indicatorStyles, setIndicatorStyles] = useState({
+    width: 0,
+    height: 0,
+    x: 0,
+    opacity: 0
+  });
+  
+  // Update indicator position when active link changes or on resize
+  useEffect(() => {
+    const updateIndicator = () => {
+      const activeNavItem = navItemsRef.current.get(location.pathname);
+      const navContainer = navContainerRef.current;
+      
+      if (activeNavItem && navContainer) {
+        const itemRect = activeNavItem.getBoundingClientRect();
+        const containerRect = navContainer.getBoundingClientRect();
+        
+        // Calculate position relative to container
+        setIndicatorStyles({
+          width: itemRect.width,
+          height: itemRect.height,
+          x: itemRect.left - containerRect.left,
+          opacity: 1
+        });
+      } else {
+        // If no active link, hide the indicator
+        setIndicatorStyles(prev => ({
+          ...prev,
+          opacity: 0
+        }));
+      }
+    };
+    
+    // Initial position
+    updateIndicator();
+    
+    // Update position on window resize
+    window.addEventListener('resize', updateIndicator);
+    
+    return () => {
+      window.removeEventListener('resize', updateIndicator);
+    };
+  }, [location.pathname, navItemsRef]);
+
   return (
     <div className="hidden md:flex items-center space-x-1">
-      <div className="glass-effect rounded-xl p-1 flex items-center">
+      <div 
+        ref={navContainerRef}
+        className="glass-effect rounded-xl p-1 flex items-center relative overflow-hidden"
+      >
+        {/* Background indicator pill */}
+        <motion.div
+          className="absolute bg-gradient-to-r from-purple-600/80 to-purple-500/80 rounded-lg"
+          initial={false}
+          animate={{
+            width: indicatorStyles.width,
+            height: indicatorStyles.height,
+            x: indicatorStyles.x,
+            opacity: indicatorStyles.opacity
+          }}
+          transition={{
+            type: "tween",
+            duration: 0.3,
+            ease: "easeOut"
+          }}
+        />
+        
+        {/* Nav links */}
         {NAV_LINKS.map((link) => {
           const isActive = location.pathname === link.path;
           return (
-            <motion.div key={link.path} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.div 
+              key={link.path} 
+              whileHover={{ scale: 1.05 }} 
+              whileTap={{ scale: 0.95 }}
+            >
               <Link
                 to={link.path}
-                className={`relative px-4 py-2 rounded-lg flex items-center space-x-2 transition-all focus:outline-none ${
+                className={`relative px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors focus:outline-none ${
                   isActive
                     ? "text-white font-medium"
                     : "text-gray-300 hover:text-white hover:bg-purple-900/20"
                 }`}
                 aria-current={isActive ? "page" : undefined}
+                ref={node => {
+                  if (node) {
+                    navItemsRef.current.set(link.path, node);
+                  }
+                }}
               >
                 <span className="text-sm">{link.icon}</span>
                 <span>{link.title}</span>
-                
-                {/* Active indicator - persistent across route changes */}
-                {isActive && (
-                  <motion.div
-                    layoutId="nav-pill" 
-                    className="absolute inset-0 bg-gradient-to-r from-purple-600/80 to-purple-500/80 rounded-lg -z-10"
-                    initial={false}
-                    transition={{ 
-                      type: "spring", 
-                      stiffness: 400, 
-                      damping: 30,
-                      duration: 0.3
-                    }}
-                  />
-                )}
               </Link>
             </motion.div>
           );
