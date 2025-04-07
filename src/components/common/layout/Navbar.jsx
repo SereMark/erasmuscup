@@ -194,7 +194,7 @@ function MobileNavigation({ open, setOpen, location }) {
           className="md:hidden fixed inset-x-0 top-[calc(100%-1px)] z-40 overflow-hidden"
         >
           <div className="mx-4 my-2 overflow-hidden rounded-2xl shadow-[0_10px_50px_rgba(88,28,135,0.3)]">
-            <div className="relative bg-black/60 backdrop-blur-md border border-purple-800/30">
+            <div className="relative bg-black/90 backdrop-blur-lg border border-purple-800/30">
               <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-600/80 via-brand-500/60 to-purple-600/80"></div>
               <div className="p-5 space-y-3">
                 <h3 className="text-sm font-medium text-gray-300 mb-3 border-b border-purple-800/30 pb-2">NAVIGATION</h3>
