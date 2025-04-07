@@ -1,27 +1,28 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaArrowUp } from "react-icons/fa";
 
-/**
- * Button component that appears when user scrolls down and allows them to scroll back to top
- */
-function BackToTopButton({ showBackToTop, scrollToTop }) {
+function BackToTopButton({ showBackToTop }) {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <motion.button
-      onClick={scrollToTop}
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{
-        opacity: showBackToTop ? 1 : 0,
-        scale: showBackToTop ? 1 : 0.8,
-        y: showBackToTop ? 0 : 20
-      }}
-      transition={{ duration: 0.3 }}
-      className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50 bg-gradient-to-r from-purple-600 to-indigo-700 rounded-full p-2 sm:p-3 shadow-lg text-white"
-      aria-label="Back to top"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-      </svg>
-    </motion.button>
+    <AnimatePresence>
+      {showBackToTop && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.5 }}
+          transition={{ duration: 0.3 }}
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-lg hover:shadow-brand-500/20 hover:translate-y-[-4px] transition-all duration-300"
+          aria-label="Back to top"
+        >
+          <FaArrowUp />
+        </motion.button>
+      )}
+    </AnimatePresence>
   );
 }
 
