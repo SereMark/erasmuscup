@@ -185,73 +185,91 @@ function MobileNavigation({ open, setOpen, location }) {
   return (
     <AnimatePresence>
       {open && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm md:hidden z-40"
-            onClick={() => setOpen(false)}
-            aria-hidden="true"
-          />
-          
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden fixed top-0 right-0 bottom-0 w-4/5 max-w-sm z-50 glass-effect shadow-xl"
-          >
-            <div className="p-6 h-full flex flex-col">
-              <div className="flex justify-between items-center mb-8">
-                <BrandLogo setOpen={setOpen} />
-                <button
-                  onClick={() => setOpen(false)}
-                  className="p-2 rounded-full bg-brand-900/30 text-gray-200"
-                >
-                  <FaTimes size={20} />
-                </button>
-              </div>
-              
-              <div className="space-y-2 flex-grow">
-                {NAV_LINKS.map((link) => {
+        <motion.div
+          key="mobile-menu"
+          initial={{ opacity: 0, y: -20, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -20, scale: 0.98 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="md:hidden absolute inset-x-0 top-full z-40 shadow-[0_15px_40px_rgba(0,0,0,0.6)]"
+        >
+          <div className="mx-4 my-2 rounded-2xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-indigo-900/20 p-[1px]">
+            <div className="glass-effect rounded-2xl backdrop-blur-lg">
+              {/* Navigation items */}
+              <div className="p-5 space-y-3">
+                <h3 className="text-sm font-medium text-gray-400 mb-3 border-b border-gray-700/50 pb-2">NAVIGATION</h3>
+                
+                {NAV_LINKS.map((link, index) => {
                   const isActive = location.pathname === link.path;
                   return (
-                    <motion.div
-                      key={link.path}
-                      whileHover={{ x: 4 }}
-                      whileTap={{ scale: 0.98 }}
+                    <motion.div 
+                      key={link.path} 
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      whileTap={{ scale: 0.97 }}
                     >
                       <Link
                         to={link.path}
-                        className={`flex items-center space-x-3 p-4 rounded-lg transition-colors ${
+                        onClick={() => setOpen(false)}
+                        className={`relative block px-4 py-3.5 rounded-xl transition-all duration-300 ${
                           isActive
-                            ? "bg-gradient-to-r from-brand-900/40 to-brand-800/40 text-white font-medium border-l-4 border-brand-500"
-                            : "text-gray-300 hover:bg-brand-900/20 hover:text-white"
+                            ? "bg-gradient-to-r from-purple-600/80 to-purple-500/80 text-white font-semibold shadow-md"
+                            : "hover:bg-purple-900/20 text-gray-200 hover:text-white"
                         }`}
                         aria-current={isActive ? "page" : undefined}
-                        onClick={() => setOpen(false)}
                       >
-                        <span className="text-lg">{link.icon}</span>
-                        <span className="text-lg">{link.title}</span>
+                        <div className="flex items-center">
+                          <span className="text-xl mr-3">{link.icon}</span>
+                          <span className="font-medium">{link.title}</span>
+                          
+                          {isActive && (
+                            <motion.span
+                              layoutId="active-mobile-indicator"
+                              className="ml-auto h-2 w-2 rounded-full bg-white"
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ duration: 0.2 }}
+                            />
+                          )}
+                        </div>
                       </Link>
                     </motion.div>
                   );
                 })}
               </div>
               
-              <div className="pt-6 mt-auto border-t border-brand-900/30">
-                <p className="text-sm text-gray-400 mb-4">Follow us on social media:</p>
-                <div className="flex space-x-4">
-                  <SocialButton icon="instagram" href="https://www.instagram.com/house_cup_erasmus/" />
-                  <SocialButton icon="facebook" href="#" />
-                  <SocialButton icon="email" href="mailto:housecup2025@example.com" />
-                </div>
+              {/* Social section */}
+              <div className="bg-black/40 backdrop-blur-md px-5 py-6 rounded-b-2xl">
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                  <h3 className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-300 mb-4">CONNECT WITH US</h3>
+                  <div className="flex justify-between items-center">
+                    <div className="flex space-x-3">
+                      <SocialButton icon="facebook" href="https://facebook.com" />
+                      <SocialButton icon="instagram" href="https://instagram.com" />
+                      <SocialButton icon="email" href="mailto:contact@example.com" />
+                    </div>
+                    
+                    <motion.button
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setOpen(false)}
+                      className="text-sm font-medium px-4 py-2 rounded-lg bg-purple-800/50 text-white hover:bg-purple-700/60 transition-colors flex items-center"
+                    >
+                      <span>Close</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </motion.button>
+                  </div>
+                </motion.div>
               </div>
             </div>
-          </motion.div>
-        </>
+          </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );
@@ -277,13 +295,18 @@ function SocialButton({ icon, href }) {
   };
 
   return (
-    <a 
+    <motion.a 
       href={href} 
       target="_blank" 
       rel="noopener noreferrer"
-      className="w-10 h-10 flex items-center justify-center rounded-full bg-brand-900/50 text-gray-200 hover:bg-brand-700 hover:text-white transition-colors"
+      whileHover={{ scale: 1.1, y: -2 }}
+      whileTap={{ scale: 0.95 }}
+      className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-brand-800 to-brand-900 text-gray-200 hover:text-white transition-colors shadow-lg"
     >
-      {icons[icon]}
-    </a>
+      <div className="relative">
+        <div className="absolute inset-0 bg-white/10 rounded-full blur-sm opacity-0 group-hover:opacity-50 transition-opacity"></div>
+        {icons[icon]}
+      </div>
+    </motion.a>
   );
 }
