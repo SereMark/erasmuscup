@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useAnimation } from "../../../hooks/useAnimation";
 
 export default function InstagramSection() {
-  const { ref, inView } = useAnimation({
+  const { ref, hasBeenInView  } = useAnimation({
     threshold: 0.2
   });
   
@@ -17,7 +17,7 @@ export default function InstagramSection() {
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      animate={hasBeenInView  ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.8 }}
       className="relative max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16"
     >
@@ -28,7 +28,7 @@ export default function InstagramSection() {
             <div className="space-y-6 max-w-xl">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
-                animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+                animate={hasBeenInView  ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-300">
@@ -43,7 +43,7 @@ export default function InstagramSection() {
               {/* Followers indicator */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={hasBeenInView  ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="flex items-center space-x-1"
               >
@@ -58,7 +58,7 @@ export default function InstagramSection() {
               {/* Instagram button */}
               <motion.a
                 initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={hasBeenInView  ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
                 href="https://www.instagram.com/house_cup_erasmus/"
                 className="group inline-flex items-center bg-gradient-to-r from-pink-500 to-purple-600 px-6 py-3 rounded-full text-white font-medium shadow-lg hover:shadow-[0_5px_20px_rgba(219,39,119,0.5)] transition-all duration-300 transform hover:scale-105 active:scale-95"
@@ -78,7 +78,7 @@ export default function InstagramSection() {
             {/* Image */}
             <motion.div
               initial={{ opacity: 0, y: 30, rotate: -5 }}
-              animate={inView ? { opacity: 1, y: 0, rotate: 0 } : { opacity: 0, y: 30, rotate: -5 }}
+              animate={hasBeenInView  ? { opacity: 1, y: 0, rotate: 0 } : { opacity: 0, y: 30, rotate: -5 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               className="relative mx-auto md:mx-0"
             >

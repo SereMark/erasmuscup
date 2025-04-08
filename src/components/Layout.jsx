@@ -11,7 +11,7 @@ export default function Layout() {
 
   // Scroll to top on route change
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.pathname]);
 
   // Show back to top button when scrolled down

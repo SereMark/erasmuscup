@@ -4,14 +4,13 @@
 
 @layer base {
   :root {
-    --scroll-behavior: smooth !important;
-    scroll-behavior: smooth !important;
+    --scroll-behavior: smooth;
+    scroll-behavior: smooth;
   }
 
   html {
     font-size: 15px;
     line-height: 1.5;
-    scroll-behavior: smooth;
   }
   @screen sm {
     html {

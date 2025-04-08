@@ -314,8 +314,7 @@ function MobileNavigation({ open, setOpen, location }) {
                   <div className="flex justify-between items-center">
                     <div className="flex space-x-4">
                       <SocialButton icon="facebook" href="https://facebook.com" />
-                      <SocialButton icon="instagram" href="https://instagram.com" />
-                      <SocialButton icon="email" href="mailto:contact@example.com" />
+                      <SocialButton icon="instagram" href="https://www.instagram.com/house_cup_erasmus/" />
                     </div>
                     
                     <motion.button
