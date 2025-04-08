@@ -85,8 +85,7 @@ function QuickLinks() {
   const links = [
     { name: "Current Standings", path: "/leaderboard" },
     { name: "Rules & Guidelines", path: "/housecup-rules" },
-    { name: "About the Houses", path: "/" },
-    { name: "Events Calendar", path: "/" }
+    { name: "Upcoming Events", path: "/events" }
   ];
 
   return (
