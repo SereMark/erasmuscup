@@ -8,7 +8,7 @@ import CaptureTheFlagEvent from "../components/sections/events/CaptureTheFlagEve
 import { SectionTitle } from "../components/features/rules/SectionTitle";
 
 export default function EventsPage() {
-  const { ref, hasBeenInView } = useAnimation({ threshold: 0.1 });
+  const { ref, hasBeenInView } = useAnimation({threshold: 0, rootMargin: "0px 0px -100px 0px"});
   
   return (
     <div className="bg-black text-white min-h-screen">
