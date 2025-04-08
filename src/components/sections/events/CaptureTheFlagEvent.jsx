@@ -1,6 +1,5 @@
 import React from "react";
 import EventCard from "../../features/events/EventCard";
-import EventAction from "../../features/events/EventAction";
 import EventDetails from "../../features/events/EventDetails";
 import EventInfoItem from "../../features/events/EventInfoItem";
 import EventNote from "../../features/events/EventNote";
@@ -111,12 +110,6 @@ export default function CaptureTheFlagEvent() {
         <div className="text-gray-400 text-xs italic">
           <span>Event organized by Max</span>
         </div>
-        <EventAction 
-          label="See Full Rules"
-          color="from-indigo-600 to-purple-600"
-          shadowColor="shadow-indigo-500/20"
-          href="/housecup-rules"
-        />
       </div>
     </EventCard>
   );
