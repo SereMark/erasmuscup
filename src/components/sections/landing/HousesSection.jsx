@@ -4,7 +4,7 @@ import { useAnimation } from "../../../hooks/useAnimation";
 import { fadeInVariants } from "../../../constants/animations";
 import { HOUSES } from "../../../constants/houseData";
 import { HouseCard } from "../../features/houses/HouseCard";
-import { SectionTitle } from "../../common/ui/SectionTitle";
+import { SectionTitle } from "../../features/rules/SectionTitle";
 
 export default function HousesSection() {
   const { ref, inView } = useAnimation({ threshold: 0.1 });

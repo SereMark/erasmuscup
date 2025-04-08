@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { containerVariants, fadeInUpVariant } from "../../../constants/animations";
 import { TableView } from "../../features/leaderboard/TableView";
 import { CardView } from "../../features/leaderboard/CardView";
-import { SectionTitle } from "../../common/ui/SectionTitle";
+import { SectionTitle } from "../../features/rules/SectionTitle";
 
 const ScoreboardSection = forwardRef(({ viewMode, setViewMode, isMobile, sortedHouseTotals, rankMapping, inView }, ref) => {
   return (

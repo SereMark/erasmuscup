@@ -4,7 +4,7 @@ import { useAnimation } from "../../../hooks/useAnimation";
 import { fadeInVariants } from "../../../constants/animations";
 import { FEATURES } from "../../../constants/featuresData";
 import { GradientCard } from "../../common/ui/GradientCard";
-import { SectionTitle } from "../../common/ui/SectionTitle";
+import { SectionTitle } from "../../features/rules/SectionTitle";
 
 export default function FeaturesSection() {
   const { ref, hasBeenInView } = useAnimation({ threshold: 0.2 });

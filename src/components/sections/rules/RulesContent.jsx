@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
-import RuleCard from "../../common/ui/RuleCard";
-import PartHeading from "../../common/ui/PartHeading";
-import ScheduleCard from "../../common/ui/ScheduleCard";
+import RuleCard from "../../features/rules/RuleCard";
+import PartHeading from "../../features/rules/PartHeading";
+import ScheduleCard from "../../features/rules/ScheduleCard";
 import { containerVariants, itemVariants } from "../../../constants/animations";
 import * as ruleSections from "../../../constants/ruleSections";
 

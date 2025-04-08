@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useAnimation } from "../../../hooks/useAnimation";
 import { GradientCard } from "../../common/ui/GradientCard";
-import { SectionTitle } from "../../common/ui/SectionTitle";
+import { SectionTitle } from "../../features/rules/SectionTitle";
 
 export default function WelcomeSection() {
   const { ref, inView } = useAnimation({ threshold: 0.2 });

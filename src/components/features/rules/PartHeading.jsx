@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useAnimation } from "../../../hooks/useAnimation";
-import { GradientCard } from "./GradientCard";
+import { GradientCard } from "../../common/ui/GradientCard";
 
 /**
  * Component for part section headings in the rules page

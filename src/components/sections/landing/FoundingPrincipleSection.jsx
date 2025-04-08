@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useAnimation } from "../../../hooks/useAnimation";
 import { fadeInVariants } from "../../../constants/animations";
 import { GradientCard } from "../../common/ui/GradientCard";
-import { SectionTitle } from "../../common/ui/SectionTitle";
+import { SectionTitle } from "../../features/rules/SectionTitle";
 
 export default function FoundingPrincipleSection() {
   const { ref, inView } = useAnimation({ threshold: 0.2 });
