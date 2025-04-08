@@ -4,7 +4,7 @@ import { useInView } from "react-intersection-observer";
 export function useAnimation(options = {}) {
   const { 
     triggerOnce = true, 
-    threshold = 0.2,
+    threshold = 0.1,
     rootMargin = "0px" 
   } = options;
   
