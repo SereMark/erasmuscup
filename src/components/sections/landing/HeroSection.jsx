@@ -47,11 +47,11 @@ export default function HeroSection({ y }) {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="flex flex-col sm:flex-row gap-4 items-center justify-center"
           >
-            <PrimaryButton to="/leaderboard">
-              Check Leaderboard
+            <PrimaryButton to="/events">
+              Join the Competition
             </PrimaryButton>
-            <SecondaryButton to="/housecup-rules">
-              Read the Full Rules
+            <SecondaryButton to="/leaderboard">
+              Check Leaderboard
             </SecondaryButton>
           </motion.div>
         </motion.div>
