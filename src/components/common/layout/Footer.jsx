@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaInstagram, FaFacebook, FaEnvelope, FaGithub } from "react-icons/fa";
+import { FaInstagram, FaEnvelope, FaGithub } from "react-icons/fa";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -115,18 +115,6 @@ function SocialLinks() {
       href: "https://www.instagram.com/house_cup_erasmus/",
       icon: <FaInstagram size={20} />,
       hoverColor: "hover:text-pink-400"
-    },
-    {
-      name: "Facebook",
-      href: "#",
-      icon: <FaFacebook size={20} />,
-      hoverColor: "hover:text-blue-400"
-    },
-    {
-      name: "Email",
-      href: "mailto:housecup2025@example.com",
-      icon: <FaEnvelope size={20} />,
-      hoverColor: "hover:text-green-400"
     },
     {
       name: "GitHub",
