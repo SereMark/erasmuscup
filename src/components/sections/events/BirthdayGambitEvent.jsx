@@ -24,7 +24,7 @@ export default function BirthdayGambitEvent() {
     >
       <div className="prose prose-invert prose-sm sm:prose-base max-w-none">
         <p className="text-gray-300 mb-4">
-          This Friday is Marco's birthday and he's organizing a Special Secret Gambit at Pleschingersee (weather permitting).
+          This Friday is Marco's birthday and he's organizing a Special Secret Gambit at Pleschinger See.
           Celebrate his birthday with House Cup challenges, favorite snacks to share, and a Buffalo-free evening
           (at least from the birthday boy)!
         </p>
@@ -38,7 +38,7 @@ export default function BirthdayGambitEvent() {
           <EventInfoItem 
             icon="location"
             label="Where:"
-            value="Pleschingersee"
+            value="Pleschinger See"
           />
           <EventInfoItem 
             icon="info"
