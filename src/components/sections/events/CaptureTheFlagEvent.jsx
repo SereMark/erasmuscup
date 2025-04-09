@@ -5,11 +5,16 @@ import EventInfoItem from "../../features/events/EventInfoItem";
 import EventNote from "../../features/events/EventNote";
 import EventPointsSystem from "../../features/events/EventPointsSystem";
 import EventRule from "../../features/events/EventRule";
-import { captureFlagEventData } from "../../../constants/eventData";
+import { 
+  captureFlagEventData, 
+  isEventActive, 
+  getActivePhase,
+  getEventStatus 
+} from "../../../constants/eventData";
 import { motion } from "framer-motion";
 
 // Component for the pulsing LIVE badge
-const LiveBadge = () => (
+const LiveBadge = ({ phaseName }) => (
   <motion.div
     animate={{ 
       scale: [1, 1.1, 1],
@@ -23,7 +28,7 @@ const LiveBadge = () => (
     className="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center space-x-1 ml-3"
   >
     <span className="h-2 w-2 bg-white rounded-full block"></span>
-    <span>LIVE</span>
+    <span>{phaseName || "LIVE"}</span>
   </motion.div>
 );
 
@@ -41,35 +46,40 @@ const eventIcons = {
   )
 };
 
-// Calculate time remaining in the hunt
-const useTimeRemaining = () => {
+// Calculate time remaining for the active phase or event
+const useTimeRemaining = (event) => {
   const [timeRemaining, setTimeRemaining] = React.useState("");
   
   React.useEffect(() => {
-    // Set end time to Friday 23:59
     const calculateTimeRemaining = () => {
       const now = new Date();
-      const endDate = new Date();
       
-      // Set to next Friday 23:59
-      const dayOfWeek = now.getDay(); // 0 is Sunday, 5 is Friday
-      const daysToFriday = dayOfWeek <= 5 ? 5 - dayOfWeek : 7 - dayOfWeek + 5;
+      // Check if the event is active
+      if (!isEventActive(event)) {
+        return "Event not active";
+      }
       
-      endDate.setDate(now.getDate() + daysToFriday);
-      endDate.setHours(23, 59, 0, 0);
+      // Get end time from active phase or overall event
+      const activePhase = getActivePhase(event);
+      const endDate = activePhase ? activePhase.endTime : event.endTime;
       
       // Calculate the time difference
       const diff = endDate - now;
       
-      // Convert to hours and minutes
-      const hours = Math.floor(diff / (1000 * 60 * 60));
+      // Convert to days, hours, and minutes
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       
       if (diff <= 0) {
-        return "Hunt ended!";
+        return "Phase ended!";
       }
       
-      return `${hours}h ${minutes}m remaining`;
+      let timeString = "";
+      if (days > 0) {
+        timeString += `${days}d `;
+      }
+      return `${timeString}${hours}h ${minutes}m remaining`;
     };
     
     // Update time remaining every minute
@@ -81,7 +91,7 @@ const useTimeRemaining = () => {
     setTimeRemaining(calculateTimeRemaining());
     
     return () => clearInterval(timer);
-  }, []);
+  }, [event]);
   
   return timeRemaining;
 };
@@ -91,8 +101,6 @@ export default function CaptureTheFlagEvent() {
     type,
     typeColor,
     typeTextColor,
-    status,
-    date,
     title,
     gradient,
     gradientText,
@@ -107,15 +115,41 @@ export default function CaptureTheFlagEvent() {
     organizer
   } = captureFlagEventData;
   
-  const timeRemaining = useTimeRemaining();
-  const isLive = status === "LIVE";
+  // Get dynamic event data
+  const eventStatus = getEventStatus(captureFlagEventData);
+  const activePhase = getActivePhase(captureFlagEventData);
+  const timeRemaining = useTimeRemaining(captureFlagEventData);
+  const isLive = eventStatus === "LIVE";
+  
+  // Dynamically determine the display date
+  const getDisplayDate = () => {
+    if (isLive && activePhase) {
+      return `${activePhase.name} Active!`;
+    } else if (eventStatus === "UPCOMING") {
+      return "Coming Soon";
+    } else {
+      return "Event Completed";
+    }
+  };
+  
+  // Get badge label for the active phase
+  const getLiveBadgeLabel = () => {
+    if (activePhase) {
+      if (activePhase.name === "Setup Phase") {
+        return "SETUP";
+      } else if (activePhase.name === "Hunt Phase") {
+        return "HUNT";
+      }
+    }
+    return "LIVE";
+  };
   
   return (
     <EventCard
       type={type}
       typeColor={typeColor}
       typeTextColor={typeTextColor}
-      date={date}
+      date={getDisplayDate()}
       title={title}
       gradient={gradient}
       gradientText={gradientText}
@@ -127,7 +161,7 @@ export default function CaptureTheFlagEvent() {
       <div className="prose prose-invert prose-sm sm:prose-base max-w-none">
         {isLive && (
           <div className="flex items-center mb-4">
-            <LiveBadge />
+            <LiveBadge phaseName={getLiveBadgeLabel()} />
             <div className="ml-3 text-sm font-medium text-indigo-300">
               {timeRemaining}
             </div>
@@ -139,15 +173,22 @@ export default function CaptureTheFlagEvent() {
         </p>
         
         <EventDetails title="Event Schedule:">
-          {schedule.map((item, index) => (
-            <EventInfoItem 
-              key={index}
-              icon={item.icon}
-              label={item.label}
-              value={item.value}
-              isActive={item.isActive}
-            />
-          ))}
+          {schedule.map((item, index) => {
+            // Determine if this schedule item is active based on phases
+            const isActive = 
+              activePhase && 
+              activePhase.label === item.label;
+              
+            return (
+              <EventInfoItem 
+                key={index}
+                icon={item.icon}
+                label={item.label}
+                value={item.value}
+                isActive={isActive}
+              />
+            );
+          })}
         </EventDetails>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4">
@@ -190,9 +231,9 @@ export default function CaptureTheFlagEvent() {
         <div className="text-gray-400 text-xs italic">
           <span>Event organized by {organizer}</span>
         </div>
-        {isLive && (
+        {isLive && activePhase && (
           <div className="bg-indigo-900/20 text-indigo-300 px-3 py-1 rounded text-xs font-medium">
-            Hunt phase active
+            {activePhase.name} active
           </div>
         )}
       </div>

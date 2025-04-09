@@ -1,9 +1,73 @@
+// Helper function to create event dates
+function createEventDate(dayOffset, hour, minute) {
+  const date = new Date();
+  date.setDate(date.getDate() + dayOffset);
+  date.setHours(hour, minute, 0, 0);
+  return date;
+}
+
+// Create date objects for the event phases
+// Setup phase: Monday midnight to Wednesday 23:59
+const setupPhaseStart = createEventDate(-((new Date().getDay() - 1) % 7), 0, 0); // Previous Monday 00:00
+const setupPhaseEnd = createEventDate(-((new Date().getDay() - 3) % 7), 23, 59); // Wednesday 23:59
+
+// Hunt phase: Thursday midnight to Friday 23:59
+const huntPhaseStart = createEventDate(-((new Date().getDay() - 4) % 7), 0, 0); // Thursday 00:00
+const huntPhaseEnd = createEventDate(-((new Date().getDay() - 5) % 7), 23, 59); // Friday 23:59
+
 export const captureFlagEventData = {
     type: "MAIN EVENT",
     typeColor: "bg-purple-600/20",
     typeTextColor: "text-purple-300",
-    status: "LIVE",
-    date: "Hunt Phase Active!",
+    // Priority for this event (higher number = higher priority)
+    priority: 5,
+    // The status is dynamic now, but we keep this for backward compatibility and because I'm lazy
+    status: "UPCOMING", // This will be overridden by dynamic status
+    // Start and end times for the entire event
+    startTime: setupPhaseStart,
+    endTime: huntPhaseEnd,
+    
+    // Event phases with their own start and end times
+    phases: [
+      {
+        name: "Setup Phase",
+        startTime: setupPhaseStart,
+        endTime: setupPhaseEnd,
+        icon: "time",
+        label: "Set-up:",
+        value: "Monday midnight to Wednesday 23:59",
+        // Hero texts specific to the setup phase
+        heroTexts: {
+          title: "Setup Phase in Progress",
+          message: "The Capture the Flag setup phase is active! Houses are currently hiding their flags before the hunt begins.",
+          badgeText: "Setup Phase Active! 🚩"
+        }
+      },
+      {
+        name: "Hunt Phase",
+        startTime: huntPhaseStart,
+        endTime: huntPhaseEnd,
+        icon: "time",
+        label: "Hunt:",
+        value: "Thursday midnight to Friday 23:59",
+        // Hero texts specific to the hunt phase
+        heroTexts: {
+          title: "Active Events & Challenges",
+          message: "The Capture the Flag hunt is in progress! Find other houses' flags to earn points for your house.",
+          badgeText: "The Hunt is on! 🏁"
+        }
+      }
+    ],
+    
+    // Default hero texts (used if no phase is active or as fallback)
+    heroTexts: {
+      title: "Active Events & Challenges",
+      message: "The Capture the Flag event is in progress! Check the current phase to see what you should be doing.",
+      badgeText: "Event Active! 🚩"
+    },
+    
+    // Display date that will be dynamically determined
+    date: "Event Active!",
     title: "Capture the Flag Easter Hunt",
     gradient: "from-purple-800 to-indigo-900",
     gradientText: "from-indigo-300 to-purple-300",
@@ -22,7 +86,7 @@ export const captureFlagEventData = {
         icon: "time",
         label: "Hunt:",
         value: "Thursday midnight to Friday 23:59",
-        isActive: true
+        isActive: false
       }
     ],
     notes: [

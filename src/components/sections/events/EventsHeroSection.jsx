@@ -1,10 +1,50 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { getActiveEvents } from "../../../constants/eventData";
+import { 
+  getActiveEvents, 
+  getUpcomingEvents, 
+  getEventHeroTexts 
+} from "../../../constants/eventData";
 
 export default function EventsHeroSection() {
-  const activeEvents = getActiveEvents();
+  // Get events status dynamically
+  const [activeEvents, setActiveEvents] = React.useState([]);
+  const [upcomingEvents, setUpcomingEvents] = React.useState([]);
+  
+  // Update event statuses at regular intervals
+  React.useEffect(() => {
+    const updateEventStatuses = () => {
+      setActiveEvents(getActiveEvents());
+      setUpcomingEvents(getUpcomingEvents());
+    };
+    
+    // Update immediately
+    updateEventStatuses();
+    
+    // Update every minute to check for status changes
+    const intervalId = setInterval(updateEventStatuses, 60000);
+    
+    return () => clearInterval(intervalId);
+  }, []);
+  
   const hasActiveEvents = activeEvents.length > 0;
+  
+  // Get hero texts for the most important active event (first in the list)
+  const getHeroTexts = () => {
+    if (hasActiveEvents) {
+      const primaryEvent = activeEvents[0];
+      return getEventHeroTexts(primaryEvent);
+    }
+    
+    return {
+      title: "Upcoming Trials & Challenges",
+      message: "Ready to earn glory for your House? These events will test your loyalty, cunning, and dignity.",
+      badgeText: null // No badge for upcoming events
+    };
+  };
+  
+  // Get hero texts
+  const heroTexts = getHeroTexts();
   
   return (
     <div className="relative w-full h-[25vh] sm:h-[30vh] overflow-hidden">
@@ -32,14 +72,12 @@ export default function EventsHeroSection() {
           className="px-4 sm:px-6 max-w-3xl text-center backdrop-blur-sm bg-black/20 p-4 sm:p-6 rounded-2xl border border-white/10"
         >
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight mb-2 sm:mb-3 text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400 drop-shadow-lg">
-            {hasActiveEvents ? "Active Events & Challenges" : "Upcoming Trials & Challenges"}
+            {heroTexts.title}
           </h1>
           <p className="text-sm sm:text-base font-light text-gray-200 leading-relaxed">
-            {hasActiveEvents 
-              ? "The Capture the Flag hunt is in progress! Find other houses' flags to earn points for your house."
-              : "Ready to earn glory for your House? These events will test your loyalty, cunning, and dignity."}
+            {heroTexts.message}
           </p>
-          {hasActiveEvents && (
+          {hasActiveEvents && heroTexts.badgeText && (
             <motion.div
               animate={{ 
                 scale: [1, 1.05, 1],
@@ -52,7 +90,7 @@ export default function EventsHeroSection() {
               className="mt-4"
             >
               <span className="inline-block bg-red-600/70 text-white px-4 py-2 rounded-full text-sm font-medium">
-                The Hunt is on! 🏁
+                {heroTexts.badgeText}
               </span>
             </motion.div>
           )}
