@@ -7,8 +7,9 @@ import React from "react";
  * @param {string} props.icon - Icon type (time, location, info, bring)
  * @param {string} props.label - Item label
  * @param {string} props.value - Item value
+ * @param {boolean} props.isActive - Whether this item is active/current
  */
-export default function EventInfoItem({ icon, label, value }) {
+export default function EventInfoItem({ icon, label, value, isActive = false }) {
   // Icons mapping
   const icons = {
     time: (
@@ -35,11 +36,18 @@ export default function EventInfoItem({ icon, label, value }) {
   };
   
   return (
-    <li className="flex items-start">
+    <li className={`flex items-start ${isActive ? 'bg-indigo-800/30 p-2 rounded-lg -ml-2' : ''}`}>
       <span className="flex-shrink-0 mr-2 mt-0.5">
         {icons[icon]}
       </span>
-      <span><strong className="text-white">{label}</strong> {value}</span>
+      <span>
+        <strong className="text-white">{label}</strong> {value}
+        {isActive && (
+          <span className="ml-2 inline-block px-2 py-0.5 bg-indigo-600/50 text-indigo-200 text-xs rounded-full">
+            Current
+          </span>
+        )}
+      </span>
     </li>
   );
 }
