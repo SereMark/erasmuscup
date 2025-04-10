@@ -47,7 +47,7 @@ export const birthdayGambitEventData = {
       {
         icon: "time",
         label: "When:",
-        value: "Friday evening (6:00 PM - 11:00 PM)"
+        value: "Friday 11th, 3:00 PM"
       },
       {
         icon: "location",
