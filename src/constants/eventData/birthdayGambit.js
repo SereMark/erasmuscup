@@ -12,7 +12,7 @@ function getNextFriday() {
 // Set event times for "This Friday"
 const eventDate = getNextFriday();
 const eventStartTime = new Date(eventDate);
-eventStartTime.setHours(18, 0, 0, 0); // 6:00 PM
+eventStartTime.setHours(15, 0, 0, 0); // 3:00 PM
 
 const eventEndTime = new Date(eventDate);
 eventEndTime.setHours(23, 0, 0, 0); // 11:00 PM
