@@ -65,13 +65,14 @@ export default function Navbar() {
           <NavToggle open={open} setOpen={setOpen} />
           <DesktopNav location={location} navItemsRef={navItemsRef} />
         </div>
-        <MobileNav open={open} setOpen={setOpen} location={location} />
       </motion.header>
       <div
         className={`transition-all duration-300 ${
           scrolled ? "h-14 sm:h-16" : "h-16 sm:h-20"
         }`}
       />
+      
+      <MobileNav open={open} setOpen={setOpen} location={location} />
     </>
   );
 }
