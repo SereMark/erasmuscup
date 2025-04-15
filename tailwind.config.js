@@ -187,11 +187,40 @@ module.exports = {
       borderRadius: {
         "4xl": "2rem",
       },
+      height: {
+        screen: "100vh",
+        "screen-small": "100svh",
+        "dynamic-screen": "calc(var(--vh, 1vh) * 100)",
+      },
+      minHeight: {
+        screen: "100vh",
+        "screen-small": "100svh",
+        "dynamic-screen": "calc(var(--vh, 1vh) * 100)",
+      },
+      maxWidth: {
+        "8xl": "90rem",
+        "9xl": "100rem",
+        "content-sm": "640px",
+        "content-md": "768px",
+        "content-lg": "1024px",
+      },
+      spacing: {
+        'safe-top': 'env(safe-area-inset-top)',
+        'safe-bottom': 'env(safe-area-inset-bottom)',
+        'safe-left': 'env(safe-area-inset-left)',
+        'safe-right': 'env(safe-area-inset-right)',
+      },
     },
   },
   plugins: [
     require("tailwind-scrollbar-hide"),
-    function ({ addUtilities, theme }) {
+    function ({ addUtilities, theme, addBase }) {
+      addBase({
+        ':root': {
+          '--vh': '1vh',
+        },
+      });
+      
       const newUtilities = {
         ".text-shadow": {
           "text-shadow": "0 2px 4px rgba(0,0,0,0.1)",
@@ -246,6 +275,10 @@ module.exports = {
         ".scrollbar-thin::-webkit-scrollbar": {
           width: "6px",
           height: "6px",
+          "@media (max-width: 768px)": {
+            width: "4px",
+            height: "4px",
+          },
         },
         ".scrollbar-thin::-webkit-scrollbar-track": {
           backgroundColor: "rgba(0,0,0,0.1)",
@@ -272,6 +305,10 @@ module.exports = {
           position: "relative",
           overflow: "hidden",
           "border-radius": "1rem",
+          "@media (max-width: 640px)": {
+            "max-width": "100%",
+            "overflow-wrap": "break-word",
+          },
         },
         ".house-theHoo": {
           background: "var(--gradient-house-theHoo)",
@@ -336,6 +373,28 @@ module.exports = {
         },
         ".border-house-deepJungle": {
           borderColor: "var(--color-house-deepJungle-500)",
+        },
+        ".mobile-safe-padding": {
+          "padding-top": "env(safe-area-inset-top)",
+          "padding-bottom": "env(safe-area-inset-bottom)",
+          "padding-left": "env(safe-area-inset-left)",
+          "padding-right": "env(safe-area-inset-right)",
+        },
+        ".break-words-mobile": {
+          "@media (max-width: 640px)": {
+            "overflow-wrap": "break-word",
+            "word-wrap": "break-word",
+            "word-break": "break-word",
+            "hyphens": "auto",
+          },
+        },
+        ".min-h-dynamic-screen": {
+          "min-height": "100vh",
+          "min-height": "calc(var(--vh, 1vh) * 100)",
+        },
+        ".h-dynamic-screen": {
+          "height": "100vh",
+          "height": "calc(var(--vh, 1vh) * 100)",
         },
       };
       addUtilities(newUtilities, ["responsive", "hover"]);

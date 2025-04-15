@@ -30,12 +30,15 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!open) return;
+    
     const handleKeyDown = (e) => {
       if (e.key === "Escape") setOpen(false);
     };
+    
     const handleClickOutside = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) setOpen(false);
     };
+    
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("mousedown", handleClickOutside);
     document.body.style.overflow = "hidden";
@@ -57,7 +60,7 @@ export default function Navbar() {
         className={`fixed w-full z-50 transition-all duration-300 ${
           scrolled
             ? "py-2 bg-dark-950/90 backdrop-blur-md shadow-md"
-            : "py-4 bg-dark-950/20 backdrop-blur-sm"
+            : "py-3 sm:py-4 bg-dark-950/20 backdrop-blur-sm"
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between">
@@ -66,9 +69,10 @@ export default function Navbar() {
           <DesktopNav location={location} navItemsRef={navItemsRef} />
         </div>
       </motion.header>
+      
       <div
         className={`transition-all duration-300 ${
-          scrolled ? "h-14 sm:h-16" : "h-16 sm:h-20"
+          scrolled ? "h-12 sm:h-14 md:h-16" : "h-14 sm:h-16 md:h-20"
         }`}
       />
       
@@ -81,7 +85,7 @@ function NavBrand({ setOpen }) {
   return (
     <Link
       to="/"
-      className="group flex items-center space-x-3"
+      className="group flex items-center space-x-2 sm:space-x-3"
       onClick={() => setOpen(false)}
       aria-label="House Cup Home"
     >
@@ -95,12 +99,12 @@ function NavBrand({ setOpen }) {
         <img
           src="/assets/logos/house-cup-logo.png"
           alt="House Cup Logo"
-          className="h-9 w-auto relative z-10"
+          className="h-8 sm:h-9 w-auto relative z-10"
           loading="eager"
         />
       </motion.div>
       <div className="flex flex-col">
-        <span className="font-bold text-lg xs:text-xl sm:text-2xl tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-300">
+        <span className="font-bold text-base xs:text-lg sm:text-xl md:text-2xl tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-300">
           House Cup
         </span>
         <span className="text-xs text-gray-400 -mt-1 hidden sm:block">
@@ -125,7 +129,7 @@ function NavToggle({ open, setOpen }) {
         variants={{ open: { rotate: 180 }, closed: { rotate: 0 } }}
         transition={{ duration: 0.3 }}
       >
-        {open ? <FaTimes size={24} /> : <FaBars size={24} />}
+        {open ? <FaTimes size={22} /> : <FaBars size={22} />}
       </motion.div>
     </motion.button>
   );
@@ -247,6 +251,7 @@ function MobileNav({ open, setOpen, location }) {
             className="fixed inset-0 bg-dark-950/80 backdrop-blur-sm z-40 md:hidden"
             onClick={() => setOpen(false)}
           />
+          
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -264,6 +269,7 @@ function MobileNav({ open, setOpen, location }) {
                 <FaTimes size={20} />
               </button>
             </div>
+            
             <nav className="p-4">
               <ul className="space-y-2">
                 {NAV_LINKS.map((link, index) => {
@@ -298,7 +304,8 @@ function MobileNav({ open, setOpen, location }) {
                   );
                 })}
               </ul>
-              <div className="mt-8 border-t border-brand-900/30 pt-6">
+              
+              <div className="mt-6 border-t border-brand-900/30 pt-6">
                 <h3 className="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wider">
                   Connect with us
                 </h3>

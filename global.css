@@ -6,6 +6,7 @@
   :root {
     --scroll-behavior: smooth;
     scroll-behavior: smooth;
+    --vh: 1vh;
   }
   html {
     font-size: 15px;
@@ -40,6 +41,12 @@
     width: 8px;
     height: 8px;
   }
+  @media (max-width: 768px) {
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+  }
   ::-webkit-scrollbar-track {
     @apply bg-dark-950;
   }
@@ -52,30 +59,38 @@
   ::selection {
     @apply bg-brand-500/30 text-white;
   }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply font-display leading-relaxed pb-1;
-}
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display leading-relaxed pb-1;
+  }
 
-.section-title,
-h1,
-h2.text-xl,
-h2.text-2xl,
-h2.text-3xl,
-h2.text-4xl,
-h3.text-xl,
-h3.text-2xl {
-  @apply leading-loose pb-2 mb-1;
-}
+  .section-title,
+  h1,
+  h2.text-xl,
+  h2.text-2xl,
+  h2.text-3xl,
+  h2.text-4xl,
+  h3.text-xl,
+  h3.text-2xl {
+    @apply leading-loose pb-2 mb-1;
+  }
   strong {
     @apply font-semibold;
   }
   button {
     @apply focus:outline-none;
+  }
+  @media (max-width: 640px) {
+    h1, h2, h3, h4, h5, h6, p, a, span, div, li {
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+    }
   }
 }
 
@@ -501,4 +516,37 @@ h3.text-2xl {
 }
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.15);
+}
+
+.min-h-screen {
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+@media (max-width: 768px) {
+  .fixed.top-0.right-0.h-full {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+  .text-balance {
+    text-wrap: balance;
+    hyphens: auto;
+  }
+  
+  p, li, .text-sm {
+    word-break: break-word;
+  }
+  
+  .glass-card {
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
 }
