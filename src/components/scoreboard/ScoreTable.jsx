@@ -46,30 +46,30 @@ export default function ScoreTable({ scores, houses, housesFilter }) {
       className="container mx-auto px-4 sm:px-6 lg:px-8 py-8"
     >
       <div className="glass-card overflow-hidden border border-brand-900/30">
-        <div className="overflow-x-auto scrollbar-thin">
-          <table className="min-w-full divide-y divide-white/10">
+        <div className="w-full overflow-x-auto scrollbar-thin">
+          <table className="min-w-full divide-y divide-white/10 table-fixed md:table-auto">
             <thead>
               <motion.tr variants={rowVariants} className="bg-dark-800/70">
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Event</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Date</th>
+                <th className="px-3 py-3 sm:px-6 sm:py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider w-32 sm:w-auto">Event</th>
+                <th className="px-3 py-3 sm:px-6 sm:py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider w-24 sm:w-auto">Date</th>
                 {filteredHouses.map(house => (
                   <th
                     key={house.key}
-                    className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-house-${house.key}`}
+                    className={`px-3 py-3 sm:px-6 sm:py-4 text-left text-xs font-medium uppercase tracking-wider text-house-${house.key} w-24 sm:w-auto`}
                   >
-                    <div className="flex items-center gap-2">
-                      <div className="w-5 h-5 rounded-full overflow-hidden bg-dark-800 flex-shrink-0 border border-white/10">
+                    <div className="flex items-center gap-1 sm:gap-2">
+                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full overflow-hidden bg-dark-800 flex-shrink-0 border border-white/10">
                         <img
                           src={house.logo}
                           alt={house.name}
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <span>{house.name}</span>
+                      <span className="truncate">{house.name}</span>
                     </div>
                   </th>
                 ))}
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Type</th>
+                <th className="px-3 py-3 sm:px-6 sm:py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider w-24 sm:w-auto">Type</th>
               </motion.tr>
             </thead>
             <tbody className="divide-y divide-white/5">
@@ -83,21 +83,21 @@ export default function ScoreTable({ scores, houses, housesFilter }) {
                       : "hover:bg-dark-800/30"
                   } transition-colors duration-200`}
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-3 py-3 sm:px-6 sm:py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-white">{event.eventName}</div>
                     {event.type === "adjustment" && (
                       <div className="text-xs text-brand-400">Point Adjustment</div>
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-400 font-mono">{event.date}</div>
+                  <td className="px-3 py-3 sm:px-6 sm:py-4 whitespace-nowrap">
+                    <div className="text-xs sm:text-sm text-gray-400 font-mono">{event.date}</div>
                   </td>
                   {filteredHouses.map(house => (
-                    <td key={house.key} className="px-6 py-4 whitespace-nowrap">
+                    <td key={house.key} className="px-3 py-3 sm:px-6 sm:py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <span className="mr-2">{getPointTrendIcon(event.points[house.key])}</span>
+                        <span className="mr-1 sm:mr-2">{getPointTrendIcon(event.points[house.key])}</span>
                         <span
-                          className={`text-sm ${
+                          className={`text-xs sm:text-sm ${
                             event.points[house.key] > 0
                               ? `text-house-${house.key}`
                               : event.points[house.key] < 0
@@ -115,8 +115,8 @@ export default function ScoreTable({ scores, houses, housesFilter }) {
                       </div>
                     </td>
                   ))}
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-dark-800/50 text-gray-300 border border-white/10">
+                  <td className="px-3 py-3 sm:px-6 sm:py-4 whitespace-nowrap">
+                    <div className="inline-flex px-2 py-1 sm:px-2.5 sm:py-1 rounded-full text-xs font-medium bg-dark-800/50 text-gray-300 border border-white/10">
                       {event.type === "adjustment" ? "Adjustment" : "Competition"}
                     </div>
                   </td>
@@ -128,21 +128,21 @@ export default function ScoreTable({ scores, houses, housesFilter }) {
                   variants={rowVariants}
                   className="bg-gradient-to-r from-brand-900/30 to-dark-800/80 border-t-2 border-white/10 font-bold"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-lg font-bold text-white">{total.eventName}</div>
+                  <td className="px-3 py-3 sm:px-6 sm:py-4 whitespace-nowrap">
+                    <div className="text-base sm:text-lg font-bold text-white">{total.eventName}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-400 font-mono">Current</div>
+                  <td className="px-3 py-3 sm:px-6 sm:py-4 whitespace-nowrap">
+                    <div className="text-xs sm:text-sm text-gray-400 font-mono">Current</div>
                   </td>
                   {filteredHouses.map(house => (
-                    <td key={house.key} className="px-6 py-4 whitespace-nowrap">
-                      <div className={`text-lg font-bold text-house-${house.key}`}>
+                    <td key={house.key} className="px-3 py-3 sm:px-6 sm:py-4 whitespace-nowrap">
+                      <div className={`text-base sm:text-lg font-bold text-house-${house.key}`}>
                         {total.points[house.key] || 0}
                       </div>
                     </td>
                   ))}
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-brand-900/30 text-brand-300 border border-brand-800/30">
+                  <td className="px-3 py-3 sm:px-6 sm:py-4 whitespace-nowrap">
+                    <div className="inline-flex px-2 py-1 sm:px-2.5 sm:py-1 rounded-full text-xs font-medium bg-brand-900/30 text-brand-300 border border-brand-800/30">
                       Final Total
                     </div>
                   </td>

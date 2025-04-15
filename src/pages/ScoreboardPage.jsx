@@ -12,11 +12,28 @@ export default function ScoreboardPage() {
   useEffect(() => {
     document.title = "House Cup 2025 | Scoreboard"
   }, [])
-  const [currentView, setCurrentView] = useState(scoreboardData.config.defaultViewMode || "table")
+  
+  const [currentView, setCurrentView] = useState(() => {
+    const isMobile = window.innerWidth < 768
+    return isMobile ? "cards" : (scoreboardData.config.defaultViewMode || "table")
+  })
+  
   const [housesFilter, setHousesFilter] = useState(scoreboardData.houses.map(h => h.key))
 
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 768
+      if (isMobile && currentView === "table") {
+        setCurrentView("cards")
+      }
+    }
+    
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [currentView])
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-dark-950">
       <ScoreboardHero
         data={scoreboardData.heroSection}
         houses={scoreboardData.houses}

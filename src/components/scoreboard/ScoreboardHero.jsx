@@ -51,20 +51,20 @@ export default function ScoreboardHero({ data, houses, scores }) {
       <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center text-center">
         <motion.div initial="hidden" animate="visible" className="space-y-6 w-full">
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-200 text-shadow-md"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-200 text-shadow-md"
             variants={titleVariants}
           >
             {data.title}
           </motion.h1>
           <motion.p
-            className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto"
+            className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto"
             variants={subtitleVariants}
           >
             {data.subtitle}
           </motion.p>
           {standings.length > 0 && (
             <motion.div
-              className="mt-12 flex flex-wrap justify-center gap-8"
+              className="mt-8 sm:mt-12 flex flex-wrap justify-center gap-4 sm:gap-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
@@ -80,7 +80,7 @@ export default function ScoreboardHero({ data, houses, scores }) {
                   className="relative pt-6 pl-6"
                 >
                   <div
-                    className={`absolute -top-2 -left-2 w-12 h-12 rounded-full flex items-center justify-center ring-4 ring-dark-900 ${
+                    className={`absolute -top-2 -left-2 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center ring-4 ring-dark-900 ${
                       i === 0
                         ? "bg-gradient-to-br from-yellow-300 to-yellow-500 text-dark-900 shadow-lg shadow-yellow-500/20"
                         : i === 1
@@ -91,7 +91,7 @@ export default function ScoreboardHero({ data, houses, scores }) {
                     {i === 0 ? <FaTrophy className="text-lg" /> : <span className="font-bold text-lg">{i + 1}</span>}
                   </div>
                   <div
-                    className={`glass-card py-4 px-6 flex items-center gap-6 ${
+                    className={`glass-card py-3 sm:py-4 px-4 sm:px-6 flex items-center gap-3 sm:gap-6 ${
                       i === 0
                         ? "border-2 border-accent-400/70 shadow-lg shadow-accent-500/20"
                         : i === 1
@@ -99,7 +99,7 @@ export default function ScoreboardHero({ data, houses, scores }) {
                           : "border-2 border-amber-700/30"
                     }`}
                   >
-                    <div className="w-12 h-12 rounded-full overflow-hidden bg-dark-800 flex-shrink-0 border-2 border-white/10">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-dark-800 flex-shrink-0 border-2 border-white/10">
                       <img
                         src={house.logo}
                         alt={`${house.name} logo`}
@@ -107,8 +107,8 @@ export default function ScoreboardHero({ data, houses, scores }) {
                       />
                     </div>
                     <div className="text-left">
-                      <div className="font-semibold text-white text-lg">{house.name}</div>
-                      <div className={`text-house-${house.key} font-mono font-medium`}>
+                      <div className="font-semibold text-white text-base sm:text-lg">{house.name}</div>
+                      <div className={`text-house-${house.key} font-mono font-medium text-sm sm:text-base`}>
                         {house.totalPoints} pts
                       </div>
                     </div>

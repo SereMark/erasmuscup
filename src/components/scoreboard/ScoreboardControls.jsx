@@ -49,10 +49,10 @@ export default function ScoreboardControls({
       animate="visible"
       className="container mx-auto px-4 sm:px-6 lg:px-8 py-6"
     >
-      <div className="glass-card p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-center gap-6 border border-brand-900/30">
+      <div className="glass-card p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
         <motion.div
           variants={itemVariants}
-          className="flex bg-dark-800/50 backdrop-blur-sm rounded-full p-1 border border-white/5 overflow-x-auto no-scrollbar"
+          className="flex w-full sm:w-auto bg-dark-800/50 backdrop-blur-sm rounded-full p-1 border border-white/5 overflow-x-auto no-scrollbar"
         >
           {config.viewOptions.map(view => (
             <button
@@ -65,7 +65,7 @@ export default function ScoreboardControls({
               }`}
             >
               <span className="mr-2">{viewIcons[view]}</span>
-              <span className="hidden sm:inline capitalize">{view} View</span>
+              <span className="capitalize">{view}</span>
             </button>
           ))}
         </motion.div>

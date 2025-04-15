@@ -148,14 +148,14 @@ export default function StatsView({ scores, houses, housesFilter }) {
       variants={containerVariants}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10"
+      className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 sm:space-y-10"
     >
       <motion.div
         variants={itemVariants}
-        className="glass-card p-6 border border-brand-900/30"
+        className="glass-card p-4 sm:p-6 border border-brand-900/30"
       >
-        <h3 className="text-xl font-bold text-white mb-6">Cumulative Score Progression</h3>
-        <div className="h-80">
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Cumulative Score Progression</h3>
+        <div className="h-64 sm:h-80">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={lineChartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
               <defs>
@@ -177,8 +177,12 @@ export default function StatsView({ scores, houses, housesFilter }) {
               <XAxis
                 dataKey="name"
                 stroke={chartTheme.axisStroke}
-                tick={{ fill: chartTheme.axisTickColor }}
+                tick={{ fill: chartTheme.axisTickColor, fontSize: 10 }}
                 axisLine={{ stroke: chartTheme.axisStroke }}
+                angle={-45}
+                textAnchor="end"
+                height={60}
+                interval={0}
               />
               <YAxis
                 stroke={chartTheme.axisStroke}
@@ -204,7 +208,7 @@ export default function StatsView({ scores, houses, housesFilter }) {
                   stroke={houseColors[house.key]}
                   fillOpacity={1}
                   fill={`url(#scoreboard-area-gradient-${house.key}-${index})`}
-                  activeDot={{ r: 8, strokeWidth: 0 }}
+                  activeDot={{ r: 6, strokeWidth: 0 }}
                   strokeWidth={2}
                 />
               ))}
@@ -212,20 +216,25 @@ export default function StatsView({ scores, houses, housesFilter }) {
           </ResponsiveContainer>
         </div>
       </motion.div>
+      
       <motion.div
         variants={itemVariants}
-        className="glass-card p-6 border border-brand-900/30"
+        className="glass-card p-4 sm:p-6 border border-brand-900/30"
       >
-        <h3 className="text-xl font-bold text-white mb-6">Event Performance Breakdown</h3>
-        <div className="h-80">
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Event Performance Breakdown</h3>
+        <div className="h-64 sm:h-80">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={barChartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.gridStroke} />
               <XAxis
                 dataKey="name"
                 stroke={chartTheme.axisStroke}
-                tick={{ fill: chartTheme.axisTickColor }}
+                tick={{ fill: chartTheme.axisTickColor, fontSize: 10 }}
                 axisLine={{ stroke: chartTheme.axisStroke }}
+                angle={-45}
+                textAnchor="end"
+                height={60}
+                interval={0}
               />
               <YAxis
                 stroke={chartTheme.axisStroke}
@@ -256,13 +265,14 @@ export default function StatsView({ scores, houses, housesFilter }) {
           </ResponsiveContainer>
         </div>
       </motion.div>
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <motion.div
           variants={itemVariants}
-          className="glass-card p-6 lg:col-span-2 border border-brand-900/30"
+          className="glass-card p-4 sm:p-6 border border-brand-900/30"
         >
-          <h3 className="text-xl font-bold text-white mb-6">Points Distribution</h3>
-          <div className="h-64">
+          <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Points Distribution</h3>
+          <div className="h-56 sm:h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -270,10 +280,11 @@ export default function StatsView({ scores, houses, housesFilter }) {
                   cx="50%"
                   cy="50%"
                   labelLine={{ stroke: "rgba(255,255,255,0.3)" }}
-                  outerRadius={80}
+                  outerRadius={70}
                   fill="#8884d8"
                   dataKey="value"
                   label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  labelStyle={{ fontSize: '12px' }}
                 >
                   {pieChartData.map((entry, index) => (
                     <Cell
@@ -296,12 +307,13 @@ export default function StatsView({ scores, houses, housesFilter }) {
             </ResponsiveContainer>
           </div>
         </motion.div>
+        
         <motion.div
           variants={itemVariants}
-          className="glass-card p-6 lg:col-span-2 border border-brand-900/30"
+          className="glass-card p-4 sm:p-6 border border-brand-900/30"
         >
-          <h3 className="text-xl font-bold text-white mb-6">Top Events by Points</h3>
-          <div className="h-64">
+          <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Top Events by Points</h3>
+          <div className="h-56 sm:h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 layout="vertical"
@@ -315,7 +327,7 @@ export default function StatsView({ scores, houses, housesFilter }) {
                     .sort((a, b) => b.totalPoints - a.totalPoints)
                     .slice(0, 5)
                 })()}
-                margin={{ top: 5, right: 30, left: 80, bottom: 5 }}
+                margin={{ top: 5, right: 30, left: 60, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.gridStroke} />
                 <XAxis
@@ -328,8 +340,8 @@ export default function StatsView({ scores, houses, housesFilter }) {
                   dataKey="name"
                   type="category"
                   stroke={chartTheme.axisStroke}
-                  tick={{ fill: chartTheme.axisTickColor }}
-                  width={80}
+                  tick={{ fill: chartTheme.axisTickColor, fontSize: 10 }}
+                  width={60}
                   axisLine={{ stroke: chartTheme.axisStroke }}
                 />
                 <Tooltip
@@ -360,12 +372,13 @@ export default function StatsView({ scores, houses, housesFilter }) {
           </div>
         </motion.div>
       </div>
+      
       <motion.div
         variants={itemVariants}
-        className="glass-card p-6 border border-brand-900/30"
+        className="glass-card p-4 sm:p-6 border border-brand-900/30"
       >
-        <h3 className="text-xl font-bold text-white mb-6">House Performance Trends</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">House Performance Trends</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {filteredHouses.map(house => {
             const trend = houseTrends[house.key]
             const wins = eventRankings[house.key]?.wins || 0
@@ -373,19 +386,19 @@ export default function StatsView({ scores, houses, housesFilter }) {
             return (
               <div
                 key={house.key}
-                className={`flex flex-col p-5 rounded-lg bg-house-${house.key}/5 border border-house-${house.key}/20`}
+                className={`flex flex-col p-3 sm:p-5 rounded-lg bg-house-${house.key}/5 border border-house-${house.key}/20`}
               >
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full overflow-hidden bg-dark-800 flex-shrink-0 border border-white/10">
+                <div className="flex items-center mb-3 sm:mb-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-dark-800 flex-shrink-0 border border-white/10">
                     <img
                       src={house.logo}
                       alt={house.name}
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="ml-4">
-                    <div className={`text-house-${house.key} font-medium text-lg`}>{house.name}</div>
-                    <div className="flex items-center text-sm bg-dark-900/50 px-2 py-1 rounded-full mt-1">
+                  <div className="ml-3 sm:ml-4">
+                    <div className={`text-house-${house.key} font-medium text-base sm:text-lg`}>{house.name}</div>
+                    <div className="flex items-center text-xs sm:text-sm bg-dark-900/50 px-2 py-1 rounded-full mt-1">
                       <span className="mr-1.5">{getTrendIcon(trend.direction)}</span>
                       <span
                         className={`${
@@ -402,7 +415,7 @@ export default function StatsView({ scores, houses, housesFilter }) {
                     </div>
                   </div>
                 </div>
-                <div className="mt-2 space-y-2 text-sm">
+                <div className="mt-2 space-y-2 text-xs sm:text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-400">Events Won:</span>
                     <span className="text-white">{wins} event{wins !== 1 ? 's' : ''}</span>
@@ -422,12 +435,13 @@ export default function StatsView({ scores, houses, housesFilter }) {
           })}
         </div>
       </motion.div>
+      
       <motion.div
         variants={itemVariants}
-        className="glass-card p-6 border border-brand-900/30"
+        className="glass-card p-4 sm:p-6 border border-brand-900/30"
       >
-        <h3 className="text-xl font-bold text-white mb-6">House Details</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">House Details</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {filteredHouses.map(house => {
             const regularEvents = scores.filter(s => !s.type)
             let bestEvent = { name: "None", points: 0 }
@@ -444,10 +458,10 @@ export default function StatsView({ scores, houses, housesFilter }) {
             return (
               <div
                 key={house.key}
-                className="flex flex-col h-full glass-card-inner p-6 bg-dark-900/50 border border-white/5 rounded-xl"
+                className="flex flex-col h-full glass-card-inner p-4 sm:p-6 bg-dark-900/50 border border-white/5 rounded-xl"
               >
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full overflow-hidden bg-dark-800 flex-shrink-0 border border-white/10 mr-3">
+                <div className="flex items-center mb-3 sm:mb-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-dark-800 flex-shrink-0 border border-white/10 mr-3">
                     <img
                       src={house.logo}
                       alt={house.name}
@@ -455,19 +469,19 @@ export default function StatsView({ scores, houses, housesFilter }) {
                     />
                   </div>
                   <div>
-                    <h4 className={`text-xl font-bold text-house-${house.key}`}>{house.name}</h4>
-                    <div className="text-sm text-gray-400">{house.animal}</div>
+                    <h4 className={`text-lg sm:text-xl font-bold text-house-${house.key}`}>{house.name}</h4>
+                    <div className="text-xs sm:text-sm text-gray-400">{house.animal}</div>
                   </div>
                 </div>
-                <div className="text-sm italic text-gray-300 mb-4 border-l-2 border-white/10 pl-3">
+                <div className="text-xs sm:text-sm italic text-gray-300 mb-3 sm:mb-4 border-l-2 border-white/10 pl-3">
                   "{house.motto}"
                 </div>
                 <div className="space-y-2 mt-auto pt-4 border-t border-white/10">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between text-xs sm:text-sm">
                     <span className="text-gray-400">Best Event:</span>
                     <span className="text-white font-medium">{bestEvent.name} ({bestEvent.points} pts)</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between text-xs sm:text-sm">
                     <span className="text-gray-400">Adjustments:</span>
                     <span className={`font-medium ${
                       adjustmentTotal > 0
@@ -479,9 +493,9 @@ export default function StatsView({ scores, houses, housesFilter }) {
                       {adjustmentTotal > 0 ? "+" : ""}{adjustmentTotal}
                     </span>
                   </div>
-                  <div className="flex justify-between pt-2 border-t border-white/5">
+                  <div className="flex justify-between pt-2 border-t border-white/5 text-sm sm:text-base">
                     <span className="text-gray-300 font-medium">Total Points:</span>
-                    <span className={`text-lg font-bold text-house-${house.key}`}>{totalPoints}</span>
+                    <span className={`text-base sm:text-lg font-bold text-house-${house.key}`}>{totalPoints}</span>
                   </div>
                 </div>
               </div>
