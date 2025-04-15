@@ -67,7 +67,10 @@ export default function TableOfContents({
               </div>
               <div className="p-4 border-b border-white/10">
                 <button
-                  onClick={() => setShowSearch(!showSearch)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowSearch(!showSearch);
+                  }}
                   className="w-full flex items-center justify-between py-2 px-3 rounded-md bg-dark-800/50 text-gray-300"
                 >
                   <div className="flex items-center">
@@ -98,13 +101,17 @@ export default function TableOfContents({
                           placeholder="Type to search..."
                           value={searchTerm}
                           onChange={handleSearchChange}
+                          onClick={(e) => e.stopPropagation()}
                           className="w-full px-4 py-2 pl-10 rounded-md bg-dark-800/80 border border-white/10 text-white text-sm placeholder-gray-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors focus:outline-none"
                           autoFocus
                         />
                         <FaSearch className="absolute left-3 top-2.5 text-gray-400" size={14} />
                         {searchTerm && (
                           <button
-                            onClick={clearSearch}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              clearSearch();
+                            }}
                             className="absolute right-3 top-2 text-gray-400 hover:text-gray-200"
                             aria-label="Clear search"
                           >
