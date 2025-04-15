@@ -60,7 +60,7 @@
       "description": "View upcoming House Cup events"
     },
     {
-      "name": "scoreboard",
+      "name": "Scores",
       "url": "/scoreboard",
       "description": "Check current house standings"
     },
