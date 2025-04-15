@@ -3,7 +3,7 @@ import { motion, useInView } from "framer-motion"
 
 export default function HousesSection({ data }) {
   const sectionRef = useRef(null)
-  const isInView = useInView(sectionRef, { once: false, amount: .2 })
+  const isInView = useInView(sectionRef, { once: false, amount: .15 })
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { when: "beforeChildren", staggerChildren: .2, delayChildren: .3 } }
@@ -31,13 +31,13 @@ export default function HousesSection({ data }) {
   }
 
   return (
-    <section ref={sectionRef} className="py-24 relative overflow-hidden">
+    <section ref={sectionRef} className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900/70 to-dark-950 -z-10" />
       <div className="absolute inset-0 overflow-hidden -z-10">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/assets/textures/noise.png')] bg-repeat opacity-5" /> {/* TODO */}
-        <div className="absolute top-0 left-1/4 w-[30rem] h-[30rem] bg-brand-500/10 rounded-full blur-[100px]" /> 
-        <div className="absolute bottom-1/4 right-1/3 w-[35rem] h-[35rem] bg-accent-500/10 rounded-full blur-[100px]" />
-        <div className="absolute top-1/2 left-1/2 w-[40rem] h-[40rem] bg-dark-700/10 rounded-full blur-[100px]" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/assets/textures/noise.png')] bg-repeat opacity-5" />
+        <div className="absolute top-0 left-1/4 w-[15rem] sm:w-[30rem] h-[15rem] sm:h-[30rem] bg-brand-500/10 rounded-full blur-[100px]" /> 
+        <div className="absolute bottom-1/4 right-1/3 w-[15rem] sm:w-[35rem] h-[15rem] sm:h-[35rem] bg-accent-500/10 rounded-full blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 w-[20rem] sm:w-[40rem] h-[20rem] sm:h-[40rem] bg-dark-700/10 rounded-full blur-[100px]" />
       </div>
       <motion.div
         variants={sectionVariants}
@@ -45,13 +45,13 @@ export default function HousesSection({ data }) {
         animate={isInView ? "visible" : "hidden"}
         className="container mx-auto px-4 sm:px-6 lg:px-8"
       >
-        <motion.div variants={titleVariants} className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-brand-500 mb-4">
+        <motion.div variants={titleVariants} className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-brand-500 mb-4">
             {data.title}
           </h2>
-          <p className="max-w-3xl mx-auto text-lg text-gray-300">{data.subtitle}</p>
+          <p className="max-w-3xl mx-auto text-base sm:text-lg text-gray-300">{data.subtitle}</p>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {data.houseList.map((house, i) => (
             <motion.div
               key={house.key}
@@ -61,9 +61,9 @@ export default function HousesSection({ data }) {
               className="relative group perspective"
             >
               <div className="relative preserve-3d transition-transform duration-500 group-hover:rotate-y-3 group-hover:scale-102">
-                <div className={`glass-card p-6 border-t-4 border-house-${house.key} bg-house-${house.key}/10 h-full min-h-[300px] flex flex-col`}>
-                  <div className="flex items-center space-x-4 mb-6">
-                    <div className="w-16 h-16 relative flex-shrink-0">
+                <div className={`glass-card p-4 sm:p-6 border-t-4 border-house-${house.key} bg-house-${house.key}/10 h-full min-h-[250px] sm:min-h-[300px] flex flex-col`}>
+                  <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 relative flex-shrink-0">
                       <motion.div
                         initial={{ opacity: 0, scale: .8 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -91,21 +91,21 @@ export default function HousesSection({ data }) {
                       </svg>
                     </div>
                     <div>
-                      <h3 className={`text-xl font-bold text-house-${house.key}`}>{house.name}</h3>
-                      {house.animal && <p className="text-sm text-gray-400">{house.animal}</p>}
+                      <h3 className={`text-lg sm:text-xl font-bold text-house-${house.key}`}>{house.name}</h3>
+                      {house.animal && <p className="text-xs sm:text-sm text-gray-400">{house.animal}</p>}
                     </div>
                   </div>
-                  <div className="space-y-3 flex-grow">
+                  <div className="space-y-2 sm:space-y-3 flex-grow text-sm sm:text-base">
                     {house.motto && (
-                      <div className="flex items-start">
-                        <span className="text-gray-400 w-24 flex-shrink-0">Motto:</span>
+                      <div className="flex items-start flex-col sm:flex-row">
+                        <span className="text-gray-400 w-full sm:w-24 flex-shrink-0 mb-1 sm:mb-0">Motto:</span>
                         <span className="text-white italic">{house.motto}</span>
                       </div>
                     )}
-                    {house.caption && <div className="text-xs text-gray-500 ml-24">{house.caption}</div>}
+                    {house.caption && <div className="text-xs text-gray-500 sm:ml-24">{house.caption}</div>}
                     {house.captain && (
-                      <div className="flex items-center">
-                        <span className="text-gray-400 w-24 flex-shrink-0">Captain:</span>
+                      <div className="flex items-start flex-col sm:flex-row">
+                        <span className="text-gray-400 w-full sm:w-24 flex-shrink-0 mb-1 sm:mb-0">Captain:</span>
                         <span className="text-white">{house.captain}</span>
                       </div>
                     )}

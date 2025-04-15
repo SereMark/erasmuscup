@@ -3,7 +3,7 @@ import { motion, useInView } from "framer-motion"
 
 export default function FeaturesSection({ data }) {
   const sectionRef = useRef(null)
-  const isInView = useInView(sectionRef, { once: false, amount: .2 })
+  const isInView = useInView(sectionRef, { once: false, amount: .15 })
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { when: "beforeChildren", staggerChildren: .2 } }
@@ -24,11 +24,11 @@ export default function FeaturesSection({ data }) {
   }
 
   return (
-    <section ref={sectionRef} className="py-24 relative overflow-hidden">
+    <section ref={sectionRef} className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <div className="absolute w-full h-[500px] bg-gradient-to-b from-dark-900/0 via-brand-900/5 to-dark-900/0" />
-        <div className="absolute top-1/3 left-0 w-[25rem] h-[25rem] bg-brand-500/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 right-1/4 w-[30rem] h-[30rem] bg-accent-500/5 rounded-full blur-[100px]" />
+        <div className="absolute w-full h-[300px] sm:h-[500px] bg-gradient-to-b from-dark-900/0 via-brand-900/5 to-dark-900/0" />
+        <div className="absolute top-1/3 left-0 w-[15rem] sm:w-[25rem] h-[15rem] sm:h-[25rem] bg-brand-500/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 right-1/4 w-[15rem] sm:w-[30rem] h-[15rem] sm:h-[30rem] bg-accent-500/5 rounded-full blur-[100px]" />
       </div>
       <motion.div
         variants={sectionVariants}
@@ -36,14 +36,14 @@ export default function FeaturesSection({ data }) {
         animate={isInView ? "visible" : "hidden"}
         className="container mx-auto px-4 sm:px-6 lg:px-8"
       >
-        <motion.div variants={titleVariants} className="text-center mb-16">
-          <span className="inline-block px-4 py-1.5 bg-brand-900/30 rounded-full text-brand-300 text-sm font-medium mb-4">FEATURES</span>
-          <h2 className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-brand-500 mb-6">
+        <motion.div variants={titleVariants} className="text-center mb-8 sm:mb-12 md:mb-16">
+          <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 bg-brand-900/30 rounded-full text-brand-300 text-xs sm:text-sm font-medium mb-3 sm:mb-4">FEATURES</span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-brand-500 mb-4 sm:mb-6">
             {data.title}
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-brand-500/0 via-brand-500 to-brand-500/0 mx-auto" />
+          <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-brand-500/0 via-brand-500 to-brand-500/0 mx-auto" />
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {data.featureList.map((feature, i) => (
             <motion.div
               key={i}
@@ -52,9 +52,9 @@ export default function FeaturesSection({ data }) {
               whileHover="hover"
               className="relative"
             >
-              <div className="glass-card p-6 h-full flex flex-col items-center text-center group">
+              <div className="glass-card p-4 sm:p-6 h-full flex flex-col items-center text-center group">
                 <motion.div
-                  className="w-16 h-16 mb-6 rounded-full bg-brand-900/30 flex items-center justify-center relative"
+                  className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 rounded-full bg-brand-900/30 flex items-center justify-center relative"
                   variants={iconVariants}
                   custom={i}
                   whileHover="hover"
@@ -63,7 +63,7 @@ export default function FeaturesSection({ data }) {
                     <img
                       src={feature.iconPath}
                       alt={`${feature.title} icon`}
-                      className="w-8 h-8 invert brightness-0"
+                      className="w-6 h-6 sm:w-8 sm:h-8 invert brightness-0"
                     />
                   ) : (
                     <svg
@@ -73,7 +73,7 @@ export default function FeaturesSection({ data }) {
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="w-8 h-8 text-white"
+                      className="w-6 h-6 sm:w-8 sm:h-8 text-white"
                     >
                       <path d={feature.iconPath} />
                     </svg>
@@ -100,10 +100,10 @@ export default function FeaturesSection({ data }) {
                     </defs>
                   </svg>
                 </motion.div>
-                <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-brand-300 transition-colors duration-300">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-white group-hover:text-brand-300 transition-colors duration-300">
                   {feature.title}
                 </h3>
-                <p className="text-gray-400 flex-grow">{feature.description}</p>
+                <p className="text-sm sm:text-base text-gray-400 flex-grow">{feature.description}</p>
                 <div className="absolute inset-0 -z-10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                   <div className="absolute inset-0 bg-gradient-to-br from-brand-900/10 to-accent-900/10 rounded-2xl" />
                   <div className="absolute -inset-0.5 bg-gradient-to-br from-brand-500/20 to-accent-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
