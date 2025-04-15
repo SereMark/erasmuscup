@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { FaSearch, FaChevronDown, FaChevronUp } from "react-icons/fa"
+import { FaSearch, FaChevronDown, FaChevronUp, FaTimes } from "react-icons/fa"
 
 export default function TableOfContents({
   tableOfContents,
@@ -40,7 +40,8 @@ export default function TableOfContents({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-dark-950/80 backdrop-blur-sm z-40"
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-dark-950/90 backdrop-blur-sm z-40"
               onClick={() => setShowTableOfContents(false)}
             />
             <motion.div
@@ -55,12 +56,13 @@ export default function TableOfContents({
               className="fixed top-0 left-0 bottom-0 w-5/6 max-w-xs bg-dark-900 border-r border-brand-900/30 shadow-xl z-50 flex flex-col"
             >
               <div className="p-4 border-b border-white/10 flex items-center justify-between">
-                <h3 className="text-xl font-semibold text-brand-300">Table of Contents</h3>
+                <h3 className="text-lg font-semibold text-brand-300">Table of Contents</h3>
                 <button
                   onClick={() => setShowTableOfContents(false)}
-                  className="w-8 h-8 flex items-center justify-center rounded-full bg-dark-800 hover:bg-dark-700 transition-colors"
+                  className="w-8 h-8 flex items-center justify-center rounded-full bg-dark-800 hover:bg-dark-700 transition-colors text-gray-300"
+                  aria-label="Close table of contents"
                 >
-                  <FaChevronUp />
+                  <FaTimes size={16} />
                 </button>
               </div>
               <div className="p-4 border-b border-white/10">
@@ -69,10 +71,17 @@ export default function TableOfContents({
                   className="w-full flex items-center justify-between py-2 px-3 rounded-md bg-dark-800/50 text-gray-300"
                 >
                   <div className="flex items-center">
-                    <FaSearch className="mr-2" />
-                    {searchTerm ? <span className="truncate max-w-[200px]">{searchTerm}</span> : <span>Search rules...</span>}
+                    <FaSearch className="mr-2 text-gray-400" size={14} />
+                    {searchTerm ? (
+                      <span className="truncate max-w-[160px] text-sm">{searchTerm}</span>
+                    ) : (
+                      <span className="text-sm text-gray-400">Search rules...</span>
+                    )}
                   </div>
-                  <FaChevronDown className={`transition-transform ${showSearch ? 'rotate-180' : ''}`} />
+                  <FaChevronDown 
+                    className={`transition-transform ${showSearch ? 'rotate-180' : ''}`} 
+                    size={14}
+                  />
                 </button>
                 <AnimatePresence>
                   {showSearch && (
@@ -80,6 +89,7 @@ export default function TableOfContents({
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
                       className="overflow-hidden mt-2"
                     >
                       <div className="relative">
@@ -88,16 +98,17 @@ export default function TableOfContents({
                           placeholder="Type to search..."
                           value={searchTerm}
                           onChange={handleSearchChange}
-                          className="w-full px-4 py-2 pl-10 rounded-md bg-dark-800/80 border border-white/10 text-white placeholder-gray-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors"
+                          className="w-full px-4 py-2 pl-10 rounded-md bg-dark-800/80 border border-white/10 text-white text-sm placeholder-gray-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors focus:outline-none"
                           autoFocus
                         />
-                        <FaSearch className="absolute left-3 top-3 text-gray-400" />
+                        <FaSearch className="absolute left-3 top-2.5 text-gray-400" size={14} />
                         {searchTerm && (
                           <button
                             onClick={clearSearch}
-                            className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-200"
+                            className="absolute right-3 top-2 text-gray-400 hover:text-gray-200"
+                            aria-label="Clear search"
                           >
-                            ×
+                            <FaTimes size={16} />
                           </button>
                         )}
                       </div>
@@ -105,27 +116,27 @@ export default function TableOfContents({
                   )}
                 </AnimatePresence>
               </div>
-              <div className="flex-1 overflow-y-auto no-scrollbar p-4">
+              <div className="flex-1 overflow-y-auto p-4 no-scrollbar">
                 {tableOfContents.map((sec, i) => (
-                  <div key={i} className="mb-6">
+                  <div key={i} className="mb-5">
                     {sec.title && (
-                      <h4 className="font-semibold text-brand-300 mb-2 pb-1 border-b border-brand-900/30">
+                      <h4 className="font-semibold text-brand-300 mb-2 pb-1 border-b border-brand-900/30 text-sm">
                         {sec.title}
                       </h4>
                     )}
-                    <ul className="space-y-3">
+                    <ul className="space-y-2">
                       {sec.items.map(it => (
                         <li key={it.id}>
                           <a
                             href={`#${it.id}`}
                             onClick={e => handleSectionClick(it.id, e)}
-                            className={`flex w-full text-left items-center py-2 px-3 rounded-lg transition-colors ${
+                            className={`flex w-full text-left items-center py-2 px-3 rounded-lg transition-colors text-sm ${
                               activeSection === it.id
                                 ? "bg-brand-900/30 text-brand-300"
                                 : "hover:bg-dark-800/50 text-gray-300 hover:text-white"
                             }`}
                           >
-                            <span className="mr-3 text-lg">{it.icon}</span>
+                            <span className="mr-2 text-base">{it.icon}</span>
                             <span>{it.label}</span>
                           </a>
                         </li>
@@ -137,9 +148,9 @@ export default function TableOfContents({
               <div className="p-4 border-t border-white/10">
                 <button
                   onClick={() => setShowTableOfContents(false)}
-                  className="w-full py-2.5 rounded-lg bg-brand-800 text-white font-medium hover:bg-brand-700 transition-colors"
+                  className="w-full py-2.5 rounded-lg bg-brand-800 text-white font-medium hover:bg-brand-700 transition-colors text-sm"
                 >
-                  Close
+                  Close Menu
                 </button>
               </div>
             </motion.div>
@@ -150,7 +161,7 @@ export default function TableOfContents({
   }
 
   return (
-    <div className="lg:w-1/4 sticky top-24 self-start glass-card border border-brand-900/30 overflow-hidden z-10">
+    <div className="lg:w-1/4 sticky top-24 self-start glass-card border border-brand-900/30 overflow-hidden z-10 h-auto max-h-[85vh] flex flex-col">
       <div className="p-4 border-b border-white/10">
         <div className="relative">
           <input
@@ -158,40 +169,41 @@ export default function TableOfContents({
             placeholder="Search rules..."
             value={searchTerm}
             onChange={handleSearchChange}
-            className="w-full px-4 py-2 pl-10 rounded-md bg-dark-800/50 border border-white/10 text-white placeholder-gray-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors"
+            className="w-full px-4 py-2 pl-10 rounded-md bg-dark-800/50 border border-white/10 text-white placeholder-gray-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors text-sm focus:outline-none"
           />
-          <FaSearch className="absolute left-3 top-3 text-gray-400" />
+          <FaSearch className="absolute left-3 top-2.5 text-gray-400" size={14} />
           {searchTerm && (
             <button
               onClick={clearSearch}
-              className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-200"
+              className="absolute right-3 top-2 text-gray-400 hover:text-gray-200"
+              aria-label="Clear search"
             >
-              ×
+              <FaTimes size={16} />
             </button>
           )}
         </div>
       </div>
-      <motion.div className="max-h-[70vh] overflow-y-auto p-4 no-scrollbar">
+      <div className="overflow-y-auto p-4 no-scrollbar flex-1">
         {tableOfContents.map((sec, i) => (
-          <div key={i} className="mb-6">
+          <div key={i} className="mb-5">
             {sec.title && (
-              <h4 className="font-semibold text-brand-300 mb-2 pb-1 border-b border-brand-900/30">
+              <h4 className="font-semibold text-brand-300 mb-2 pb-1 border-b border-brand-900/30 text-sm">
                 {sec.title}
               </h4>
             )}
-            <ul className="space-y-2">
+            <ul className="space-y-1.5">
               {sec.items.map(it => (
                 <li key={it.id}>
                   <a
                     href={`#${it.id}`}
                     onClick={e => handleSectionClick(it.id, e)}
-                    className={`flex w-full text-left items-center py-1 px-2 rounded transition-colors ${
+                    className={`flex w-full text-left items-center py-1.5 px-2 rounded transition-colors ${
                       activeSection === it.id
                         ? "bg-brand-900/30 text-brand-300"
                         : "hover:bg-dark-800/50 text-gray-300 hover:text-white"
                     }`}
                   >
-                    <span className="mr-2">{it.icon}</span>
+                    <span className="mr-2 flex-shrink-0">{it.icon}</span>
                     <span className="text-sm">{it.label}</span>
                   </a>
                 </li>
@@ -199,7 +211,7 @@ export default function TableOfContents({
             </ul>
           </div>
         ))}
-      </motion.div>
+      </div>
     </div>
   )
 }

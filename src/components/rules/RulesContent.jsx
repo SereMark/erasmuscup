@@ -49,7 +49,7 @@ export default function RulesContent({
   }
 
   return (
-    <div className="lg:w-3/4 w-full">
+    <div className="w-full lg:w-3/4">
       <motion.div
         variants={documentHeaderVariants}
         initial="hidden"
@@ -58,27 +58,28 @@ export default function RulesContent({
       >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center">
-            <span className="mr-3 text-2xl sm:text-3xl">{documentHeader.icon}</span>
+            <span className="mr-2 sm:mr-3 text-xl sm:text-2xl">{documentHeader.icon}</span>
             {documentHeader.title}
           </h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
           {documentHeader.info.map((item, i) => (
             <div
               key={i}
-              className="flex flex-col p-3 bg-dark-800/30 rounded-lg border border-brand-900/20"
+              className="flex flex-col p-2 sm:p-3 bg-dark-800/30 rounded-lg border border-brand-900/20"
             >
-              <span className="text-sm text-gray-400">{item.label}</span>
-              <span className="text-white font-medium">{item.value}</span>
+              <span className="text-xs sm:text-sm text-gray-400">{item.label}</span>
+              <span className="text-sm sm:text-base text-white font-medium">{item.value}</span>
             </div>
           ))}
         </div>
-        <div className="p-3 sm:p-4 bg-brand-900/20 rounded-lg border border-brand-800/30 text-gray-300 text-sm sm:text-base">
+        <div className="p-3 sm:p-4 bg-brand-900/20 rounded-lg border border-brand-800/30 text-gray-300 text-xs sm:text-sm">
           <FaInfoCircle className="inline-block mr-2 text-brand-400" />
           <span dangerouslySetInnerHTML={{ __html: documentHeader.note }} />
         </div>
       </motion.div>
-      <div className="space-y-6 sm:space-y-8">
+      
+      <div className="space-y-5 sm:space-y-8">
         {sections.map((sec, i) => (
           <motion.div
             key={sec.id}
@@ -91,12 +92,12 @@ export default function RulesContent({
             viewport={{ once: true, amount: 0.1 }}
             className="glass-card p-4 sm:p-6 border border-brand-900/30"
           >
-            <div className="flex items-center mb-4">
-              <span className="text-2xl mr-3">{sec.emoji}</span>
-              <h3 className="text-lg sm:text-xl font-bold text-white">{sec.title}</h3>
+            <div className="flex items-center mb-3 sm:mb-4">
+              <span className="text-xl sm:text-2xl mr-2 sm:mr-3">{sec.emoji}</span>
+              <h3 className="text-base sm:text-xl font-bold text-white break-words">{sec.title}</h3>
             </div>
             <div
-              className="text-gray-300 leading-relaxed prose prose-invert max-w-none text-sm sm:text-base"
+              className="text-gray-300 leading-relaxed prose prose-invert max-w-none text-xs sm:text-base"
               dangerouslySetInnerHTML={{
                 __html: highlightTerms(sec.text)
               }}
