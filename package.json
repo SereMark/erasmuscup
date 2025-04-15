@@ -1,13 +1,12 @@
 {
   "name": "erasmuscup",
   "version": "1.0.0",
-  "description": "🧙‍♂️ The official website for the Erasmus House Cup 2025 — a chaotic, Harry Potter-inspired competition of pride, events, and jelly beans.",
+  "description": "Official website for the Erasmus House Cup 2025—a playful, Harry Potter-inspired competition of house pride, weekly events, and wild challenges.",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -15,16 +14,13 @@
   },
   "keywords": [
     "erasmus",
-    "house cup",
-    "harry potter",
-    "vite",
+    "house-cup",
+    "competition",
     "react",
     "tailwind",
-    "game",
-    "fun",
-    "leaderboard",
-    "jelly beans",
-    "gambits"
+    "vite",
+    "scoreboard",
+    "fun"
   ],
   "author": "House Cup Parliament 2025",
   "license": "MIT",
@@ -44,12 +40,13 @@
     "framer-motion": "^11.16.0",
     "gsap": "^3.12.5",
     "locomotive-scroll": "^4.1.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^5.4.0",
+    "react-intersection-observer": "^9.4.1",
     "react-router-dom": "^6.22.3",
-    "three": "^0.172.0",
-    "react-intersection-observer": "latest",
-    "tailwind-scrollbar-hide": "latest"
+    "recharts": "^2.10.3",
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "three": "^0.172.0"
   }
 }

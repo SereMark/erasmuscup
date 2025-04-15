@@ -2,64 +2,90 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    
-    <!-- Primary Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Erasmus House Cup 2025</title>
-    <meta name="description" content="The official digital hub of the Erasmus House Cup 2025. Join a house, earn points, attend events, and possibly get executed (unless you chug a Yardie)." />
+    <meta
+      name="description"
+      content="The official digital hub of the Erasmus House Cup 2025. Join a house, earn points, attend events, and possibly get executed (unless you chug a Yardie)."
+    />
     <meta name="author" content="House Cup Parliament 2025" />
-    <meta name="keywords" content="Erasmus, House Cup, Harry Potter, student life, events, leaderboard, jelly beans, Yardie, nudity, party games" />
-    <meta name="theme-color" content="#121212" />
-    
-    <!-- Canonical URL -->
+    <meta
+      name="keywords"
+      content="Erasmus, House Cup, events, scoreboard, party games"
+    />
+    <meta name="theme-color" content="#9146ff" />
     <link rel="canonical" href="https://erasmushousecup.com/" />
-    
-    <!-- Favicon and App Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/public/assets/icons/favicon-32x32.png" /> <!--TODO-->
-    <link rel="icon" type="image/png" sizes="16x16" href="/public/assets/icons/favicon-16x16.png" /> <!--TODO-->
-    <link rel="apple-touch-icon" sizes="180x180" href="/public/assets/icons/apple-touch-icon.png" /> <!--TODO-->
-    
-    <!-- PWA Support -->
-    <link rel="manifest" href="/manifest.json" /> <!--TODO-->
+    <!-- TODO -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/public/assets/icons/favicon-32x32.png"
+    />
+    <!-- TODO -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/public/assets/icons/favicon-16x16.png"
+    />
+    <!-- TODO -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/assets/icons/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="/manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="apple-mobile-web-app-title" content="Erasmus House Cup" />
-    
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://erasmushousecup.com/" />
     <meta property="og:title" content="Erasmus House Cup 2025" />
-    <meta property="og:description" content="The official digital hub of the Erasmus House Cup 2025. Join a house, earn points, attend events, and possibly get executed (unless you chug a Yardie)." />
-    <meta property="og:image" content="/public/assets/logos/house-cup-cover.png" />
-    
-    <!-- Twitter -->
+    <meta
+      property="og:description"
+      content="The official digital hub of the Erasmus House Cup 2025. Join a house, earn points, attend events, and possibly get executed."
+    />
+    <meta
+      property="og:image"
+      content="/public/assets/logos/house-cup-cover.png"
+    />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://erasmushousecup.com/" />
     <meta property="twitter:title" content="Erasmus House Cup 2025" />
-    <meta property="twitter:description" content="The official digital hub of the Erasmus House Cup 2025. Join a house, earn points, attend events, and possibly get executed (unless you chug a Yardie)." />
-    <meta property="twitter:image" content="/public/assets/logos/house-cup-cover.png" />
-    
-    <!-- Resource Hints -->
+    <meta
+      property="twitter:description"
+      content="The official digital hub of the Erasmus House Cup 2025. Join a house, earn points, attend events, and possibly get executed."
+    />
+    <meta
+      property="twitter:image"
+      content="/public/assets/logos/house-cup-cover.png"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-    
-    <!-- Preload Critical Assets -->
-    <link rel="preload" href="/index.css" as="style" />
+    <link rel="preload" href="/global.css" as="style" />
     <link rel="modulepreload" href="/src/main.jsx" />
-    <link rel="preload" href="/public/assets/logos/house-cup-logo.png" as="image" />
-    
-    <!-- Font Loading Optimization -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
-    
-    <!-- Security -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self';" />
+    <link
+      rel="preload"
+      href="/public/assets/logos/house-cup-logo.png"
+      as="image"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self';"
+    />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    
-    <!-- Structured Data -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -90,26 +116,18 @@
   </head>
   <body>
     <div id="root"></div>
-    
-    <!-- Preload main script with top priority -->
     <script type="module" src="/src/main.jsx"></script>
-    
-    <!-- Fallback for browsers that don't support JavaScript modules -->
     <script nomodule>
-      document.body.innerHTML = '<p style="text-align: center; padding: 2rem;">This application requires a modern browser that supports JavaScript modules. Please update your browser.</p>';
+      document.body.innerHTML =
+        '<p style="text-align: center; padding: 2rem;">This application requires a modern browser that supports JavaScript modules. Please update your browser.</p>';
     </script>
-    
-    <!-- Add offline support notification -->
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js')
-            .then(registration => {
-              console.log('ServiceWorker registration successful');
-            })
-            .catch(error => {
-              console.error('ServiceWorker registration failed:', error);
-            });
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(() => console.log("ServiceWorker registration successful"))
+            .catch((e) => console.error("ServiceWorker registration failed:", e));
         });
       }
     </script>

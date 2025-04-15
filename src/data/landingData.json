@@ -1,0 +1,113 @@
+{
+  "heroSection": {
+    "title": "House Cup 2025",
+    "subtitle": "Join us for a definitely-not-a-cult showdown among fearless Erasmus adventurers, proudly governed by the House Cup Rules 2025.",
+    "backgroundImage": "/assets/logos/house-cup-cover.png",
+    "buttons": [
+      { "text": "Join the Competition", "link": "/events", "styleType": "primary" },
+      { "text": "Check Scoreboard", "link": "/scoreboard", "styleType": "secondary" }
+    ]
+  },
+  "welcomeSection": {
+    "title": "Welcome to the Madness!",
+    "descriptionHtml": "Each Erasmus warrior is magically (and scientifically?) placed into one of four Houses. Every weekly event (plus the occasional <em class=\"text-brand-300\">Gambit</em>) can catapult your House’s score or doom you to glorious embarrassment. Please, for the love of Darwin, don’t offer <strong class=\"text-accent-400\">Constructive Feedback</strong>; that’s <strong class=\"text-accent-400\">Treason</strong>.",
+    "highlights": [
+      {
+        "text": "No, it’s not a cult",
+        "ruleReference": "section 2(3)"
+      },
+      {
+        "text": "<em class=\"text-accent-400\">Murder</em> is not punished",
+        "ruleReference": "section 17"
+      },
+      {
+        "text": "If your House fails, you’ll have one last chance to perform a <em class=\"text-accent-400\">Yardie</em> (beer-chug) or suffer <em class=\"text-accent-400\">public hanging</em>",
+        "ruleReference": "section 18"
+      },
+      {
+        "text": "Public Nudity can snag you 30 points. Round up ten or more streakers for a 1000-point jackpot. Seriously.",
+        "ruleReference": "section 16"
+      }
+    ],
+    "footerHtml": "Insanity is calling! Check out the <a href=\"/rules\" class=\"font-bold text-brand-400 underline hover:text-accent-400 transition-colors\">Full Rules</a> to learn how \"Buffaloed\" can cost you points and how \"Constructive Feedback\" can land you in hot water—or at the gallows."
+  },
+  "housesSection": {
+    "title": "Meet The Four Houses",
+    "subtitle": "Our Founders used the 16Personalities Test to create each House (section 3). You’ll do the same but with our in-house quiz!",
+    "houseList": [
+      {
+        "key": "theHoo",
+        "name": "The Hoo",
+        "animal": "Owl",
+        "motto": "Sharp minds, sharper claws.",
+        "captain": "Alex",
+        "logo": "/assets/logos/house-hoo-logo.png"
+      },
+      {
+        "key": "brewCrew",
+        "name": "Brew Crew",
+        "animal": "Alligator",
+        "motto": "Veni, Vidi, Bibi.",
+        "caption": "(We came, we saw, we drank.)",
+        "captain": "Viky",
+        "logo": "/assets/logos/brew-crew-logo.png"
+      },
+      {
+        "key": "redStorm",
+        "name": "Red Storm",
+        "animal": "Tiger",
+        "motto": "Roar like a Tiger, chill like a Panda.",
+        "captain": "Elise",
+        "logo": "/assets/logos/house-tiger-logo.png"
+      },
+      {
+        "key": "deepJungle",
+        "name": "Deep Jungle",
+        "animal": "Raccoon",
+        "motto": "Think first, then slay.",
+        "captain": "Marco",
+        "logo": "/assets/logos/deep-jungle-logo.png"
+      }
+    ]
+  },
+  "featuresSection": {
+    "title": "Key Features",
+    "featureList": [
+      {
+        "title": "Mandatory Weekly House Events",
+        "description": "Miss even one event, and your House is slapped with a 50-point penalty.",
+        "iconPath": "https://cdn.jsdelivr.net/npm/lucide-static@0.313.0/icons/calendar-check.svg"
+      },
+      {
+        "title": "Gambits & Super Gambits",
+        "description": "Earn extra points on the fly. But if you get caught cheating thrice before midnight, expect harsh retribution.",
+        "iconPath": "https://cdn.jsdelivr.net/npm/lucide-static@0.313.0/icons/dices.svg"
+      },
+      {
+        "title": "Team Pride",
+        "description": "Show up in House colors (or shout the loudest) to score sweet bonus points. Vocal cords are expendable!",
+        "iconPath": "https://cdn.jsdelivr.net/npm/lucide-static@0.313.0/icons/megaphone.svg"
+      },
+      {
+        "title": "Armistices",
+        "description": "Conspire with exactly 1 or 2 other Houses to share points. Slightly shady? Sure. Entirely allowed? Absolutely.",
+        "iconPath": "https://cdn.jsdelivr.net/npm/lucide-static@0.313.0/icons/users.svg"
+      }
+    ]
+  },
+  "principleSection": {
+    "title": "The Founding Principle",
+    "mainTextHtml": "On the auspicious evening of the <strong class=\"text-brand-300\">Strawberry Moon</strong>, whichever House towers over the scoreboard gets the coveted <strong class=\"text-accent-400\">House Pokal</strong>. The rest have exactly one week to guzzle a <em class=\"text-brand-400\">Yardie</em> or suffer comedic doom (a.k.a. public hanging).",
+    "secondaryTextHtml": "Yes, we let <em>murder</em> slide, but we won’t tolerate skipping House Events or treacherous side deals. Priorities, right? May the best House triumph!"
+  },
+  "instagramSection": {
+    "title": "Follow Our Wild Journey",
+    "description": "Peek behind the curtain: heroic yard-chugs, unfortunate “Buffaloed” mishaps, and spontaneous public nudity stunts.",
+    "postCount": "9",
+    "followerCount": "36",
+    "followingCount": "36",
+    "username": "@house_cup_erasmus",
+    "profileLink": "https://www.instagram.com/house_cup_erasmus/",
+    "logoImage": "/assets/logos/house-cup-logo.png"
+  }
+}

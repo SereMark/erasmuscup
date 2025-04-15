@@ -1,0 +1,136 @@
+{
+    "config": {
+      "mobileBreakpoint": 768,
+      "defaultViewMode": "table",
+      "viewOptions": ["table", "cards", "stats"]
+    },
+    "heroSection": {
+      "title": "Who Rules Them All?",
+      "subtitle": "The scoreboard refreshes live with every event, Buffalo call, and stealthy Nudity Challenge. Will your House reign supreme, or end up yard-chugging your way to freedom?",
+      "backgroundImage": "/assets/logos/house-cup-cover.png",
+      "gradient": "from-brand-800 via-brand-900 to-dark-950"
+    },
+    "houses": [
+      {
+        "key": "theHoo",
+        "name": "The Hoo",
+        "logo": "/assets/logos/house-hoo-logo.png",
+        "animal": "Owl",
+        "motto": "Sharp minds, sharper claws."
+      },
+      {
+        "key": "brewCrew",
+        "name": "Brew Crew",
+        "logo": "/assets/logos/brew-crew-logo.png",
+        "animal": "Alligator",
+        "motto": "Veni, Vidi, Bibi."
+      },
+      {
+        "key": "redStorm",
+        "name": "Red Storm",
+        "logo": "/assets/logos/house-tiger-logo.png",
+        "animal": "Tiger",
+        "motto": "Roar like a Tiger, chill like a Panda."
+      },
+      {
+        "key": "deepJungle",
+        "name": "Deep Jungle",
+        "logo": "/assets/logos/deep-jungle-logo.png",
+        "animal": "Raccoon",
+        "motto": "Think first, then slay."
+      }
+    ],
+    "scores": [
+      {
+        "id": 1,
+        "date": "21.03.2025",
+        "eventName": "Jackbox",
+        "points": {
+          "theHoo": 50,
+          "brewCrew": 75,
+          "redStorm": 25,
+          "deepJungle": 100
+        }
+      },
+      {
+        "id": 2,
+        "date": "28.03.2025",
+        "eventName": "Petanque",
+        "points": {
+          "theHoo": 27,
+          "brewCrew": 76,
+          "redStorm": 55,
+          "deepJungle": 102
+        }
+      },
+      {
+        "id": 3,
+        "date": "05.04.2025",
+        "eventName": "Beer pong",
+        "points": {
+          "theHoo": 47,
+          "brewCrew": 30,
+          "redStorm": 14,
+          "deepJungle": 61
+        }
+      },
+      {
+        "id": 4,
+        "date": "11.04.2025",
+        "eventName": "Flag hunt",
+        "points": {
+          "theHoo": 0,
+          "brewCrew": 25,
+          "redStorm": 75,
+          "deepJungle": 50
+        }
+      },
+      {
+        "id": 5,
+        "date": "11.04.2025",
+        "eventName": "Special gambit",
+        "points": {
+          "theHoo": 27,
+          "brewCrew": 38,
+          "redStorm": 50,
+          "deepJungle": 30
+        }
+      },
+      {
+        "id": 6,
+        "type": "adjustment",
+        "eventName": "Public nudity",
+        "points": {
+          "theHoo": 60,
+          "brewCrew": 0,
+          "redStorm": 30,
+          "deepJungle": 0
+        }
+      },
+      {
+        "id": 7,
+        "type": "adjustment",
+        "eventName": "Buffaloes",
+        "points": {
+          "theHoo": 0,
+          "brewCrew": -20,
+          "redStorm": -10,
+          "deepJungle": -20
+        }
+      },
+      {
+        "id": 8,
+        "type": "total",
+        "eventName": "Current Total",
+        "points": {
+          "theHoo": 211,
+          "brewCrew": 224,
+          "redStorm": 239,
+          "deepJungle": 323
+        }
+      }
+    ],
+    "footerNote": {
+      "messageHtml": "Think your House is unbeatable? Or too far behind to care? Try a <em class=\"text-brand-400 font-semibold\">Super Gambit</em> (sec. 12a) for that sweet multiplier, or go for some <em class=\"text-accent-400 font-semibold\">Public Nudity</em> (sec. 16) if your neighbors can handle it!"
+    }
+  }  

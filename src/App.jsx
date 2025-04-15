@@ -1,22 +1,20 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom"; 
-import Layout from "./components/Layout";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/layout/Layout";
 import LandingPage from "./pages/LandingPage";
-import LeaderboardPage from "./pages/LeaderboardPage";
-import HouseCupRulesPage from "./pages/HouseCupRulesPage";
+import ScoreboardPage from "./pages/ScoreboardPage";
 import EventsPage from "./pages/EventsPage";
+import RulesPage from "./pages/RulesPage";
 
 export default function App() {
   return (
-    <div className="min-h-screen text-gray-100">
-      <Routes>
-        <Route element={<Layout />}>
-          <Route index element={<LandingPage />} />
-          <Route path="/leaderboard" element={<LeaderboardPage />} />
-          <Route path="/housecup-rules" element={<HouseCupRulesPage />} />
-          <Route path="/events" element={<EventsPage />} />
-        </Route>
-      </Routes>
-    </div>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<LandingPage />} />
+        <Route path="/scoreboard" element={<ScoreboardPage />} />
+        <Route path="/events" element={<EventsPage />} />
+        <Route path="/rules" element={<RulesPage />} />
+      </Route>
+    </Routes>
   );
 }
