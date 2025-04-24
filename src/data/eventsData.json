@@ -13,10 +13,6 @@
       "upcoming": {
         "title": "Upcoming Events",
         "subtitle": "Ready your war paint—missing even one might cost your House a chunk of points."
-      },
-      "completed": {
-        "title": "Past Events",
-        "subtitle": "Catch up on who dominated, who cheated, and who got Buffaloed. Then prep for the next round!"
       }
     },
     "defaultHero": {

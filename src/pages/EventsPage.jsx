@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react"
 import eventsData from "../data/eventsData.json"
-import { determineEventStatus } from "../utils/eventHelpers"
 import EventsHero from "../components/events/EventsHero"
 import EventSection from "../components/events/EventSection"
 import EmptyState from "../components/events/EmptyState"
+import { eventUtils } from "../utils/eventUtils"
 
 export default function EventsPage() {
   useEffect(() => {
@@ -11,9 +11,9 @@ export default function EventsPage() {
   }, [])
 
   const [featuredEvent, setFeaturedEvent] = useState(null)
-  const processedEvents = eventsData.eventList.map(e => ({ ...e, status: determineEventStatus(e) }))
-  const activeEvents = processedEvents.filter(e => e.status === "active")
-  const upcomingEvents = processedEvents.filter(e => e.status === "upcoming")
+  const processedEvents = eventUtils.processEvents(eventsData.eventList)
+  const activeEvents = eventUtils.getActiveEvents(processedEvents)
+  const upcomingEvents = eventUtils.getUpcomingEvents(processedEvents, activeEvents)
 
   useEffect(() => {
     if (activeEvents.length) {
