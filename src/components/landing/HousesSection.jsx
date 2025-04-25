@@ -95,18 +95,20 @@ export default function HousesSection({ data }) {
                       {house.animal && <p className="text-xs sm:text-sm text-gray-400">{house.animal}</p>}
                     </div>
                   </div>
-                  <div className="space-y-2 sm:space-y-3 flex-grow text-sm sm:text-base">
+                  <div className="flex flex-col gap-4 flex-grow text-sm sm:text-base transition-all duration-300 ease-[var(--animation-timing)]">
                     {house.motto && (
-                      <div className="flex items-start flex-col sm:flex-row">
-                        <span className="text-gray-400 w-full sm:w-24 flex-shrink-0 mb-1 sm:mb-0">Motto:</span>
-                        <span className="text-white italic">{house.motto}</span>
+                      <div className="flex flex-col gap-1.5 sm:gap-0 sm:flex-row items-start">
+                        <span className="text-gray-400 w-full sm:w-24 flex-shrink-0 font-medium">Motto:</span>
+                        <span className="text-white italic leading-relaxed">{house.motto}</span>
                       </div>
                     )}
-                    {house.caption && <div className="text-xs text-gray-500 sm:ml-24">{house.caption}</div>}
+                    {house.caption && (
+                      <div className="text-xs text-gray-500 sm:ml-24 leading-relaxed -mt-2 sm:-mt-1.5">{house.caption}</div>
+                    )}
                     {house.captain && (
-                      <div className="flex items-start flex-col sm:flex-row">
-                        <span className="text-gray-400 w-full sm:w-24 flex-shrink-0 mb-1 sm:mb-0">Captain:</span>
-                        <span className="text-white">{house.captain}</span>
+                      <div className="flex flex-col gap-1.5 sm:gap-0 sm:flex-row items-start mt-auto">
+                        <span className="text-gray-400 w-full sm:w-24 flex-shrink-0 font-medium">Captain:</span>
+                        <span className="text-white leading-relaxed">{house.captain}</span>
                       </div>
                     )}
                   </div>
