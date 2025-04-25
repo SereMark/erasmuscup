@@ -14,31 +14,31 @@
   "scope": "/",
   "icons": [
     {
-      "src": "/public/assets/icons/favicon-16x16.png",
+      "src": "/assets/icons/favicon-16x16.png",
       "sizes": "16x16",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/public/assets/icons/favicon-32x32.png",
+      "src": "/assets/icons/favicon-32x32.png",
       "sizes": "32x32",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/public/assets/icons/apple-touch-icon.png",
+      "src": "/assets/icons/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/public/assets/logos/house-cup-logo.png",
+      "src": "/assets/logos/house-cup-logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/public/assets/icons/maskable-icon.png",
+      "src": "/assets/icons/maskable-icon.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
@@ -46,7 +46,7 @@
   ],
   "screenshots": [
     {
-      "src": "/public/assets/logos/house-cup-cover.png",
+      "src": "/assets/logos/house-cup-cover.png",
       "sizes": "1280x720",
       "type": "image/png",
       "platform": "wide",
