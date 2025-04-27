@@ -1,18 +1,25 @@
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
 import {
   BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer, Area, AreaChart
 } from "recharts"
-import { FaArrowUp, FaArrowDown, FaMinus } from "react-icons/fa"
+import { FaArrowUp, FaArrowDown, FaMinus, FaChevronDown, FaChevronUp } from "react-icons/fa"
 
 export default function StatsView({ scores, houses, housesFilter }) {
   const statsRef = useRef(null)
   const isInView = useInView(statsRef, { once: false, amount: 0.1 })
+  
+  // State for collapsible sections on mobile
+  const [expandedSection, setExpandedSection] = useState("progression")
+  
+  // Filter houses based on selected filters
   const filteredHouses = housesFilter
     .map(key => houses.find(h => h.key === key))
     .filter(Boolean)
+  
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -23,6 +30,7 @@ export default function StatsView({ scores, houses, housesFilter }) {
       }
     }
   }
+  
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -34,10 +42,19 @@ export default function StatsView({ scores, houses, housesFilter }) {
       }
     }
   }
+  
+  // Toggle section expansion
+  const toggleSection = (section) => {
+    setExpandedSection(expandedSection === section ? null : section)
+  }
+  
+  // Prepare chart data
+  // Line chart - cumulative score progression
   const lineChartData = (() => {
     const eventScores = scores.filter(s => s.type !== "total")
     const runningTotals = {}
     filteredHouses.forEach(h => (runningTotals[h.key] = 0))
+    
     return eventScores.map(event => {
       const dataPoint = { name: event.eventName }
       filteredHouses.forEach(house => {
@@ -48,6 +65,8 @@ export default function StatsView({ scores, houses, housesFilter }) {
       return dataPoint
     })
   })()
+  
+  // Bar chart - event performance breakdown
   const barChartData = (() => {
     const regularEvents = scores.filter(x => !x.type)
     return regularEvents.map(event => {
@@ -58,31 +77,57 @@ export default function StatsView({ scores, houses, housesFilter }) {
       return dataPoint
     })
   })()
+  
+  // Pie chart - points distribution
   const pieChartData = (() => {
     const totalScore = scores.find(x => x.type === "total")
     if (!totalScore) return []
+    
     return filteredHouses.map(h => ({
       name: h.name,
       value: totalScore.points[h.key] || 0,
       key: h.key
     }))
   })()
+  
+  // Top events by points
+  const topEventsData = (() => {
+    const regularEvents = scores.filter(x => !x.type)
+    return regularEvents
+      .map(event => {
+        const totalPoints = Object.values(event.points).reduce((sum, p) => sum + (p || 0), 0)
+        return { 
+          name: event.eventName, 
+          totalPoints, 
+          date: event.date 
+        }
+      })
+      .sort((a, b) => b.totalPoints - a.totalPoints)
+      .slice(0, 5)
+  })()
+  
+  // Event type breakdown
   const eventBreakdown = (() => {
     const regularEvents = scores.filter(x => !x.type).length
     const adjustmentEvents = scores.filter(x => x.type === "adjustment").length
+    
     return [
       { name: "Competitions", value: regularEvents },
       { name: "Adjustments", value: adjustmentEvents }
     ]
   })()
+  
+  // House event rankings
   const eventRankings = (() => {
     const regularEvents = scores.filter(x => !x.type)
     const rankings = {}
+    
     regularEvents.forEach(event => {
       const sorted = [...filteredHouses].sort((a, b) => (event.points[b.key] || 0) - (event.points[a.key] || 0))
       if (sorted.length > 0) {
         const winner = sorted[0]
         const winnerPoints = event.points[winner.key] || 0
+        
         if (winnerPoints > 0) {
           if (!rankings[winner.key]) rankings[winner.key] = { wins: 0, eventNames: [] }
           rankings[winner.key].wins += 1
@@ -90,49 +135,63 @@ export default function StatsView({ scores, houses, housesFilter }) {
         }
       }
     })
+    
     return rankings
   })()
-  const calculateHouseTrends = () => {
+  
+  // Calculate house performance trends
+  const houseTrends = (() => {
     const eventScores = scores.filter(s => s.type !== "total" && !s.type)
     const trends = {}
+    
     filteredHouses.forEach(h => {
       const housePoints = eventScores.map(e => e.points[h.key] || 0)
+      
       if (housePoints.length < 2) {
         trends[h.key] = { direction: "neutral", percentage: "0", lastPointsChange: 0 }
         return
       }
+      
       const lastPoints = housePoints[housePoints.length - 1]
       const beforeLastPoints = housePoints[housePoints.length - 2]
       let percentageChange = 0
+      
       if (beforeLastPoints !== 0) {
         percentageChange = ((lastPoints - beforeLastPoints) / Math.abs(beforeLastPoints)) * 100
       } else if (lastPoints > 0) {
         percentageChange = 100
       }
+      
       let direction = "neutral"
       if (percentageChange > 0) direction = "up"
       else if (percentageChange < 0) direction = "down"
+      
       trends[h.key] = {
         direction,
         percentage: Math.abs(percentageChange).toFixed(0),
         lastPointsChange: lastPoints - beforeLastPoints
       }
     })
+    
     return trends
-  }
-  const houseTrends = calculateHouseTrends()
+  })()
+  
+  // House colors for charts
   const houseColors = {
     theHoo: "rgb(var(--color-house-theHoo))",
     brewCrew: "rgb(var(--color-house-brewCrew))",
     redStorm: "rgb(var(--color-house-redStorm))",
     deepJungle: "rgb(var(--color-house-deepJungle))"
   }
-  const eventTypeColors = ["#3b82f6", "#8b5cf6"]
+  
+  // Helper function for trend icons
   const getTrendIcon = direction => {
     if (direction === "up") return <FaArrowUp className="text-green-500" />
     if (direction === "down") return <FaArrowDown className="text-rose-500" />
     return <FaMinus className="text-gray-500" />
   }
+  
+  // Chart theme for consistent styling
   const chartTheme = {
     backgroundColor: "rgba(15,23,42,0.9)",
     gridStroke: "rgba(255,255,255,0.1)",
@@ -141,6 +200,36 @@ export default function StatsView({ scores, houses, housesFilter }) {
     tooltipBackgroundColor: "rgba(15,23,42,0.9)",
     tooltipBorderColor: "rgba(255,255,255,0.1)"
   }
+  
+  // Collapsible section component
+  const CollapsibleSection = ({ id, title, children }) => {
+    const isExpanded = expandedSection === id
+    
+    return (
+      <motion.div
+        variants={itemVariants}
+        className="glass-card p-4 sm:p-6 border border-brand-900/30 mb-6 overflow-hidden"
+      >
+        {/* Mobile header with toggle */}
+        <div 
+          className="flex justify-between items-center cursor-pointer md:cursor-default"
+          onClick={() => toggleSection(id)}
+        >
+          <h3 className="text-lg sm:text-xl font-bold text-white">
+            {title}
+          </h3>
+          <button className="md:hidden text-gray-400 p-1.5">
+            {isExpanded ? <FaChevronUp /> : <FaChevronDown />}
+          </button>
+        </div>
+        
+        {/* Content - always visible on desktop, toggleable on mobile */}
+        <div className={`mt-4 transition-all duration-300 ${!isExpanded ? 'max-h-0 overflow-hidden md:max-h-none md:overflow-visible' : 'max-h-[2000px]'}`}>
+          {children}
+        </div>
+      </motion.div>
+    )
+  }
 
   return (
     <motion.div
@@ -148,21 +237,18 @@ export default function StatsView({ scores, houses, housesFilter }) {
       variants={containerVariants}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 sm:space-y-10"
+      className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-10"
     >
-      <motion.div
-        variants={itemVariants}
-        className="glass-card p-4 sm:p-6 border border-brand-900/30"
-      >
-        <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Cumulative Score Progression</h3>
+      {/* Cumulative Score Progression Chart */}
+      <CollapsibleSection id="progression" title="Cumulative Score Progression">
         <div className="h-64 sm:h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={lineChartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <AreaChart data={lineChartData} margin={{ top: 10, right: 10, left: 0, bottom: 40 }}>
               <defs>
                 {filteredHouses.map((house, index) => (
                   <linearGradient
-                    key={`scoreboard-area-gradient-${house.key}-${index}`}
-                    id={`scoreboard-area-gradient-${house.key}-${index}`}
+                    key={`area-gradient-${house.key}`}
+                    id={`area-gradient-${house.key}`}
                     x1="0"
                     y1="0"
                     x2="0"
@@ -181,7 +267,7 @@ export default function StatsView({ scores, houses, housesFilter }) {
                 axisLine={{ stroke: chartTheme.axisStroke }}
                 angle={-45}
                 textAnchor="end"
-                height={60}
+                height={70}
                 interval={0}
               />
               <YAxis
@@ -199,7 +285,7 @@ export default function StatsView({ scores, houses, housesFilter }) {
                 }}
               />
               <Legend />
-              {filteredHouses.map((house, index) => (
+              {filteredHouses.map((house) => (
                 <Area
                   key={house.key}
                   type="monotone"
@@ -207,7 +293,7 @@ export default function StatsView({ scores, houses, housesFilter }) {
                   name={house.name}
                   stroke={houseColors[house.key]}
                   fillOpacity={1}
-                  fill={`url(#scoreboard-area-gradient-${house.key}-${index})`}
+                  fill={`url(#area-gradient-${house.key})`}
                   activeDot={{ r: 6, strokeWidth: 0 }}
                   strokeWidth={2}
                 />
@@ -215,25 +301,22 @@ export default function StatsView({ scores, houses, housesFilter }) {
             </AreaChart>
           </ResponsiveContainer>
         </div>
-      </motion.div>
+      </CollapsibleSection>
       
-      <motion.div
-        variants={itemVariants}
-        className="glass-card p-4 sm:p-6 border border-brand-900/30"
-      >
-        <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Event Performance Breakdown</h3>
+      {/* Event Performance Breakdown Chart */}
+      <CollapsibleSection id="breakdown" title="Event Performance Breakdown">
         <div className="h-64 sm:h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={barChartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <BarChart data={barChartData} margin={{ top: 10, right: 10, left: 0, bottom: 40 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.gridStroke} />
               <XAxis
                 dataKey="name"
                 stroke={chartTheme.axisStroke}
-                tick={{ fill: chartTheme.axisTickColor, fontSize: 10 }}
+                tick={{ fill: chartTheme.axisTickColor, fontSize: 9 }}
                 axisLine={{ stroke: chartTheme.axisStroke }}
                 angle={-45}
                 textAnchor="end"
-                height={60}
+                height={70}
                 interval={0}
               />
               <YAxis
@@ -264,15 +347,13 @@ export default function StatsView({ scores, houses, housesFilter }) {
             </BarChart>
           </ResponsiveContainer>
         </div>
-      </motion.div>
+      </CollapsibleSection>
       
+      {/* Two-column charts - Single column on mobile */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <motion.div
-          variants={itemVariants}
-          className="glass-card p-4 sm:p-6 border border-brand-900/30"
-        >
-          <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Points Distribution</h3>
-          <div className="h-56 sm:h-64">
+        {/* Points Distribution Pie Chart */}
+        <CollapsibleSection id="distribution" title="Points Distribution">
+          <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -284,11 +365,10 @@ export default function StatsView({ scores, houses, housesFilter }) {
                   fill="#8884d8"
                   dataKey="value"
                   label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  labelStyle={{ fontSize: '12px' }}
                 >
                   {pieChartData.map((entry, index) => (
                     <Cell
-                      key={`scoreboard-pie-cell-${index}`}
+                      key={`pie-cell-${index}`}
                       fill={houseColors[entry.key] || "#cccccc"}
                     />
                   ))}
@@ -306,28 +386,16 @@ export default function StatsView({ scores, houses, housesFilter }) {
               </PieChart>
             </ResponsiveContainer>
           </div>
-        </motion.div>
+        </CollapsibleSection>
         
-        <motion.div
-          variants={itemVariants}
-          className="glass-card p-4 sm:p-6 border border-brand-900/30"
-        >
-          <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Top Events by Points</h3>
-          <div className="h-56 sm:h-64">
+        {/* Top Events Chart */}
+        <CollapsibleSection id="topEvents" title="Top Events by Points">
+          <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 layout="vertical"
-                data={(() => {
-                  const regularEvents = scores.filter(x => !x.type)
-                  return regularEvents
-                    .map(event => {
-                      const totalPoints = Object.values(event.points).reduce((sum, p) => sum + (p || 0), 0)
-                      return { name: event.eventName, totalPoints, date: event.date }
-                    })
-                    .sort((a, b) => b.totalPoints - a.totalPoints)
-                    .slice(0, 5)
-                })()}
-                margin={{ top: 5, right: 30, left: 60, bottom: 5 }}
+                data={topEventsData}
+                margin={{ top: 5, right: 20, left: 60, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.gridStroke} />
                 <XAxis
@@ -370,24 +438,23 @@ export default function StatsView({ scores, houses, housesFilter }) {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </motion.div>
+        </CollapsibleSection>
       </div>
       
-      <motion.div
-        variants={itemVariants}
-        className="glass-card p-4 sm:p-6 border border-brand-900/30"
-      >
-        <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">House Performance Trends</h3>
+      {/* House Performance Trends */}
+      <CollapsibleSection id="trends" title="House Performance Trends">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {filteredHouses.map(house => {
             const trend = houseTrends[house.key]
             const wins = eventRankings[house.key]?.wins || 0
             const bestEvents = eventRankings[house.key]?.eventNames || []
+            
             return (
               <div
                 key={house.key}
-                className={`flex flex-col p-3 sm:p-5 rounded-lg bg-house-${house.key}/5 border border-house-${house.key}/20`}
+                className={`flex flex-col p-4 sm:p-5 rounded-lg bg-house-${house.key}/5 border border-house-${house.key}/20`}
               >
+                {/* House header */}
                 <div className="flex items-center mb-3 sm:mb-4">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-dark-800 flex-shrink-0 border border-white/10">
                     <img
@@ -397,7 +464,9 @@ export default function StatsView({ scores, houses, housesFilter }) {
                     />
                   </div>
                   <div className="ml-3 sm:ml-4">
-                    <div className={`text-house-${house.key} font-medium text-base sm:text-lg`}>{house.name}</div>
+                    <div className={`text-house-${house.key} font-medium text-base sm:text-lg`}>
+                      {house.name}
+                    </div>
                     <div className="flex items-center text-xs sm:text-sm bg-dark-900/50 px-2 py-1 rounded-full mt-1">
                       <span className="mr-1.5">{getTrendIcon(trend.direction)}</span>
                       <span
@@ -415,6 +484,8 @@ export default function StatsView({ scores, houses, housesFilter }) {
                     </div>
                   </div>
                 </div>
+                
+                {/* House stats */}
                 <div className="mt-2 space-y-2 text-xs sm:text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-400">Events Won:</span>
@@ -434,15 +505,13 @@ export default function StatsView({ scores, houses, housesFilter }) {
             )
           })}
         </div>
-      </motion.div>
+      </CollapsibleSection>
       
-      <motion.div
-        variants={itemVariants}
-        className="glass-card p-4 sm:p-6 border border-brand-900/30"
-      >
-        <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">House Details</h3>
+      {/* House Details */}
+      <CollapsibleSection id="details" title="House Details">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {filteredHouses.map(house => {
+            // Find best event for this house
             const regularEvents = scores.filter(s => !s.type)
             let bestEvent = { name: "None", points: 0 }
             regularEvents.forEach(event => {
@@ -451,15 +520,19 @@ export default function StatsView({ scores, houses, housesFilter }) {
                 bestEvent = { name: event.eventName, points }
               }
             })
+            
+            // Calculate totals
             const totalScore = scores.find(s => s.type === "total")
             const totalPoints = totalScore ? totalScore.points[house.key] || 0 : 0
             const adjustments = scores.filter(s => s.type === "adjustment")
             const adjustmentTotal = adjustments.reduce((a, adj) => a + (adj.points[house.key] || 0), 0)
+            
             return (
               <div
                 key={house.key}
-                className="flex flex-col h-full glass-card-inner p-4 sm:p-6 bg-dark-900/50 border border-white/5 rounded-xl"
+                className="flex flex-col h-full glass-card p-4 sm:p-6 bg-dark-900/50 border border-white/5 rounded-xl"
               >
+                {/* House header */}
                 <div className="flex items-center mb-3 sm:mb-4">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-dark-800 flex-shrink-0 border border-white/10 mr-3">
                     <img
@@ -469,17 +542,27 @@ export default function StatsView({ scores, houses, housesFilter }) {
                     />
                   </div>
                   <div>
-                    <h4 className={`text-lg sm:text-xl font-bold text-house-${house.key}`}>{house.name}</h4>
-                    <div className="text-xs sm:text-sm text-gray-400">{house.animal}</div>
+                    <h4 className={`text-lg sm:text-xl font-bold text-house-${house.key}`}>
+                      {house.name}
+                    </h4>
+                    <div className="text-xs sm:text-sm text-gray-400">
+                      {house.animal}
+                    </div>
                   </div>
                 </div>
+                
+                {/* House motto */}
                 <div className="text-xs sm:text-sm italic text-gray-300 mb-3 sm:mb-4 border-l-2 border-white/10 pl-3">
                   "{house.motto}"
                 </div>
-                <div className="space-y-2 mt-auto pt-4 border-t border-white/10">
+                
+                {/* House stats */}
+                <div className="space-y-2 mt-auto pt-3 sm:pt-4 border-t border-white/10">
                   <div className="flex justify-between text-xs sm:text-sm">
                     <span className="text-gray-400">Best Event:</span>
-                    <span className="text-white font-medium">{bestEvent.name} ({bestEvent.points} pts)</span>
+                    <span className="text-white font-medium">
+                      {bestEvent.name} ({bestEvent.points} pts)
+                    </span>
                   </div>
                   <div className="flex justify-between text-xs sm:text-sm">
                     <span className="text-gray-400">Adjustments:</span>
@@ -495,14 +578,16 @@ export default function StatsView({ scores, houses, housesFilter }) {
                   </div>
                   <div className="flex justify-between pt-2 border-t border-white/5 text-sm sm:text-base">
                     <span className="text-gray-300 font-medium">Total Points:</span>
-                    <span className={`text-base sm:text-lg font-bold text-house-${house.key}`}>{totalPoints}</span>
+                    <span className={`text-base sm:text-lg font-bold text-house-${house.key}`}>
+                      {totalPoints}
+                    </span>
                   </div>
                 </div>
               </div>
             )
           })}
         </div>
-      </motion.div>
+      </CollapsibleSection>
     </motion.div>
   )
 }

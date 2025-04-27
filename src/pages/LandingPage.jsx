@@ -10,28 +10,16 @@ import InstagramSection from "../components/landing/InstagramSection"
 export default function LandingPage() {
   useEffect(() => {
     document.title = "House Cup 2025 | Home"
-    
-    const setVh = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    };
-    
-    setVh();
-    window.addEventListener('resize', setVh);
-    
-    return () => {
-      window.removeEventListener('resize', setVh);
-    };
   }, [])
 
   return (
-    <div className="min-h-screen bg-dark-950">
+    <main className="min-h-dynamic-screen bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950 overflow-hidden">
       <HeroSection data={landingData.heroSection} />
       <WelcomeSection data={landingData.welcomeSection} />
       <HousesSection data={landingData.housesSection} />
       <FeaturesSection data={landingData.featuresSection} />
       <PrincipleSection data={landingData.principleSection} />
       <InstagramSection data={landingData.instagramSection} />
-    </div>
+    </main>
   )
 }

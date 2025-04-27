@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { FaSearch, FaChevronDown, FaChevronUp, FaTimes } from "react-icons/fa"
+import { FaSearch, FaChevronDown, FaTimes } from "react-icons/fa"
 
 export default function TableOfContents({
   tableOfContents,
@@ -13,6 +13,7 @@ export default function TableOfContents({
   const [isSmallScreen, setIsSmallScreen] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
 
+  // Check screen size
   useEffect(() => {
     const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth < 1024)
@@ -22,20 +23,24 @@ export default function TableOfContents({
     return () => window.removeEventListener("resize", checkScreenSize)
   }, [])
 
+  // Handle search input
   const handleSearchChange = e => setSearchTerm(e.target.value)
   const clearSearch = () => setSearchTerm("")
 
+  // Handle section click
   const handleSectionClick = (sectionId, e) => {
     e.preventDefault()
     window.location.hash = sectionId
     if (isSmallScreen) setShowTableOfContents(false)
   }
 
+  // Mobile table of contents
   if (isSmallScreen) {
     return (
       <AnimatePresence>
         {showTableOfContents && (
           <>
+            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -44,6 +49,8 @@ export default function TableOfContents({
               className="fixed inset-0 bg-dark-950/90 backdrop-blur-sm z-40"
               onClick={() => setShowTableOfContents(false)}
             />
+            
+            {/* Mobile sidebar */}
             <motion.div
               variants={{
                 hidden: { opacity: 0, x: "-100%" },
@@ -55,6 +62,7 @@ export default function TableOfContents({
               exit="exit"
               className="fixed top-0 left-0 bottom-0 w-5/6 max-w-xs bg-dark-900 border-r border-brand-900/30 shadow-xl z-50 flex flex-col"
             >
+              {/* Header */}
               <div className="p-4 border-b border-white/10 flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-brand-300">Table of Contents</h3>
                 <button
@@ -65,6 +73,8 @@ export default function TableOfContents({
                   <FaTimes size={16} />
                 </button>
               </div>
+              
+              {/* Search toggle */}
               <div className="p-4 border-b border-white/10">
                 <button
                   onClick={(e) => {
@@ -86,6 +96,8 @@ export default function TableOfContents({
                     size={14}
                   />
                 </button>
+                
+                {/* Search input (expandable) */}
                 <AnimatePresence>
                   {showSearch && (
                     <motion.div
@@ -123,6 +135,8 @@ export default function TableOfContents({
                   )}
                 </AnimatePresence>
               </div>
+              
+              {/* Content sections */}
               <div className="flex-1 overflow-y-auto p-4 no-scrollbar">
                 {tableOfContents.map((sec, i) => (
                   <div key={i} className="mb-5">
@@ -152,10 +166,12 @@ export default function TableOfContents({
                   </div>
                 ))}
               </div>
+              
+              {/* Footer */}
               <div className="p-4 border-t border-white/10">
                 <button
                   onClick={() => setShowTableOfContents(false)}
-                  className="w-full py-2.5 rounded-lg bg-brand-800 text-white font-medium hover:bg-brand-700 transition-colors text-sm"
+                  className="w-full py-2.5 rounded-lg bg-gradient-to-r from-brand-700 to-brand-600 text-white font-medium hover:from-brand-600 hover:to-brand-500 transition-colors text-sm"
                 >
                   Close Menu
                 </button>
@@ -167,8 +183,10 @@ export default function TableOfContents({
     )
   }
 
+  // Desktop table of contents
   return (
     <div className="lg:w-1/4 sticky top-24 self-start glass-card border border-brand-900/30 overflow-hidden z-10 h-auto max-h-[85vh] flex flex-col">
+      {/* Search input */}
       <div className="p-4 border-b border-white/10">
         <div className="relative">
           <input
@@ -190,7 +208,9 @@ export default function TableOfContents({
           )}
         </div>
       </div>
-      <div className="overflow-y-auto p-4 no-scrollbar flex-1">
+      
+      {/* Content sections */}
+      <div className="overflow-y-auto p-4 no-scrollbar flex-1 scrollbar-thin">
         {tableOfContents.map((sec, i) => (
           <div key={i} className="mb-5">
             {sec.title && (
@@ -204,7 +224,7 @@ export default function TableOfContents({
                   <a
                     href={`#${it.id}`}
                     onClick={e => handleSectionClick(it.id, e)}
-                    className={`flex w-full text-left items-center py-1.5 px-2 rounded transition-colors ${
+                    className={`flex w-full text-left items-center py-2 px-3 rounded transition-colors ${
                       activeSection === it.id
                         ? "bg-brand-900/30 text-brand-300"
                         : "hover:bg-dark-800/50 text-gray-300 hover:text-white"

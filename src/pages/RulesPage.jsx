@@ -7,22 +7,27 @@ import RulesContent from "../components/rules/RulesContent"
 import { FaList } from "react-icons/fa"
 
 export default function RulesPage() {
-  useEffect(() => {
-    document.title = "House Cup 2025 | Rules"
-  }, [])
-
+  // Initialize state
   const [activeSection, setActiveSection] = useState(null)
   const [showTableOfContents, setShowTableOfContents] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const sectionRefs = useRef({})
 
+  // Set page title
   useEffect(() => {
+    document.title = "House Cup 2025 | Rules"
+  }, [])
+
+  // Initialize section refs and handle URL hash
+  useEffect(() => {
+    // Create refs for all sections
     const initRefs = {}
     ;[...rulesData.sections, rulesData.schedule].forEach(s => {
       initRefs[s.id] = React.createRef()
     })
     sectionRefs.current = initRefs
     
+    // Handle URL hash navigation
     if (window.location.hash) {
       const sectionId = window.location.hash.substring(1)
       setActiveSection(sectionId)
@@ -37,6 +42,7 @@ export default function RulesPage() {
     }
   }, [])
 
+  // Track active section during scrolling
   const handleScroll = () => {
     const scrollPos = window.scrollY + 150
     for (const section of [...rulesData.sections, rulesData.schedule]) {
@@ -52,11 +58,13 @@ export default function RulesPage() {
     }
   }
 
+  // Add scroll event listener
   useEffect(() => {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [activeSection])
 
+  // Filter sections based on search term
   const filteredSections = searchTerm
     ? [...rulesData.sections, rulesData.schedule].filter(
         s =>
@@ -65,6 +73,7 @@ export default function RulesPage() {
       )
     : [...rulesData.sections, rulesData.schedule]
 
+  // Handle table of contents visibility based on screen size
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
@@ -80,22 +89,27 @@ export default function RulesPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-dark-950">
+    <main className="min-h-dynamic-screen bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950">
+      {/* Hero Section */}
       <RulesHero data={rulesData.pageHeader} />
       
+      {/* Mobile TOC Toggle Button */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-4 lg:hidden">
         <motion.button
-          variants={{ hidden: { opacity: 0, y: -20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.3 } } }}
+          variants={{ 
+            hidden: { opacity: 0, y: -20 }, 
+            visible: { opacity: 1, y: 0, transition: { duration: 0.3 } } 
+          }}
           initial="hidden"
           animate="visible"
           onClick={() => setShowTableOfContents(!showTableOfContents)}
-          className="w-full flex items-center justify-between p-3 mb-4 rounded-xl glass-card border border-brand-900/30"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-card border border-brand-900/30"
           aria-expanded={showTableOfContents}
           aria-controls="table-of-contents"
         >
           <div className="flex items-center">
             <FaList className="mr-2 text-brand-300" />
-            <span className="text-base font-semibold text-brand-300">
+            <span className="text-base font-semibold text-white">
               {searchTerm ? "Search Results" : "Table of Contents"}
             </span>
           </div>
@@ -105,8 +119,10 @@ export default function RulesPage() {
         </motion.button>
       </div>
       
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-12 relative">
+      {/* Main Content */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-12 relative">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+          {/* Table of Contents */}
           <TableOfContents
             tableOfContents={rulesData.tableOfContents}
             activeSection={activeSection}
@@ -116,6 +132,7 @@ export default function RulesPage() {
             setSearchTerm={setSearchTerm}
           />
           
+          {/* Rules Content */}
           <RulesContent
             sections={filteredSections}
             documentHeader={rulesData.documentHeader}
@@ -124,6 +141,7 @@ export default function RulesPage() {
           />
         </div>
         
+        {/* No Results Message */}
         {searchTerm && filteredSections.length === 0 && (
           <motion.div 
             initial={{ opacity: 0 }}
@@ -140,6 +158,6 @@ export default function RulesPage() {
           </motion.div>
         )}
       </div>
-    </div>
+    </main>
   )
 }

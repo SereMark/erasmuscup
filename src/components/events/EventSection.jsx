@@ -15,6 +15,8 @@ export default function EventSection({
 }) {
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 })
+  
+  // Animation variants
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -26,9 +28,17 @@ export default function EventSection({
       }
     }
   }
+  
   const titleVariants = {
     hidden: { y: 30, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: [.22, 1, .36, 1] } }
+    visible: { 
+      y: 0, 
+      opacity: 1, 
+      transition: { 
+        duration: 0.6, 
+        ease: [.22, 1, .36, 1] 
+      } 
+    }
   }
 
   return (
@@ -37,8 +47,9 @@ export default function EventSection({
       variants={sectionVariants}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      className="container mx-auto px-4 sm:px-6 lg:px-8 py-12"
+      className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16"
     >
+      {/* Section header */}
       <motion.div variants={titleVariants} className="mb-10 text-center max-w-3xl mx-auto">
         <span
           className={`inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4 ${
@@ -54,8 +65,10 @@ export default function EventSection({
         </h2>
         {subtitle && <p className="text-gray-400">{subtitle}</p>}
       </motion.div>
+      
+      {/* Event cards */}
       {events.length > 0 ? (
-        <div className="space-y-6">
+        <div className="space-y-6 sm:space-y-8">
           {events.map((event, i) => (
             <EventCard
               key={event.id}
@@ -70,6 +83,7 @@ export default function EventSection({
           ))}
         </div>
       ) : (
+        // Empty state
         <motion.div variants={titleVariants} className="glass-card p-12 text-center">
           <div className="flex flex-col items-center">
             <img

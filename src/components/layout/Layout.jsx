@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaArrowUp } from "react-icons/fa";
@@ -9,45 +9,42 @@ export default function Layout() {
   const location = useLocation();
   const [showBackToTop, setShowBackToTop] = useState(false);
 
+  // Scroll to top when route changes
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 50);
-    return () => clearTimeout(timeoutId);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.pathname]);
 
+  // Handle scroll event for back-to-top button
   useEffect(() => {
     const handleScroll = () => setShowBackToTop(window.scrollY > 500);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Set viewport height CSS variable for mobile browsers
   useEffect(() => {
     const setVh = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
     };
     
     setVh();
     window.addEventListener('resize', setVh);
-    
-    return () => {
-      window.removeEventListener('resize', setVh);
-    };
+    return () => window.removeEventListener('resize', setVh);
   }, []);
 
-  const handleScrollToTop = () => {
+  const handleScrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, []);
 
   return (
-    <div className="relative flex flex-col min-h-screen overflow-x-hidden">
+    <div className="relative flex flex-col min-h-dynamic-screen overflow-hidden">
+      {/* Background elements */}
       <div className="fixed inset-0 bg-gradient-radial from-brand-900/5 via-transparent to-transparent pointer-events-none -z-10" />
       <div className="fixed inset-0 bg-[url('/assets/textures/grid.svg')] bg-repeat opacity-5 pointer-events-none -z-10" />
 
       <Navbar />
 
-      <main className="flex-1 relative">
+      <main className="flex-1">
         <AnimatePresence mode="sync" initial={false}>
           <motion.div
             key={location.pathname}
@@ -67,18 +64,16 @@ export default function Layout() {
       <AnimatePresence>
         {showBackToTop && (
           <motion.button
-            type="button"
             onClick={handleScrollToTop}
             aria-label="Back to top"
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 p-2 sm:p-3 rounded-full bg-gradient-to-br from-brand-600 to-brand-700 text-white shadow-lg hover:from-brand-500 hover:to-brand-600 active:scale-95 transition-all duration-300"
-            initial={{ opacity: 0, y: 30 }}
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 p-2 sm:p-3 rounded-full bg-gradient-to-br from-brand-600 to-brand-700 text-white shadow-lg hover:from-brand-500 hover:to-brand-600 transition-all duration-300"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 30 }}
-            transition={{ duration: 0.3 }}
+            exit={{ opacity: 0, y: 20 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <FaArrowUp size={16} className="sm:text-lg" />
+            <FaArrowUp className="text-base sm:text-lg" />
           </motion.button>
         )}
       </AnimatePresence>

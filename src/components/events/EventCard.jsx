@@ -14,12 +14,18 @@ export default function EventCard({
   const eventType = eventTypes[event.type]
   const iconKey = event.icon
   const iconData = eventIcons[iconKey]
+  
+  // Animation variants
   const cardVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { delay: index * 0.1, duration: 0.5, ease: [.43, .13, .23, .96] }
+      transition: { 
+        delay: index * 0.1, 
+        duration: 0.5, 
+        ease: [.43, .13, .23, .96] 
+      }
     },
     hover: {
       y: -5,
@@ -32,12 +38,15 @@ export default function EventCard({
     <motion.div
       variants={cardVariants}
       whileHover="hover"
-      className={`glass-card overflow-hidden group border-l-4 ${isActive ? "border-brand-500" : "border-white/10"}`}
+      className={`glass-card overflow-hidden group ${isActive ? "border-l-4 border-brand-500" : "border-l-4 border-white/10"}`}
     >
+      {/* Card header */}
       <div className="px-6 py-5 relative">
         <div className="absolute inset-0 bg-brand-500/0 group-hover:bg-brand-500/5 transition-colors duration-300" />
+        
         <div className="flex justify-between items-start relative">
           <div>
+            {/* Event type badge */}
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-900/50 text-brand-300 mb-2 border border-brand-800/30">
               {eventType.label}
               {isActive && (
@@ -47,6 +56,8 @@ export default function EventCard({
                 </span>
               )}
             </div>
+            
+            {/* Event title */}
             <h3 className="text-xl font-bold text-white group-hover:text-brand-300 transition-colors duration-300 flex items-center">
               {iconData && (
                 <img
@@ -59,6 +70,8 @@ export default function EventCard({
             </h3>
           </div>
         </div>
+        
+        {/* Event timing */}
         <div className="mt-4 text-sm text-gray-400">
           {event.timing?.phases?.length > 0 ? (
             <div className="flex items-center p-2 rounded-md bg-dark-800/30 border border-dark-700/20">
@@ -92,11 +105,16 @@ export default function EventCard({
             </div>
           )}
         </div>
+        
+        {/* Event description */}
         <div className="mt-4 text-sm text-gray-300 leading-relaxed">
           {event.description}
         </div>
       </div>
+      
+      {/* Event details section */}
       <div className="px-6 py-4 border-t border-white/5 bg-dark-900/20">
+        {/* Event details grid */}
         {event.details && (
           <div className="mb-6">
             <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
@@ -122,6 +140,8 @@ export default function EventCard({
             </div>
           </div>
         )}
+        
+        {/* Event notes */}
         {event.notes && event.notes.length > 0 && (
           <div className="mb-6">
             <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
@@ -130,8 +150,8 @@ export default function EventCard({
             </h4>
             <div className="space-y-3">
               {event.notes.map((note, idx) => {
-                const bgColor = getTemplateColor(note.templateType, "bg")
-                const borderColor = getTemplateColor(note.templateType, "border")
+                const bgColor = getTemplateColor(note.templateType, "bg", templateTypes)
+                const borderColor = getTemplateColor(note.templateType, "border", templateTypes)
                 return (
                   <div key={idx} className={`p-4 rounded-lg ${bgColor} ${borderColor}`}>
                     <h5 className="font-medium text-brand-300 mb-2">{note.title}</h5>
@@ -145,6 +165,8 @@ export default function EventCard({
             </div>
           </div>
         )}
+        
+        {/* Points system */}
         {event.pointsSystem && (
           <div className="mb-6">
             <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
@@ -176,6 +198,8 @@ export default function EventCard({
             </div>
           </div>
         )}
+        
+        {/* Event rules */}
         {event.rules && event.rules.length > 0 && (
           <div className="mb-6">
             <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
@@ -208,6 +232,8 @@ export default function EventCard({
             </div>
           </div>
         )}
+        
+        {/* Event organizer */}
         {event.organizer && (
           <div className="text-sm bg-brand-900/20 p-3 rounded-lg border border-brand-800/30 text-gray-300 flex items-center">
             <div className="w-6 h-6 rounded-full bg-dark-800/80 flex items-center justify-center mr-2 text-brand-400">
@@ -236,14 +262,46 @@ export default function EventCard({
   )
 }
 
-function getTemplateColor(templateType, part) {
+/**
+ * Helper function to get the appropriate template styling
+ */
+function getTemplateColor(templateType, part, templateTypes) {
   const colorMap = {
-    warning: { bg: "bg-amber-900/20", border: "border border-amber-800/30", text: "text-amber-400" },
-    info: { bg: "bg-blue-900/20", border: "border border-blue-800/30", text: "text-blue-400" },
-    success: { bg: "bg-emerald-900/20", border: "border border-emerald-800/30", text: "text-emerald-400" },
-    default: { bg: "bg-dark-800/30", border: "border border-dark-700/40", text: "text-gray-300" },
-    neutral: { bg: "bg-gray-800/30", border: "border border-gray-700/30", text: "text-gray-400" }
+    warning: { 
+      bg: "bg-amber-900/20", 
+      border: "border border-amber-800/30", 
+      text: "text-amber-400" 
+    },
+    info: { 
+      bg: "bg-blue-900/20", 
+      border: "border border-blue-800/30", 
+      text: "text-blue-400" 
+    },
+    success: { 
+      bg: "bg-emerald-900/20", 
+      border: "border border-emerald-800/30", 
+      text: "text-emerald-400" 
+    },
+    default: { 
+      bg: "bg-dark-800/30", 
+      border: "border border-dark-700/40", 
+      text: "text-gray-300" 
+    },
+    neutral: { 
+      bg: "bg-gray-800/30", 
+      border: "border border-gray-700/30", 
+      text: "text-gray-400" 
+    }
   }
-  const t = colorMap[templateType] || colorMap.default
+  
+  // Use template type from templateTypes if available, otherwise use default mapping
+  let t = colorMap[templateType] || colorMap.default
+  if (templateTypes && templateTypes[templateType]) {
+    const template = templateTypes[templateType]
+    if (template.styles && template.styles[part]) {
+      return template.styles[part]
+    }
+  }
+  
   return t[part]
 }
