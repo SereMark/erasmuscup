@@ -21,17 +21,6 @@ export default function Layout() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Set viewport height CSS variable for mobile browsers
-  useEffect(() => {
-    const setVh = () => {
-      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-    };
-    
-    setVh();
-    window.addEventListener('resize', setVh);
-    return () => window.removeEventListener('resize', setVh);
-  }, []);
-
   const handleScrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -45,18 +34,7 @@ export default function Layout() {
       <Navbar />
 
       <main className="flex-1">
-        <AnimatePresence mode="sync" initial={false}>
-          <motion.div
-            key={location.pathname}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, position: "absolute", width: "100%" }}
-            transition={{ duration: 0.2 }}
-            className="w-full"
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
+        <Outlet />
       </main>
 
       <Footer />
