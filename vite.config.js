@@ -12,6 +12,7 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
         cleanupOutdatedCaches: true,
+        maximumFileSizeToCacheInBytes: 4194304, // 4 MB
       },
       manifest: {
         name: 'Erasmus House Cup 2025',
