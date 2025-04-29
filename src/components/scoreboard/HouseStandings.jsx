@@ -53,10 +53,6 @@ const HouseStandingCard = ({ house, rank, score, maxScore, index }) => {
             {/* House Name and Info */}
             <div className="flex-grow">
               <h4 className="text-white font-bold text-lg">{house.name}</h4>
-              <div className="flex flex-col sm:flex-row sm:items-center text-xs">
-                <span className="hidden sm:block mx-2 text-dark-500">•</span>
-                <span className="italic text-dark-300 text-xs truncate">"{house.motto}"</span>
-              </div>
             </div>
             
             {/* Score */}
