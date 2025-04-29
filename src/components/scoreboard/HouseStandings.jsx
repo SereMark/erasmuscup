@@ -34,30 +34,30 @@ const HouseStandingCard = ({ house, rank, score, maxScore, index }) => {
         {/* House color top bar */}
         {rank === 1 && <div className={`h-1 w-full ${houseTheme.bg}`}></div>}
         
-        <div className="p-4 sm:p-5">
-          <div className="flex items-center mb-4">
+        <div className="p-3 sm:p-4 md:p-5">
+          <div className="flex items-center mb-3 md:mb-4">
             {/* Rank */}
-            <div className={`flex items-center justify-center w-10 h-10 rounded-full ${houseTheme.bgLight} mr-4 ${rank === 1 ? 'ring-2 ' + houseTheme.border : ''}`}>
-              <span className={`font-bold text-lg ${rank === 1 ? houseTheme.textPrimary : houseTheme.text}`}>{rank}</span>
+            <div className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full ${houseTheme.bgLight} mr-3 md:mr-4 ${rank === 1 ? 'ring-2 ' + houseTheme.border : ''}`}>
+              <span className={`font-bold text-base sm:text-lg ${rank === 1 ? houseTheme.textPrimary : houseTheme.text}`}>{rank}</span>
             </div>
             
             {/* House Logo */}
-            <div className="h-12 w-12 overflow-hidden mr-4 bg-dark-900/60 rounded-full p-1 flex items-center justify-center">
+            <div className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 overflow-hidden mr-3 md:mr-4 bg-dark-900/60 rounded-full p-1 flex items-center justify-center">
               <img 
                 src={house.logo} 
                 alt={house.name}
-                className="w-10 h-10 object-contain" 
+                className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 object-contain" 
               />
             </div>
             
             {/* House Name and Info */}
             <div className="flex-grow">
-              <h4 className="text-white font-bold text-lg">{house.name}</h4>
+              <h4 className="text-white font-bold text-base sm:text-lg">{house.name}</h4>
             </div>
             
             {/* Score */}
-            <div className="text-right ml-4 flex flex-col items-end">
-              <div className={`text-2xl font-bold ${rank === 1 ? 'neon-text' : houseTheme.textPrimary}`}>
+            <div className="text-right ml-2 sm:ml-4 flex flex-col items-end">
+              <div className={`text-xl sm:text-2xl font-bold ${rank === 1 ? 'neon-text' : houseTheme.textPrimary}`}>
                 {score}
               </div>
               <div className="text-xs text-dark-400">points</div>
@@ -65,7 +65,7 @@ const HouseStandingCard = ({ house, rank, score, maxScore, index }) => {
           </div>
           
           {/* Progress Bar with animation */}
-          <div className="h-2 bg-dark-700 rounded-full overflow-hidden">
+          <div className="h-1.5 sm:h-2 bg-dark-700 rounded-full overflow-hidden">
             <motion.div 
               className={`h-full ${houseTheme.bg}`}
               initial={{ width: 0 }}
@@ -102,21 +102,21 @@ const HouseStandings = ({ houses, scores }) => {
   const maxScore = Math.max(...houseScores.map((item) => item.score));
 
   return (
-    <div className="mb-16">
+    <div className="mb-10 md:mb-16">
       {/* Section Header with animation */}
       <motion.div 
-        className="mb-8 text-center"
+        className="mb-6 md:mb-8 text-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">Current Standings</h3>
-        <p className="text-dark-300">Rankings based on total points earned across all events</p>
-        <div className="w-16 h-1 bg-brand-500/70 mx-auto rounded-full mt-4"></div>
+        <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 md:mb-3">Current Standings</h3>
+        <p className="text-dark-300 text-sm md:text-base">Rankings based on total points earned across all events</p>
+        <div className="w-12 md:w-16 h-1 bg-brand-500/70 mx-auto rounded-full mt-3 md:mt-4"></div>
       </motion.div>
       
-      {/* House Cards with Grid for Larger Screens */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+      {/* House Cards Grid - Single column on mobile, two columns on larger screens */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-5 max-w-4xl mx-auto">
         {houseScores.map((item, index) => (
           <HouseStandingCard
             key={item.house.key}

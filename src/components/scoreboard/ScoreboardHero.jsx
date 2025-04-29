@@ -5,7 +5,7 @@ const ScoreboardHero = ({ data }) => {
   const { title, subtitle, backgroundImage, gradient } = data;
 
   return (
-    <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[40vh] sm:min-h-[50vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full">
         <div className="w-full h-full">
@@ -28,7 +28,7 @@ const ScoreboardHero = ({ data }) => {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+      <div className="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
         <div className="max-w-3xl mx-auto text-center">
           {/* Title */}
           <motion.div
@@ -36,8 +36,8 @@ const ScoreboardHero = ({ data }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
           >
-            <h1 className="mb-4 text-white">{title}</h1>
-            <div className="w-20 h-1 bg-brand-500 mx-auto rounded-full mb-6"></div>
+            <h1 className="mb-3 md:mb-4 text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl">{title}</h1>
+            <div className="w-16 md:w-20 h-1 bg-brand-500 mx-auto rounded-full mb-4 md:mb-6"></div>
           </motion.div>
 
           {/* Animated Subtitle */}
@@ -45,7 +45,7 @@ const ScoreboardHero = ({ data }) => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-            className="text-lg md:text-xl text-white/90"
+            className="text-base sm:text-lg md:text-xl text-white/90"
           >
             {subtitle}
           </motion.p>
@@ -55,9 +55,9 @@ const ScoreboardHero = ({ data }) => {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4, type: 'spring' }}
-            className="mt-8 inline-flex"
+            className="mt-6 md:mt-8 inline-flex"
           >
-            <div className="flex items-center px-4 py-2 bg-brand-500/20 border border-brand-500/30 rounded-lg">
+            <div className="flex items-center px-3 py-1.5 sm:px-4 sm:py-2 bg-brand-500/20 border border-brand-500/30 rounded-lg">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -65,8 +65,8 @@ const ScoreboardHero = ({ data }) => {
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  width="16" 
-                  height="16" 
+                  width="14"
+                  height="14"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -79,7 +79,7 @@ const ScoreboardHero = ({ data }) => {
                   <polyline points="12 6 12 12 16 14" />
                 </svg>
               </motion.div>
-              <span className="text-sm font-medium text-brand-300">
+              <span className="text-xs sm:text-sm font-medium text-brand-300">
                 Last Updated: 4/29/2025
               </span>
             </div>
@@ -89,7 +89,7 @@ const ScoreboardHero = ({ data }) => {
       </div>
 
       {/* Bottom gradient */}
-      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-dark-950 via-dark-950/90 to-transparent z-10"></div>
+      <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-gradient-to-t from-dark-950 via-dark-950/90 to-transparent z-10"></div>
     </section>
   );
 };

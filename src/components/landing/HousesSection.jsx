@@ -19,8 +19,8 @@ const HouseCard = ({ house, index }) => {
         <div className={`h-1.5 w-full ${houseTheme.bg}`}></div>
         
         {/* House Logo */}
-        <div className="relative pt-8 px-6 flex justify-center">
-          <div className={`w-24 h-24 rounded-full ${houseTheme.border} border bg-dark-900/80 p-4 flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-110`}>
+        <div className="relative pt-6 md:pt-8 px-4 md:px-6 flex justify-center">
+          <div className={`w-16 h-16 md:w-24 md:h-24 rounded-full ${houseTheme.border} border bg-dark-900/80 p-3 md:p-4 flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-110`}>
             <img
               src={house.logo}
               alt={`${house.name} Logo`}
@@ -30,16 +30,16 @@ const HouseCard = ({ house, index }) => {
         </div>
         
         {/* House Info */}
-        <div className="p-6 flex-grow">
-          <h3 className={`text-2xl font-bold mb-2 text-center ${houseTheme.text}`}>{house.name}</h3>
+        <div className="p-4 md:p-6 flex-grow">
+          <h3 className={`text-xl md:text-2xl font-bold mb-2 text-center ${houseTheme.text}`}>{house.name}</h3>
           
-          <div className="flex flex-col items-center mb-4 space-y-1">
-            <span className="text-dark-100 text-sm font-medium">{house.animal}</span>
-            <span className="text-dark-300 text-sm">Captain: {house.captain}</span>
+          <div className="flex flex-col items-center mb-3 md:mb-4 space-y-1">
+            <span className="text-dark-100 text-xs md:text-sm font-medium">{house.animal}</span>
+            <span className="text-dark-300 text-xs md:text-sm">Captain: {house.captain}</span>
           </div>
           
-          <div className="mt-4 pt-4 border-t border-dark-700">
-            <p className="italic text-gray-300 text-sm text-center">"{house.motto}"</p>
+          <div className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-dark-700">
+            <p className="italic text-gray-300 text-xs md:text-sm text-center">"{house.motto}"</p>
             {house.caption && (
               <p className="text-dark-300 text-xs mt-2 text-center">{house.caption}</p>
             )}
@@ -57,28 +57,28 @@ const HousesSection = ({ data }) => {
   const { title, subtitle, houseList } = data;
   
   return (
-    <section className="bg-dark-950 py-24 relative">
+    <section className="bg-dark-950 py-16 md:py-24 relative">
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-radial from-dark-900/50 to-transparent opacity-60"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Heading */}
         <motion.div
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-10 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-white mb-4">{title}</h2>
-          <p className="text-dark-200">{subtitle}</p>
+          <h2 className="text-white mb-3 md:mb-4 text-2xl md:text-3xl lg:text-4xl">{title}</h2>
+          <p className="text-dark-200 text-sm md:text-base">{subtitle}</p>
           
           {/* Decorative underline */}
-          <div className="h-1 w-24 bg-brand-500 mx-auto mt-6 rounded-full opacity-70"></div>
+          <div className="h-1 w-16 md:w-24 bg-brand-500 mx-auto mt-4 md:mt-6 rounded-full opacity-70"></div>
         </motion.div>
         
         {/* Houses Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
           {houseList.map((house, index) => (
             <HouseCard key={house.key} house={house} index={index} />
           ))}
@@ -86,7 +86,7 @@ const HousesSection = ({ data }) => {
         
         {/* CTA Button */}
         <motion.div 
-          className="mt-20 text-center"
+          className="mt-12 md:mt-20 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -94,14 +94,14 @@ const HousesSection = ({ data }) => {
         >
           <motion.a 
             href="/events" 
-            className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-brand-500 to-brand-600 rounded-lg shadow-lg hover:shadow-xl hover:shadow-brand-500/20 transition-all duration-300"
+            className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold text-white bg-gradient-to-r from-brand-500 to-brand-600 rounded-lg shadow-lg hover:shadow-xl hover:shadow-brand-500/20 transition-all duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
             Join the next event!
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
-              className="h-5 w-5 ml-2" 
+              className="h-4 w-4 md:h-5 md:w-5 ml-2" 
               viewBox="0 0 20 20" 
               fill="currentColor"
             >
@@ -112,7 +112,7 @@ const HousesSection = ({ data }) => {
               />
             </svg>
           </motion.a>
-          <p className="mt-4 text-dark-300 text-sm">Find out which House you belong to and join the competition!</p>
+          <p className="mt-3 md:mt-4 text-dark-300 text-xs md:text-sm">Find out which House you belong to and join the competition!</p>
         </motion.div>
       </div>
     </section>

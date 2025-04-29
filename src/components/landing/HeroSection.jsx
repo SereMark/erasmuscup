@@ -46,7 +46,7 @@ const HeroSection = ({ data }) => {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-[90vh] flex items-center justify-center overflow-hidden"
+      className="relative min-h-[80vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden"
     >
       {/* Background Image Container */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
@@ -78,7 +78,7 @@ const HeroSection = ({ data }) => {
       {/* Content */}
       <div
         ref={contentRef}
-        className="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8 py-24 md:py-32"
+        className="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-32"
       >
         <div className="max-w-3xl mx-auto text-center">
           {/* Animated Title */}
@@ -86,7 +86,7 @@ const HeroSection = ({ data }) => {
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="mb-6 gradient-text"
+            className="mb-4 md:mb-6 gradient-text text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight"
           >
             {title}
           </motion.h1>
@@ -96,7 +96,7 @@ const HeroSection = ({ data }) => {
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-            className="text-lg md:text-xl mb-10 text-white/90"
+            className="text-base md:text-lg lg:text-xl mb-8 md:mb-10 text-white/90 max-w-xl mx-auto"
           >
             {subtitle}
           </motion.p>
@@ -106,7 +106,7 @@ const HeroSection = ({ data }) => {
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
-            className="flex flex-col sm:flex-row gap-5 justify-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             {buttons.map((button, index) => (
               <Link
@@ -114,8 +114,8 @@ const HeroSection = ({ data }) => {
                 to={button.link}
                 className={
                   button.styleType === 'primary'
-                    ? 'btn-primary'
-                    : 'btn-secondary'
+                    ? 'btn-primary w-full sm:w-auto'
+                    : 'btn-secondary w-full sm:w-auto'
                 }
               >
                 <motion.span
@@ -128,14 +128,14 @@ const HeroSection = ({ data }) => {
             ))}
           </motion.div>
 
-          {/* Scroll indicator */}
+          {/* Scroll indicator - Hidden on very small screens */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 1 }}
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+            className="absolute bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center hidden sm:flex"
           >
-            <span className="text-dark-200 text-sm mb-2">Scroll Down</span>
+            <span className="text-dark-200 text-xs md:text-sm mb-2">Scroll Down</span>
             <motion.div
               animate={{
                 y: [0, 8, 0],
@@ -143,7 +143,7 @@ const HeroSection = ({ data }) => {
               transition={{
                 duration: 1.5,
                 repeat: Infinity,
-                repeatType: 'loop',
+                repeatType: "loop",
                 ease: "easeInOut"
               }}
             >
@@ -168,7 +168,7 @@ const HeroSection = ({ data }) => {
       </div>
 
       {/* Bottom gradient */}
-      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-dark-950 via-dark-950/90 to-transparent z-10"></div>
+      <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-gradient-to-t from-dark-950 via-dark-950/90 to-transparent z-10"></div>
     </section>
   );
 };

@@ -22,29 +22,29 @@ const ScoreboardTable = ({ houses, scores }) => {
   };
 
   return (
-    <div className="overflow-x-auto w-full mb-12">
+    <div className="overflow-x-auto w-full mb-8 md:mb-12 -mx-4 px-4 sm:mx-0 sm:px-0">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="glass-card rounded-xl shadow-lg overflow-hidden border border-dark-800/50"
+        className="glass-card rounded-xl shadow-lg overflow-hidden border border-dark-800/50 min-w-[768px]" // Set a minimum width to ensure table doesn't get too cramped
       >
         <table className="w-full text-left text-white">
           <thead>
             <tr className="border-b border-dark-700 bg-dark-800/70">
-              <th className="p-4 font-semibold">Event</th>
-              <th className="p-4 font-semibold">Date</th>
+              <th className="p-3 md:p-4 font-semibold text-sm md:text-base">Event</th>
+              <th className="p-3 md:p-4 font-semibold text-sm md:text-base">Date</th>
               {houses.map((house) => (
-                <th key={house.key} className="p-4 font-semibold">
+                <th key={house.key} className="p-3 md:p-4 font-semibold text-sm md:text-base">
                   <div className="flex items-center">
-                    <div className="w-8 h-8 bg-dark-900/60 rounded-full p-1 flex items-center justify-center mr-2 hidden sm:flex">
+                    <div className="w-6 h-6 md:w-8 md:h-8 bg-dark-900/60 rounded-full p-1 flex items-center justify-center mr-2 hidden sm:flex">
                       <img 
                         src={house.logo} 
                         alt={house.name}
-                        className="w-6 h-6" 
+                        className="w-4 h-4 md:w-6 md:h-6" 
                       />
                     </div>
-                    <span className={getHouseClass(house.key, 'textPrimary')}>
+                    <span className={`${getHouseClass(house.key, 'textPrimary')} whitespace-nowrap`}>
                       {house.name}
                     </span>
                   </div>
@@ -64,13 +64,13 @@ const ScoreboardTable = ({ houses, scores }) => {
                 animate="visible"
                 variants={tableRowVariants}
               >
-                <td className="p-4 font-medium">
+                <td className="p-3 md:p-4 font-medium text-sm md:text-base">
                   {score.eventName}
                   {score.type === 'adjustment' && (
-                    <span className="badge-accent ml-2 text-xs">Adjustment</span>
+                    <span className="badge-accent ml-2 text-xs py-0">Adjustment</span>
                   )}
                 </td>
-                <td className="p-4 text-dark-300">{score.date}</td>
+                <td className="p-3 md:p-4 text-dark-300 text-sm md:text-base">{score.date}</td>
                 {houses.map((house) => {
                   const points = score.points[house.key] || 0;
                   
@@ -81,9 +81,9 @@ const ScoreboardTable = ({ houses, scores }) => {
                   return (
                     <td 
                       key={`${score.id}-${house.key}`} 
-                      className="p-4"
+                      className="p-3 md:p-4"
                     >
-                      <span className={`inline-block px-3 py-1.5 rounded-lg text-center min-w-[60px] ${getPointBadgeClass(points)} ${isHighest ? 'shadow-sm' : ''}`}>
+                      <span className={`inline-block px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-center min-w-[40px] md:min-w-[60px] text-xs md:text-sm ${getPointBadgeClass(points)} ${isHighest ? 'shadow-sm' : ''}`}>
                         {points > 0 ? `+${points}` : points}
                       </span>
                     </td>
@@ -100,12 +100,12 @@ const ScoreboardTable = ({ houses, scores }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
               >
-                <td className="p-4 text-lg" colSpan="2">
+                <td className="p-3 md:p-4 text-base md:text-lg" colSpan="2">
                   <div className="flex items-center">
                     <svg 
                       xmlns="http://www.w3.org/2000/svg" 
-                      width="18" 
-                      height="18" 
+                      width="16" 
+                      height="16" 
                       viewBox="0 0 24 24" 
                       fill="none" 
                       stroke="currentColor" 
@@ -132,8 +132,8 @@ const ScoreboardTable = ({ houses, scores }) => {
                   const isHighest = totalPoints === highestTotal;
                   
                   return (
-                    <td key={`total-${house.key}`} className="p-4">
-                      <span className={`text-lg ${getHouseClass(house.key, 'textPrimary')} ${isHighest ? 'font-extrabold' : ''}`}>
+                    <td key={`total-${house.key}`} className="p-3 md:p-4">
+                      <span className={`text-base md:text-lg ${getHouseClass(house.key, 'textPrimary')} ${isHighest ? 'font-extrabold' : ''}`}>
                         {totalPoints}
                       </span>
                     </td>
@@ -144,6 +144,11 @@ const ScoreboardTable = ({ houses, scores }) => {
           )}
         </table>
       </motion.div>
+      
+      {/* Table mobile instruction */}
+      <div className="block text-center mt-2 text-dark-400 text-xs md:hidden">
+        <p>Swipe left/right to see all houses →</p>
+      </div>
     </div>
   );
 };

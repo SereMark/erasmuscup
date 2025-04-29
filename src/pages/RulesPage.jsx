@@ -14,6 +14,7 @@ import Schedule from '../components/rules/Schedule';
 const RulesPage = () => {
   const location = useLocation();
   const [activeSectionId, setActiveSectionId] = useState('');
+  const [tocVisible, setTocVisible] = useState(false);
   const mainContentRef = useRef(null);
   
   // Extract section IDs for all sections including schedule
@@ -38,6 +39,8 @@ const RulesPage = () => {
             block: 'start'
           });
           setActiveSectionId(sectionId);
+          // Close mobile TOC after navigation
+          setTocVisible(false);
         }
       }, 100);
     }
@@ -52,6 +55,8 @@ const RulesPage = () => {
         block: 'start'
       });
       setActiveSectionId(sectionId);
+      // Close mobile TOC after clicking
+      setTocVisible(false);
     }
   };
 
@@ -65,27 +70,55 @@ const RulesPage = () => {
         />
       </Helmet>
       
-      <div className="rules-page min-h-screen bg-dark-950">
-        {/* Background Elements */}
-        <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-gradient-radial from-brand-500/5 to-transparent rounded-full filter blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-gradient-radial from-accent-500/5 to-transparent rounded-full filter blur-3xl"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(#333_1px,transparent_1px)] bg-[size:20px_20px] opacity-5"></div>
-        </div>
-        
+      <div className="rules-page min-h-screen">
         {/* Hero Section */}
         <RulesHero data={rulesData.pageHeader} />
         
         {/* Main Content */}
-        <section className="py-12 md:py-16 lg:py-20">
+        <section className="py-8 sm:py-12 md:py-16 lg:py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {/* Document Header */}
             <DocumentHeader data={rulesData.documentHeader} />
             
+            {/* Mobile ToC toggle */}
+            <div className="lg:hidden mb-6">
+              <button 
+                onClick={() => setTocVisible(!tocVisible)}
+                className="flex items-center justify-between w-full px-4 py-3 bg-dark-800 rounded-lg shadow-md"
+              >
+                <span className="font-medium text-white">Table of Contents</span>
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  className={`transition-transform duration-300 ${tocVisible ? 'rotate-180' : ''}`}
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              
+              {/* Mobile ToC dropdown */}
+              <div className={`mt-2 transition-all duration-300 overflow-hidden ${
+                tocVisible ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+              }`}>
+                <TableOfContents 
+                  data={rulesData.tableOfContents}
+                  currentSectionId={activeSectionId}
+                  onSectionClick={handleSectionClick}
+                />
+              </div>
+            </div>
+            
             {/* Content Area with Sidebar */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-              {/* Sidebar - Table of Contents */}
-              <div className="lg:col-span-1">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-8">
+              {/* Sidebar - Table of Contents (desktop only) */}
+              <div className="hidden lg:block lg:col-span-1 sticky top-20 self-start">
                 <TableOfContents 
                   data={rulesData.tableOfContents}
                   currentSectionId={activeSectionId}
@@ -164,29 +197,29 @@ const RulesPage = () => {
         </section>
         
         {/* Call-to-Action Section */}
-        <section className="py-20 bg-gradient-to-b from-dark-900 to-dark-950 relative overflow-hidden">
+        <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-dark-900 to-dark-950 relative overflow-hidden">
           {/* Decorative pattern */}
           <div className="absolute inset-0 dot-pattern opacity-5"></div>
           
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <div>
-              <h2 className="text-3xl font-bold text-white mb-4">Ready to Join the Competition?</h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-brand-400 to-brand-500 mx-auto rounded-full mb-6"></div>
-              <p className="text-dark-200 max-w-2xl mx-auto mb-10">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Ready to Join the Competition?</h2>
+              <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-brand-400 to-brand-500 mx-auto rounded-full mb-4 sm:mb-6"></div>
+              <p className="text-dark-200 max-w-2xl mx-auto mb-6 sm:mb-10 text-sm sm:text-base">
                 Now that you've read the rules, it's time to discover your House and compete for the Cup.
                 Take the quiz and join the excitement!
               </p>
             </div>
             
-            <div className="flex flex-col sm:flex-row justify-center gap-5">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-5">
               <a 
                 href="/events" 
-                className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-brand-500 to-brand-600 rounded-lg shadow-lg hover:shadow-xl hover:shadow-brand-500/20 transition-all duration-300"
+                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold text-white bg-gradient-to-r from-brand-500 to-brand-600 rounded-lg shadow-lg hover:shadow-xl hover:shadow-brand-500/20 transition-all duration-300"
               >
                 Join the next event!
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="h-5 w-5 ml-2" 
+                  className="h-4 w-4 sm:h-5 sm:w-5 ml-2" 
                   viewBox="0 0 20 20" 
                   fill="currentColor"
                 >
@@ -200,7 +233,7 @@ const RulesPage = () => {
               
               <a 
                 href="/scoreboard" 
-                className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-dark-800 hover:bg-dark-700 border border-dark-700 hover:border-dark-600 rounded-lg transition-colors duration-300"
+                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold text-white bg-dark-800 hover:bg-dark-700 border border-dark-700 hover:border-dark-600 rounded-lg transition-colors duration-300"
               >
                 View Scoreboard
               </a>

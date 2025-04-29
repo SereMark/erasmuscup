@@ -24,23 +24,23 @@
   }
 
   h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight;
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight;
   }
 
   h2 {
-    @apply text-3xl md:text-4xl font-bold leading-tight;
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold leading-tight;
   }
 
   h3 {
-    @apply text-2xl md:text-3xl font-bold leading-snug;
+    @apply text-xl sm:text-2xl md:text-3xl font-bold leading-snug;
   }
 
   h4 {
-    @apply text-xl md:text-2xl font-semibold;
+    @apply text-lg sm:text-xl md:text-2xl font-semibold;
   }
 
   p {
-    @apply text-base md:text-lg leading-relaxed;
+    @apply text-sm sm:text-base md:text-lg leading-relaxed;
   }
 
   a {
@@ -51,7 +51,7 @@
 @layer components {
   /* Button styles */
   .btn {
-    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-lg transition-all duration-200;
+    @apply inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium rounded-lg transition-all duration-200;
   }
 
   .btn-primary {
@@ -81,7 +81,7 @@
 
   /* Badge styles */
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
   }
 
   .badge-primary {
@@ -106,7 +106,7 @@
   }
 
   .section-padding {
-    @apply py-12 md:py-16 lg:py-24;
+    @apply py-8 sm:py-12 md:py-16 lg:py-24;
   }
 
   /* Navigation styles */
@@ -159,17 +159,41 @@
   /* Neon text effects */
   .neon-text {
     @apply text-brand-400;
-    text-shadow: 0 0 5px rgba(145, 70, 255, 0.5), 0 0 10px rgba(145, 70, 255, 0.3);
+    text-shadow: 0 0 3px rgba(145, 70, 255, 0.5), 0 0 6px rgba(145, 70, 255, 0.3);
   }
   
   .neon-text-accent {
     @apply text-accent-400;
-    text-shadow: 0 0 5px rgba(255, 109, 96, 0.5), 0 0 10px rgba(255, 109, 96, 0.3);
+    text-shadow: 0 0 3px rgba(255, 109, 96, 0.5), 0 0 6px rgba(255, 109, 96, 0.3);
   }
 
   /* Dot pattern background */
   .dot-pattern {
     background-image: radial-gradient(circle, theme('colors.dark.700') 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-size: 16px 16px;
+    @screen md {
+      background-size: 20px 20px;
+    }
+  }
+
+  /* Mobile-first media query helpers */
+  @media (max-width: 640px) {
+    .display-on-mobile-only {
+      display: block;
+    }
+    
+    .hide-on-mobile {
+      display: none;
+    }
+  }
+  
+  @media (min-width: 641px) {
+    .display-on-mobile-only {
+      display: none;
+    }
+    
+    .hide-on-mobile {
+      display: block;
+    }
   }
 }

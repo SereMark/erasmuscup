@@ -40,9 +40,6 @@ const ScoreboardPage = () => {
     // Add event listener for resize
     window.addEventListener('resize', checkScreenSize);
     
-    // Scroll to top on component mount
-    window.scrollTo(0, 0);
-    
     // Cleanup
     return () => {
       window.removeEventListener('resize', checkScreenSize);
@@ -83,13 +80,7 @@ const ScoreboardPage = () => {
         <ScoreboardHero data={heroSection} />
         
         {/* Main Content */}
-        <section className="py-16 md:py-20 bg-dark-950 relative">
-          {/* Background Elements */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-gradient-radial from-brand-500/5 to-transparent rounded-full filter blur-3xl"></div>
-            <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-gradient-radial from-accent-500/5 to-transparent rounded-full filter blur-3xl"></div>
-          </div>
-          
+        <section className="py-10 md:py-16 lg:py-20 bg-dark-950 relative">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* House Standings */}
             <HouseStandings houses={houses} scores={scores} />
@@ -99,6 +90,7 @@ const ScoreboardPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
+              className="overflow-x-auto py-2 -mx-4 px-4 sm:mx-0 sm:px-0"
             >
               <ViewSelector 
                 viewOptions={isMobile ? config.viewOptions.filter(option => option !== 'table') : config.viewOptions}
@@ -129,7 +121,7 @@ const ScoreboardPage = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="py-20 bg-gradient-to-b from-dark-900 to-dark-950 relative overflow-hidden"
+          className="py-12 md:py-16 lg:py-20 bg-gradient-to-b from-dark-900 to-dark-950 relative overflow-hidden"
         >
           {/* Decorative pattern */}
           <div className="absolute inset-0 dot-pattern opacity-5"></div>
@@ -141,9 +133,9 @@ const ScoreboardPage = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-3xl font-bold text-white mb-4">Ready to Join the Competition?</h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-brand-400 to-brand-500 mx-auto rounded-full mb-6"></div>
-              <p className="text-dark-200 max-w-2xl mx-auto mb-10">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Ready to Join the Competition?</h2>
+              <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-brand-400 to-brand-500 mx-auto rounded-full mb-6"></div>
+              <p className="text-dark-200 max-w-2xl mx-auto mb-6 md:mb-10 text-sm md:text-base">
                 Don't miss your chance to be part of the legendary Erasmus House Cup 2025. 
                 Take the quiz, join a house, and start earning points!
               </p>
@@ -151,7 +143,7 @@ const ScoreboardPage = () => {
             
             <motion.a 
               href="/events" 
-              className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-brand-500 to-brand-600 rounded-lg shadow-lg hover:shadow-xl hover:shadow-brand-500/20 transition-all duration-300"
+              className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold text-white bg-gradient-to-r from-brand-500 to-brand-600 rounded-lg shadow-lg hover:shadow-xl hover:shadow-brand-500/20 transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               initial={{ opacity: 0, y: 30 }}
@@ -162,7 +154,7 @@ const ScoreboardPage = () => {
               Join the next event!
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5 ml-2" 
+                className="h-4 w-4 md:h-5 md:w-5 ml-2" 
                 viewBox="0 0 20 20" 
                 fill="currentColor"
               >

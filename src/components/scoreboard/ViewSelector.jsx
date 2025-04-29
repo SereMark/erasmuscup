@@ -38,15 +38,15 @@ const ViewSelector = ({ viewOptions, currentView, onChange }) => {
   };
 
   return (
-    <div className="flex justify-center mb-12">
-      <div className="bg-dark-800/80 backdrop-blur-sm rounded-xl p-1.5 inline-flex shadow-lg">
+    <div className="flex justify-center mb-8 md:mb-12 mx-auto">
+      <div className="bg-dark-800/80 backdrop-blur-sm rounded-xl p-1 sm:p-1.5 inline-flex shadow-lg">
         {viewOptions.map((option) => (
           <motion.button
             key={option}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => onChange(option)}
-            className={`relative px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 min-w-[100px] flex items-center justify-center ${
+            className={`relative px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 min-w-[70px] sm:min-w-[100px] flex items-center justify-center ${
               currentView === option
                 ? 'text-white'
                 : 'text-dark-300 hover:text-white'
@@ -64,8 +64,8 @@ const ViewSelector = ({ viewOptions, currentView, onChange }) => {
             
             {/* Icon and label with relative z-index */}
             <span className="relative z-10 flex items-center">
-              <span className="mr-2">{getViewIcon(option)}</span>
-              <span>{option.charAt(0).toUpperCase() + option.slice(1)}</span>
+              <span className="mr-1.5 sm:mr-2">{getViewIcon(option)}</span>
+              <span className="whitespace-nowrap">{option.charAt(0).toUpperCase() + option.slice(1)}</span>
             </span>
           </motion.button>
         ))}

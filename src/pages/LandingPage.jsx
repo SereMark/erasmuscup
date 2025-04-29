@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import HeroSection from '../components/landing/HeroSection';
 import WelcomeSection from '../components/landing/WelcomeSection';
@@ -9,11 +9,6 @@ import InstagramSection from '../components/landing/InstagramSection';
 import landingData from '../data/landingData.json';
 
 const LandingPage = () => {
-  // Scroll restoration on component mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <>
       <Helmet>

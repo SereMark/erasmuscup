@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
 import "../global.css";
 
 /**
  * Application entry point
- * - Uses React 18's createRoot API
  * - Sets up BrowserRouter for routing
  * - Uses HelmetProvider for managing document head
  */

@@ -31,29 +31,42 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   }, [location]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <header
       className={`fixed w-full z-50 transition-all duration-300 ${
         isScrolled || isMobileMenuOpen
-          ? 'bg-dark-900/90 backdrop-blur-md shadow-lg py-4'
-          : 'bg-transparent py-5'
+          ? 'bg-dark-900/90 backdrop-blur-md shadow-lg py-2 sm:py-4'
+          : 'bg-transparent py-3 sm:py-5'
       }`}
     >
-      <div className="container mx-auto container-padding">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center space-x-2 sm:space-x-3">
             <motion.img
               src="/assets/logos/house-cup-logo.png"
               alt="Erasmus House Cup Logo"
-              className="h-10 w-auto"
+              className="h-8 sm:h-10 w-auto"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
               whileHover={{ scale: 1.05 }}
             />
             <div>
-              <h1 className="text-xl font-bold leading-none mb-1">
+              <h1 className="text-base sm:text-xl font-bold leading-none mb-0.5 sm:mb-1">
                 <span className="text-white">House</span>
                 <span className="text-brand-400">Cup</span>
               </h1>
@@ -127,12 +140,12 @@ const Navbar = () => {
               transition={{ duration: 0.2 }}
               className="md:hidden overflow-hidden"
             >
-              <div className="py-4 flex flex-col space-y-3 mt-4 border-t border-dark-800">
+              <div className="py-3 sm:py-4 flex flex-col space-y-2 mt-3 sm:mt-4 border-t border-dark-800">
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`block py-2 px-4 font-medium rounded-lg transition-colors ${
+                    className={`block py-3 px-4 font-medium rounded-lg transition-colors ${
                       location.pathname === link.path
                         ? 'text-white bg-dark-800'
                         : 'text-dark-300 hover:text-white hover:bg-dark-800/50'
@@ -146,6 +159,20 @@ const Navbar = () => {
           )}
         </AnimatePresence>
       </div>
+      
+      {/* Full screen overlay for mobile menu background - appears when menu open */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-dark-950/80 backdrop-blur-sm -z-10 md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </header>
   );
 };

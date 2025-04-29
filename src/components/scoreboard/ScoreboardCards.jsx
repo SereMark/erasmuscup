@@ -33,29 +33,29 @@ const EventCard = ({ event, houses, index }) => {
         {isAdjustment && <div className="h-1 w-full bg-accent-500"></div>}
         
         {/* Event Header */}
-        <div className="p-5 border-b border-dark-700/50">
+        <div className="p-3 sm:p-4 md:p-5 border-b border-dark-700/50">
           <div className="flex justify-between items-start">
             <div>
-              <h3 className={`font-bold text-lg ${isTotal ? 'text-white' : 'text-dark-100'}`}>
+              <h3 className={`font-bold text-base sm:text-lg ${isTotal ? 'text-white' : 'text-dark-100'}`}>
                 {event.eventName}
               </h3>
               {!isTotal && (
-                <p className="text-sm text-dark-400">{event.date}</p>
+                <p className="text-xs sm:text-sm text-dark-400">{event.date}</p>
               )}
             </div>
             
             {/* Badge for adjustments */}
             {isAdjustment && (
-              <span className="badge-accent">Adjustment</span>
+              <span className="badge-accent text-xs">Adjustment</span>
             )}
             
             {/* Trophy for totals */}
             {isTotal && (
-              <div className={`${brandTheme.bgLighter} p-2 rounded-lg`}>
+              <div className={`${brandTheme.bgLighter} p-1.5 sm:p-2 rounded-lg`}>
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  width="20" 
-                  height="20" 
+                  width="18" 
+                  height="18" 
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -77,23 +77,23 @@ const EventCard = ({ event, houses, index }) => {
         </div>
         
         {/* Points by House */}
-        <div className="p-5 space-y-4 flex-grow">
+        <div className="p-3 sm:p-4 md:p-5 space-y-3 md:space-y-4 flex-grow">
           {houses.map((house) => {
             const points = event.points[house.key] || 0;
             const isHighest = !isNaN(points) && points === highestScore && points > 0;
             const houseTheme = getHouseTheme(house.key);
             
             return (
-              <div key={house.key} className={`flex items-center justify-between ${isHighest && !isTotal ? 'p-2 -mx-2 rounded-lg ' + houseTheme.bgLight : ''}`}>
+              <div key={house.key} className={`flex items-center justify-between ${isHighest && !isTotal ? 'p-1.5 sm:p-2 -mx-1.5 sm:-mx-2 rounded-lg ' + houseTheme.bgLight : ''}`}>
                 <div className="flex items-center">
-                  <div className="w-8 h-8 mr-3 bg-dark-900/60 rounded-full p-1 flex items-center justify-center">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 mr-2 sm:mr-3 bg-dark-900/60 rounded-full p-1 flex items-center justify-center">
                     <img
                       src={house.logo}
                       alt={house.name}
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <span className={`${isHighest ? 'font-medium text-white' : 'text-dark-200'}`}>{house.name}</span>
+                  <span className={`text-sm sm:text-base ${isHighest ? 'font-medium text-white' : 'text-dark-200'}`}>{house.name}</span>
                 </div>
                 
                 <div 
@@ -105,7 +105,7 @@ const EventCard = ({ event, houses, index }) => {
                         : points < 0 
                           ? 'text-accent-400'
                           : 'text-dark-300'
-                  } ${isTotal ? 'text-xl' : ''}`}
+                  } ${isTotal ? 'text-lg sm:text-xl' : 'text-sm sm:text-base'}`}
                 >
                   {points > 0 && !isTotal ? '+' : ''}{points}
                 </div>
@@ -116,7 +116,7 @@ const EventCard = ({ event, houses, index }) => {
         
         {/* Footer for special events */}
         {isTotal && (
-          <div className="p-4 bg-dark-800/40 text-center text-sm text-dark-300 border-t border-dark-700/50">
+          <div className="p-3 sm:p-4 bg-dark-800/40 text-center text-xs sm:text-sm text-dark-300 border-t border-dark-700/50">
             <span>Final standings as of the last event</span>
           </div>
         )}
@@ -131,17 +131,18 @@ const EventCard = ({ event, houses, index }) => {
         {/* Highlight for highest scoring house */}
         {!isTotal && isAdjustment === false && highestScore > 0 && (
           <div className="absolute top-0 right-0">
-            <div className={`w-8 h-8 ${winningHouseTheme.textPrimary} flex items-center justify-center`}>
+            <div className={`w-6 h-6 sm:w-8 sm:h-8 ${winningHouseTheme.textPrimary} flex items-center justify-center`}>
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
-                width="16" 
-                height="16" 
+                width="14" 
+                height="14" 
                 viewBox="0 0 24 24" 
                 fill="none" 
                 stroke="currentColor" 
                 strokeWidth="2" 
                 strokeLinecap="round" 
                 strokeLinejoin="round"
+                className="sm:w-4 sm:h-4"
               >
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
               </svg>
@@ -171,7 +172,7 @@ const ScoreboardCards = ({ houses, scores }) => {
   };
 
   return (
-    <div className="space-y-8 mb-12">
+    <div className="space-y-6 md:space-y-8 mb-8 md:mb-12">
       {/* Total Event Card - Featured at Top */}
       {totalEvent && (
         <div className="max-w-2xl mx-auto">
@@ -189,7 +190,7 @@ const ScoreboardCards = ({ houses, scores }) => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6"
       >
         {regularEvents.map((event, index) => (
           <EventCard

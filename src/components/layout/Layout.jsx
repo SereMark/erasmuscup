@@ -4,7 +4,8 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 
 /**
- * Main layout component
+ * Main layout component that handles common layout elements
+ * and functionality across all pages
  */
 const Layout = () => {
   const location = useLocation();
@@ -17,31 +18,34 @@ const Layout = () => {
     });
   }, [location.pathname]);
 
-  // Static background elements
+  // Static background elements shared across all pages
   const BackgroundElements = () => (
-    <>
-      {/* Top-right gradient orb */}
-      <div className="fixed top-0 right-0 w-1/3 h-1/3 bg-gradient-radial from-brand-500/10 to-transparent rounded-full filter blur-3xl -z-10 pointer-events-none" />
+    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+      {/* Top-left gradient orb */}
+      <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-gradient-radial from-brand-500/5 to-transparent rounded-full filter blur-3xl"></div>
       
-      {/* Bottom-left gradient orb */}
-      <div className="fixed bottom-0 left-0 w-1/3 h-1/3 bg-gradient-radial from-accent-500/10 to-transparent rounded-full filter blur-3xl -z-10 pointer-events-none" />
+      {/* Bottom-right gradient orb */}
+      <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-gradient-radial from-accent-500/5 to-transparent rounded-full filter blur-3xl"></div>
       
-      {/* Subtle grid pattern overlay */}
-      <div className="fixed inset-0 bg-[radial-gradient(#333_1px,transparent_1px)] bg-[size:20px_20px] opacity-5 -z-20 pointer-events-none" />
-    </>
+      {/* Subtle dot pattern */}
+      <div className="absolute inset-0 bg-[radial-gradient(#333_1px,transparent_1px)] bg-[size:20px_20px] opacity-5"></div>
+    </div>
   );
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-dark-950">
+      {/* Background elements */}
       <BackgroundElements />
+      
+      {/* Navigation */}
       <Navbar />
       
-      <main className="flex-grow pt-24">
-        <div className="h-full">
-          <Outlet />
-        </div>
+      {/* Main content area */}
+      <main className="flex-grow">
+        <Outlet />
       </main>
       
+      {/* Footer */}
       <Footer />
     </div>
   );
