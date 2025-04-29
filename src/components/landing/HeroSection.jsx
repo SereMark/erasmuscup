@@ -1,142 +1,176 @@
-import React from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { Link } from "react-router-dom"
-import { FaArrowRight } from "react-icons/fa"
+import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { gsap } from 'gsap';
 
-export default function HeroSection({ data }) {
-  // Parallax scroll effect
-  const { scrollYProgress } = useScroll({
-    offset: ["start start", "end start"]
-  })
-  
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9])
-  const y = useTransform(scrollYProgress, [0, 1], [0, 150])
-  
-  // Animation variants
-  const titleVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        duration: 0.8, 
-        ease: [.22, 1, .36, 1] 
-      } 
-    }
-  }
-  
-  const subtitleVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        delay: 0.2, 
-        duration: 0.8, 
-        ease: [.22, 1, .36, 1] 
-      } 
-    }
-  }
-  
-  const buttonVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: i => ({
-      opacity: 1,
-      y: 0,
-      transition: { 
-        delay: 0.4 + i * 0.1, 
-        duration: 0.5, 
-        ease: [.22, 1, .36, 1] 
-      }
-    }),
-    hover: {
-      scale: 1.05,
-      filter: "drop-shadow(0 0 10px rgba(145, 70, 255, 0.5))",
-      transition: { duration: 0.2 }
-    },
-    tap: {
-      scale: 0.98,
-      transition: { duration: 0.1 }
-    }
-  }
+const HeroSection = ({ data }) => {
+  const { title, subtitle, backgroundImage, buttons } = data;
+  const heroRef = useRef(null);
+  const imageRef = useRef(null);
+  const contentRef = useRef(null);
+  const overlayRef = useRef(null);
+
+  // GSAP animations
+  useEffect(() => {
+    const hero = heroRef.current;
+    const image = imageRef.current;
+    const overlay = overlayRef.current;
+    
+    if (!hero || !image || !overlay) return;
+
+    // Parallax effect
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const scrollSpeed = 0.35;
+      
+      // Move background image at a controlled rate
+      gsap.to(image, {
+        y: scrollPosition * scrollSpeed,
+        duration: 0.4,
+        ease: 'power1.out',
+      });
+      
+      // Ensure the overlay follows the image exactly
+      gsap.set(overlay, {
+        y: scrollPosition * scrollSpeed,
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
-    <section className="relative w-full h-dynamic-screen overflow-hidden">
-      {/* Background with parallax effect */}
-      <motion.div 
-        style={{ opacity, y }} 
-        className="absolute inset-0"
-      >
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${data.backgroundImage})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-dark-950/80 via-dark-900/70 to-dark-950" />
+    <section
+      ref={heroRef}
+      className="relative min-h-[90vh] flex items-center justify-center overflow-hidden"
+    >
+      {/* Background Image Container */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        {/* Image */}
+        <div ref={imageRef} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+          <motion.div
+            initial={{ scale: 1.1, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+            className="w-full h-full"
+          >
+            <img
+              src={backgroundImage}
+              alt="House Cup Background"
+              className="w-full h-full object-cover object-center"
+            />
+          </motion.div>
         </div>
-      </motion.div>
-      
-      {/* Decorative glow effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-screen h-screen rounded-full bg-brand-500/10 blur-[100px] animate-pulse-slow transform -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-1/3 right-1/3 w-screen h-screen rounded-full bg-accent-400/10 blur-[100px] animate-pulse-slow transform translate-x-1/2 translate-y-1/2 animation-delay-1000" />
-      </div>
-      
-      {/* Content */}
-      <div className="relative h-full max-w-7xl mx-auto px-6 flex flex-col justify-center items-center text-center">
-        <motion.div 
-          initial="hidden" 
-          animate="visible" 
-          style={{ scale }} 
-          className="space-y-6 w-full"
+        
+        {/* Overlay */}
+        <div 
+          ref={overlayRef} 
+          className="absolute inset-0 w-full h-[120%] -top-[10%]"
         >
-          {/* Title */}
-          <motion.h1 
-            className="text-5xl md:text-6xl lg:text-7xl font-bold text-balance mx-auto" 
-            variants={titleVariants}
+          <div className="absolute inset-0 bg-gradient-to-b from-dark-950/95 via-dark-950/85 to-dark-950 backdrop-blur-sm"></div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div
+        ref={contentRef}
+        className="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8 py-24 md:py-32"
+      >
+        <div className="max-w-3xl mx-auto text-center">
+          {/* Animated Title */}
+          <motion.h1
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="mb-6 gradient-text"
           >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-300 leading-tight text-shadow-md">
-              {data.title}
-            </span>
+            {title}
           </motion.h1>
-          
-          {/* Subtitle */}
-          <motion.p 
-            className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto font-light" 
-            variants={subtitleVariants}
+
+          {/* Animated Subtitle */}
+          <motion.p
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+            className="text-lg md:text-xl mb-10 text-white/90"
           >
-            {data.subtitle}
+            {subtitle}
           </motion.p>
-          
-          {/* Action buttons */}
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-4 pt-8 justify-center items-center" 
-            variants={subtitleVariants}
+
+          {/* Buttons */}
+          <motion.div
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
+            className="flex flex-col sm:flex-row gap-5 justify-center"
           >
-            {data.buttons.map((button, i) => (
-              <motion.div 
-                key={i} 
-                variants={buttonVariants} 
-                custom={i} 
-                whileHover="hover" 
-                whileTap="tap"
+            {buttons.map((button, index) => (
+              <Link
+                key={index}
+                to={button.link}
+                className={
+                  button.styleType === 'primary'
+                    ? 'btn-primary'
+                    : 'btn-secondary'
+                }
               >
-                <Link
-                  to={button.link}
-                  className={`inline-flex items-center justify-center px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 w-full sm:w-auto ${
-                    button.styleType === "primary"
-                      ? "bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-lg shadow-brand-500/30 hover:shadow-xl hover:shadow-brand-500/40"
-                      : "bg-dark-800/50 backdrop-blur-sm border border-brand-500/30 text-white hover:bg-dark-800/80 hover:border-brand-500/50"
-                  }`}
+                <motion.span
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   {button.text}
-                  <FaArrowRight className="ml-2 text-sm opacity-70" />
-                </Link>
-              </motion.div>
+                </motion.span>
+              </Link>
             ))}
           </motion.div>
-        </motion.div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 1 }}
+            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+          >
+            <span className="text-dark-200 text-sm mb-2">Scroll Down</span>
+            <motion.div
+              animate={{
+                y: [0, 8, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                repeatType: 'loop',
+                ease: "easeInOut"
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-brand-400"
+              >
+                <path d="M12 5v14"></path>
+                <path d="m19 12-7 7-7-7"></path>
+              </svg>
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
+
+      {/* Bottom gradient */}
+      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-dark-950 via-dark-950/90 to-transparent z-10"></div>
     </section>
-  )
-}
+  );
+};
+
+export default HeroSection;

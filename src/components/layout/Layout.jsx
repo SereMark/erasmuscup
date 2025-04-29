@@ -1,60 +1,50 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Outlet, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaArrowUp } from "react-icons/fa";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import React, { useEffect } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
+import Navbar from './Navbar';
+import Footer from './Footer';
 
-export default function Layout() {
+/**
+ * Main layout component
+ */
+const Layout = () => {
   const location = useLocation();
-  const [showBackToTop, setShowBackToTop] = useState(false);
-
-  // Scroll to top when route changes
+  
+  // Scroll to top on route change
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({
+      top: 0,
+      behavior: 'instant'
+    });
   }, [location.pathname]);
 
-  // Handle scroll event for back-to-top button
-  useEffect(() => {
-    const handleScroll = () => setShowBackToTop(window.scrollY > 500);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleScrollToTop = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
+  // Static background elements
+  const BackgroundElements = () => (
+    <>
+      {/* Top-right gradient orb */}
+      <div className="fixed top-0 right-0 w-1/3 h-1/3 bg-gradient-radial from-brand-500/10 to-transparent rounded-full filter blur-3xl -z-10 pointer-events-none" />
+      
+      {/* Bottom-left gradient orb */}
+      <div className="fixed bottom-0 left-0 w-1/3 h-1/3 bg-gradient-radial from-accent-500/10 to-transparent rounded-full filter blur-3xl -z-10 pointer-events-none" />
+      
+      {/* Subtle grid pattern overlay */}
+      <div className="fixed inset-0 bg-[radial-gradient(#333_1px,transparent_1px)] bg-[size:20px_20px] opacity-5 -z-20 pointer-events-none" />
+    </>
+  );
 
   return (
-    <div className="relative flex flex-col min-h-dynamic-screen overflow-hidden">
-      {/* Background elements */}
-      <div className="fixed inset-0 bg-gradient-radial from-brand-900/5 via-transparent to-transparent pointer-events-none -z-10" />
-      <div className="fixed inset-0 bg-[url('/assets/textures/grid.svg')] bg-repeat opacity-5 pointer-events-none -z-10" />
-
+    <div className="flex flex-col min-h-screen">
+      <BackgroundElements />
       <Navbar />
-
-      <main className="flex-1">
-        <Outlet />
+      
+      <main className="flex-grow pt-24">
+        <div className="h-full">
+          <Outlet />
+        </div>
       </main>
-
+      
       <Footer />
-
-      <AnimatePresence>
-        {showBackToTop && (
-          <motion.button
-            onClick={handleScrollToTop}
-            aria-label="Back to top"
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 p-2 sm:p-3 rounded-full bg-gradient-to-br from-brand-600 to-brand-700 text-white shadow-lg hover:from-brand-500 hover:to-brand-600 transition-all duration-300"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <FaArrowUp className="text-base sm:text-lg" />
-          </motion.button>
-        )}
-      </AnimatePresence>
     </div>
   );
-}
+};
+
+export default Layout;

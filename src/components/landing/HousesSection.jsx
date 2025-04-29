@@ -1,214 +1,122 @@
-import React, { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import React from 'react';
+import { motion } from 'framer-motion';
+import { getHouseTheme } from '../../utils/houseTheme';
 
-export default function HousesSection({ data }) {
-  const sectionRef = useRef(null)
-  const isInView = useInView(sectionRef, { once: false, amount: 0.15 })
+const HouseCard = ({ house, index }) => {
+  // Get house theme using the global utility
+  const houseTheme = getHouseTheme(house.key);
   
-  // Animation variants
-  const sectionVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1, 
-      transition: { 
-        when: "beforeChildren", 
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      } 
-    }
-  }
-  
-  const titleVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        duration: 0.6, 
-        ease: [.22, 1, .36, 1] 
-      } 
-    }
-  }
-  
-  const houseCardVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: i => ({
-      y: 0,
-      opacity: 1,
-      transition: { 
-        delay: i * 0.15, 
-        duration: 0.8, 
-        ease: [.25, .1, .25, 1] 
-      }
-    }),
-    hover: { 
-      y: -10, 
-      transition: { 
-        duration: 0.3, 
-        ease: [.43, .13, .23, .96] 
-      } 
-    }
-  }
-  
-  const borderVariants = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: i => ({
-      pathLength: 1,
-      opacity: 1,
-      transition: { 
-        delay: i * 0.15 + 0.5, 
-        duration: 1.2, 
-        ease: "easeInOut" 
-      }
-    })
-  }
-
   return (
-    <section 
-      ref={sectionRef} 
-      className="py-20 md:py-24 relative overflow-hidden"
+    <motion.div
+      className="group"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
     >
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900/70 to-dark-950 -z-10" />
-      
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden -z-10">
-        <div className="absolute inset-0 bg-[url('/assets/textures/noise.png')] bg-repeat opacity-5" />
-        <div className="absolute top-0 left-1/4 w-screen h-screen bg-brand-500/10 rounded-full blur-[100px]" /> 
-        <div className="absolute bottom-1/4 right-1/3 w-screen h-screen bg-accent-500/10 rounded-full blur-[100px]" />
+      <div className={`relative rounded-xl overflow-hidden bg-dark-800 transition-all duration-300 group-hover:shadow-lg group-hover:${houseTheme.glow} group-hover:-translate-y-2 h-full flex flex-col`}>
+        {/* Accent top bar */}
+        <div className={`h-1.5 w-full ${houseTheme.bg}`}></div>
+        
+        {/* House Logo */}
+        <div className="relative pt-8 px-6 flex justify-center">
+          <div className={`w-24 h-24 rounded-full ${houseTheme.border} border bg-dark-900/80 p-4 flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-110`}>
+            <img
+              src={house.logo}
+              alt={`${house.name} Logo`}
+              className="w-full h-full object-cover rounded-full"
+            />
+          </div>
+        </div>
+        
+        {/* House Info */}
+        <div className="p-6 flex-grow">
+          <h3 className={`text-2xl font-bold mb-2 text-center ${houseTheme.text}`}>{house.name}</h3>
+          
+          <div className="flex flex-col items-center mb-4 space-y-1">
+            <span className="text-dark-100 text-sm font-medium">{house.animal}</span>
+            <span className="text-dark-300 text-sm">Captain: {house.captain}</span>
+          </div>
+          
+          <div className="mt-4 pt-4 border-t border-dark-700">
+            <p className="italic text-gray-300 text-sm text-center">"{house.motto}"</p>
+            {house.caption && (
+              <p className="text-dark-300 text-xs mt-2 text-center">{house.caption}</p>
+            )}
+          </div>
+        </div>
+        
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-5 dot-pattern pointer-events-none"></div>
       </div>
+    </motion.div>
+  );
+};
+
+const HousesSection = ({ data }) => {
+  const { title, subtitle, houseList } = data;
+  
+  return (
+    <section className="bg-dark-950 py-24 relative">
+      {/* Background elements */}
+      <div className="absolute inset-0 bg-gradient-radial from-dark-900/50 to-transparent opacity-60"></div>
       
-      {/* Content */}
-      <motion.div
-        variants={sectionVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        className="container mx-auto px-6 lg:px-8"
-      >
-        {/* Section title */}
-        <motion.div variants={titleVariants} className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-brand-500 mb-4">
-            {data.title}
-          </h2>
-          <p className="max-w-3xl mx-auto text-lg text-gray-300">
-            {data.subtitle}
-          </p>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Heading */}
+        <motion.div
+          className="text-center max-w-3xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-white mb-4">{title}</h2>
+          <p className="text-dark-200">{subtitle}</p>
+          
+          {/* Decorative underline */}
+          <div className="h-1 w-24 bg-brand-500 mx-auto mt-6 rounded-full opacity-70"></div>
         </motion.div>
         
-        {/* House cards grid */}
+        {/* Houses Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {data.houseList.map((house, i) => (
-            <motion.div
-              key={house.key}
-              custom={i}
-              variants={houseCardVariants}
-              whileHover="hover"
-              className="relative group perspective"
-            >
-              {/* Card container with 3D effect */}
-              <div className="relative preserve-3d transition-transform duration-500 group-hover:rotate-y-3 group-hover:scale-102">
-                {/* Card content */}
-                <div className={`glass-card p-6 border-t-4 border-house-${house.key} bg-house-${house.key}/10 h-full flex flex-col`}>
-                  {/* Header with logo and title */}
-                  <div className="flex items-center space-x-4 mb-6">
-                    <div className="w-16 h-16 relative flex-shrink-0">
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: i * 0.15 + 0.3, duration: 0.6, ease: [.43, .13, .23, .96] }}
-                        className="absolute inset-0 flex items-center justify-center"
-                      >
-                        <img 
-                          src={house.logo} 
-                          alt={`${house.name} logo`} 
-                          className="w-full h-full object-contain"
-                        />
-                      </motion.div>
-                      
-                      {/* Animated border */}
-                      <svg className="absolute inset-0 w-full h-full animate-spin-slow" viewBox="0 0 100 100" fill="none">
-                        <motion.circle
-                          cx="50"
-                          cy="50"
-                          r="48"
-                          stroke={`url(#house-border-${house.key})`}
-                          strokeWidth="1"
-                          variants={borderVariants}
-                          custom={i}
-                        />
-                        <defs>
-                          <linearGradient id={`house-border-${house.key}`} x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-                            <stop className={`text-house-${house.key}`} stopColor="currentColor" />
-                            <stop offset="1" className={`text-house-${house.key}`} stopColor="currentColor" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
-                    </div>
-                    
-                    <div>
-                      <h3 className={`text-xl font-bold text-house-${house.key}`}>
-                        {house.name}
-                      </h3>
-                      {house.animal && (
-                        <p className="text-sm text-gray-400">
-                          {house.animal}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  
-                  {/* House details */}
-                  <div className="flex flex-col gap-4 flex-grow text-base">
-                    {house.motto && (
-                      <div className="flex flex-col sm:flex-row items-start">
-                        <span className="text-gray-400 w-full sm:w-24 flex-shrink-0 font-medium">
-                          Motto:
-                        </span>
-                        <span className="text-white italic leading-relaxed">
-                          {house.motto}
-                        </span>
-                      </div>
-                    )}
-                    
-                    {house.caption && (
-                      <div className="text-xs text-gray-500 sm:ml-24 leading-relaxed -mt-2">
-                        {house.caption}
-                      </div>
-                    )}
-                    
-                    {house.captain && (
-                      <div className="flex flex-col sm:flex-row items-start mt-auto">
-                        <span className="text-gray-400 w-full sm:w-24 flex-shrink-0 font-medium">
-                          Captain:
-                        </span>
-                        <span className="text-white leading-relaxed">
-                          {house.captain}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Progress bar */}
-                  <div className="h-1.5 w-full bg-dark-800 rounded-full mt-4 overflow-hidden">
-                    <motion.div
-                      className={`h-full w-0 gradient-${house.key}`}
-                      initial={{ width: 0 }}
-                      animate={{ width: "100%" }}
-                      transition={{ delay: i * 0.15 + 1, duration: 0.8, ease: "easeOut" }}
-                    />
-                  </div>
-                </div>
-                
-                {/* Hover effect */}
-                <div className={`absolute inset-0 bg-house-${house.key} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl`} />
-              </div>
-              
-              {/* Glow effect */}
-              <div className={`absolute -inset-1 bg-house-${house.key} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500 rounded-2xl`} />
-            </motion.div>
+          {houseList.map((house, index) => (
+            <HouseCard key={house.key} house={house} index={index} />
           ))}
         </div>
-      </motion.div>
+        
+        {/* CTA Button */}
+        <motion.div 
+          className="mt-20 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
+          <motion.a 
+            href="/events" 
+            className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-brand-500 to-brand-600 rounded-lg shadow-lg hover:shadow-xl hover:shadow-brand-500/20 transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Join the next event!
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5 ml-2" 
+              viewBox="0 0 20 20" 
+              fill="currentColor"
+            >
+              <path 
+                fillRule="evenodd" 
+                d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" 
+                clipRule="evenodd" 
+              />
+            </svg>
+          </motion.a>
+          <p className="mt-4 text-dark-300 text-sm">Find out which House you belong to and join the competition!</p>
+        </motion.div>
+      </div>
     </section>
-  )
-}
+  );
+};
+
+export default HousesSection;

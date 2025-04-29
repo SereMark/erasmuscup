@@ -1,107 +1,117 @@
-import React from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import React from 'react';
+import { motion } from 'framer-motion';
 
-export default function RulesHero({ data }) {
-  // Parallax scroll effects
-  const { scrollYProgress } = useScroll({ offset: ["start start", "end start"] })
-  const y = useTransform(scrollYProgress, [0, 1], [0, 300])
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  
-  // Animation variants
-  const titleVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        duration: 0.8, 
-        ease: [.22, 1, .36, 1] 
-      } 
-    }
-  }
-  
-  const subtitleVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        delay: 0.2, 
-        duration: 0.8, 
-        ease: [.22, 1, .36, 1] 
-      } 
-    }
-  }
+const RulesHero = ({ data }) => {
+  const { title, subtitle } = data;
 
   return (
-    <section className="relative w-full h-[40vh] sm:h-[50vh] min-h-[300px] overflow-hidden">
-      {/* Background with parallax effect */}
-      <motion.div 
-        style={{ y, opacity }} 
-        className="absolute inset-0 w-full h-full"
-      >
-        <div 
-          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${data.backgroundImage || '/assets/backgrounds/rules-bg.jpg'})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-dark-950/90 via-dark-900/80 to-dark-950" />
-          <div className="absolute inset-0 bg-[url('/assets/textures/grid.svg')] bg-repeat opacity-5" />
-        </div>
-      </motion.div>
-      
-      {/* Decorative glow effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-screen h-screen rounded-full bg-brand-500/10 blur-[100px] opacity-60"
+    <section className="relative py-20 md:py-24 overflow-hidden bg-dark-900">
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-br from-brand-900/50 to-dark-950/80"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2 }}
+        />
+        
+        <motion.div 
+          className="absolute inset-0 dot-pattern opacity-10"
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 0.1, scale: 1 }}
+          transition={{ duration: 1.5, ease: 'easeOut' }}
+        />
+        
+        {/* Decorative floating elements */}
+        <motion.div 
+          className="absolute top-1/4 right-1/4 w-32 h-32 rounded-full bg-brand-500/5 blur-2xl"
           animate={{ 
-            scale: [1, 1.05, 1], 
-            opacity: [0.6, 0.4, 0.6] 
-          }}
+            y: [0, -15, 0],
+            opacity: [0.3, 0.5, 0.3]
+          }} 
           transition={{ 
-            duration: 8, 
-            repeat: Infinity, 
-            repeatType: "reverse" 
+            duration: 6,
+            repeat: Infinity,
+            repeatType: 'reverse'
           }}
         />
-        <motion.div
-          className="absolute bottom-1/3 right-1/3 w-screen h-screen rounded-full bg-accent-400/10 blur-[100px] opacity-70"
+        
+        <motion.div 
+          className="absolute bottom-1/4 left-1/4 w-48 h-48 rounded-full bg-accent-500/5 blur-2xl"
           animate={{ 
-            scale: [1, 1.1, 1], 
-            opacity: [0.7, 0.5, 0.7] 
-          }}
+            y: [0, 15, 0],
+            opacity: [0.2, 0.4, 0.2]
+          }} 
           transition={{ 
-            duration: 10, 
-            delay: 2, 
-            repeat: Infinity, 
-            repeatType: "reverse" 
+            duration: 8,
+            repeat: Infinity,
+            repeatType: 'reverse',
+            delay: 2
           }}
         />
       </div>
-      
+
       {/* Content */}
-      <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center text-center">
-        <motion.div 
-          initial="hidden" 
-          animate="visible" 
-          className="space-y-4 sm:space-y-6 w-full"
-        >
+      <div className="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto text-center">
           {/* Title */}
-          <motion.h1
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-200 text-shadow-md"
-            variants={titleVariants}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
           >
-            {data.title}
-          </motion.h1>
-          
+            <h1 className="mb-6 gradient-text">{title}</h1>
+            <div className="w-24 h-1 bg-gradient-to-r from-brand-500 to-accent-500 mx-auto rounded-full mb-6"></div>
+          </motion.div>
+
           {/* Subtitle */}
           <motion.p
-            className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto"
-            variants={subtitleVariants}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
+            className="text-lg md:text-xl text-white/90"
           >
-            {data.subtitle}
+            {subtitle}
           </motion.p>
-        </motion.div>
+          
+          {/* Document badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-8 inline-block"
+          >
+            <div className="flex items-center px-4 py-2 rounded-full bg-dark-800/80 backdrop-blur-sm border border-dark-700">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="16" 
+                height="16" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className="text-brand-400 mr-2"
+              >
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span className="text-sm font-medium text-dark-100">Official Rulebook • April 2025 Edition</span>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Gradient divider */}
+      <div className="absolute bottom-0 left-0 w-full h-16">
+        <div className="w-full h-full bg-gradient-to-t from-dark-950 to-transparent"></div>
       </div>
     </section>
-  )
-}
+  );
+};
+
+export default RulesHero;

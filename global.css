@@ -3,302 +3,173 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --scroll-behavior: smooth;
-    scroll-behavior: smooth;
-    --vh: 1vh;
-    
-    /* Animation variables */
-    --animation-duration-fast: 200ms;
-    --animation-duration-medium: 300ms;
-    --animation-duration-slow: 500ms;
-    --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
-    
-    /* House color variables */
-    --color-house-theHoo: 145, 70, 255;
-    --color-house-brewCrew: 212, 175, 55;
-    --color-house-redStorm: 225, 29, 72;
-    --color-house-deepJungle: 16, 185, 129;
-    --color-house-theHoo-light: 172, 115, 255;
-    --color-house-brewCrew-light: 250, 204, 21;
-    --color-house-redStorm-light: 251, 113, 133;
-    --color-house-deepJungle-light: 52, 211, 153;
-  }
-  
   html {
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-text-size-adjust: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
   }
-  
-  @screen lg {
-    html {
-      font-size: 17px;
-      line-height: 1.7;
-    }
+
+  html::-webkit-scrollbar {
+    display: none;
   }
-  
+
   body {
-    margin: 0;
-    padding: 0;
-    font-family: "Inter var", "Inter", sans-serif;
+    @apply font-sans bg-dark-950 text-white min-h-screen;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    @apply bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950 text-gray-100;
   }
-  
-  /* Focus styles */
-  :focus-visible {
-    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-dark-950;
-  }
-  
-  /* Scrollbar styles */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  
-  @media (max-width: 768px) {
-    ::-webkit-scrollbar {
-      width: 4px;
-      height: 4px;
-    }
-  }
-  
-  ::-webkit-scrollbar-track {
-    @apply bg-dark-950;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    @apply bg-brand-800 rounded-full;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-brand-700;
-  }
-  
-  /* Selection */
+
   ::selection {
-    @apply bg-brand-500/30 text-white;
+    @apply bg-brand-400/30 text-white;
   }
-  
-  /* Typography */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display leading-tight;
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight;
   }
-  
-  strong {
-    @apply font-semibold;
+
+  h2 {
+    @apply text-3xl md:text-4xl font-bold leading-tight;
   }
-  
-  button {
-    @apply focus:outline-none;
+
+  h3 {
+    @apply text-2xl md:text-3xl font-bold leading-snug;
   }
-  
-  /* Mobile text handling */
-  @media (max-width: 640px) {
-    h1, h2, h3, h4, h5, h6, p, a, span, div, li {
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-      word-break: break-word;
-      hyphens: auto;
-    }
-    
-    /* Reduce animation complexity on mobile */
-    .animate-float {
-      animation-duration: 4s !important;
-    }
-    
-    .animate-shimmer {
-      animation-duration: 2.5s !important;
-    }
-    
-    /* Disable certain animations on low-end devices */
-    @media (prefers-reduced-motion) {
-      .animate-float,
-      .animate-shimmer,
-      .animate-pulse-slow,
-      .animate-gradient-x {
-        animation: none !important;
-        transform: none !important;
-      }
-    }
+
+  h4 {
+    @apply text-xl md:text-2xl font-semibold;
+  }
+
+  p {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+
+  a {
+    @apply transition-colors duration-200;
   }
 }
 
 @layer components {
-  /* Glass card styles */
-  .glass-card {
-    @apply backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl shadow-glass relative overflow-hidden;
-  }
-  
   /* Button styles */
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-lg transition-all duration-200;
+  }
+
   .btn-primary {
-    @apply px-6 py-3 bg-gradient-to-r from-brand-600 to-brand-500 text-white font-medium rounded-full shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 active:translate-y-0;
+    @apply btn bg-brand-500 hover:bg-brand-600 text-white shadow-md hover:shadow-lg hover:-translate-y-1;
   }
-  
+
   .btn-secondary {
-    @apply px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-medium rounded-full hover:bg-white/20 transition-all duration-300 hover:-translate-y-1 active:translate-y-0;
+    @apply btn bg-dark-800 hover:bg-dark-700 text-white border border-dark-700 hover:border-dark-600;
+  }
+
+  .btn-accent {
+    @apply btn bg-accent-500 hover:bg-accent-600 text-white shadow-md hover:shadow-lg hover:-translate-y-1;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent hover:bg-dark-800/50 text-white border border-dark-700;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-dark-900 rounded-xl shadow-lg overflow-hidden transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:shadow-glow hover:-translate-y-1;
+  }
+
+  /* Badge styles */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-brand-500/20 text-brand-300;
+  }
+
+  .badge-accent {
+    @apply badge bg-accent-500/20 text-accent-300;
+  }
+
+  .badge-success {
+    @apply badge bg-success-500/20 text-success-300;
+  }
+
+  .badge-info {
+    @apply badge bg-info-500/20 text-info-300;
+  }
+
+  /* Layout helpers */
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-12 md:py-16 lg:py-24;
+  }
+
+  /* Navigation styles */
+  .navbar-link {
+    @apply text-dark-100 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:w-0 after:bg-brand-400 after:transition-all hover:after:w-full;
+  }
+
+  .navbar-link.active {
+    @apply text-white after:w-full;
+  }
+
+  /* Text effects */
+  .gradient-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-accent-400;
+  }
+
+  /* Card styles */
+  .house-card {
+    @apply cursor-pointer bg-dark-800 rounded-xl overflow-hidden transition-all duration-300 transform hover:-translate-y-2;
+  }
+
+  /* Animated underline for links */
+  .animated-underline {
+    @apply relative inline-block;
+  }
+
+  .animated-underline::after {
+    @apply content-[''] absolute left-0 bottom-0 w-full h-[2px] bg-brand-400 scale-x-0 origin-bottom-right transition-transform duration-300 ease-out;
+  }
+
+  .animated-underline:hover::after {
+    @apply origin-bottom-left scale-x-100;
+  }
+
+  /* Custom scrollbar for elements that need it */
+  .custom-scrollbar {
+    @apply scrollbar-thin scrollbar-track-dark-900 scrollbar-thumb-brand-700 scrollbar-thumb-rounded;
+  }
+
+  /* Hero section backdrop */
+  .hero-backdrop {
+    @apply absolute inset-0 bg-gradient-to-b from-dark-950/90 via-dark-950/80 to-dark-950 backdrop-blur-sm;
   }
   
-  /* Section title */
-  .section-title {
-    @apply text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-brand-500;
+  /* Glassmorphism effect */
+  .glass-card {
+    @apply bg-dark-900/70 backdrop-blur-md border border-dark-800/50 rounded-xl;
+  }
+
+  /* Neon text effects */
+  .neon-text {
+    @apply text-brand-400;
+    text-shadow: 0 0 5px rgba(145, 70, 255, 0.5), 0 0 10px rgba(145, 70, 255, 0.3);
   }
   
-  /* Form input */
-  .input-glass {
-    @apply bg-transparent border border-white/10 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors;
+  .neon-text-accent {
+    @apply text-accent-400;
+    text-shadow: 0 0 5px rgba(255, 109, 96, 0.5), 0 0 10px rgba(255, 109, 96, 0.3);
   }
-  
-  /* House gradients */
-  .gradient-theHoo {
-    @apply bg-gradient-to-r from-purple-600 to-brand-500;
+
+  /* Dot pattern background */
+  .dot-pattern {
+    background-image: radial-gradient(circle, theme('colors.dark.700') 1px, transparent 1px);
+    background-size: 20px 20px;
   }
-  
-  .gradient-brewCrew {
-    @apply bg-gradient-to-r from-amber-500 to-amber-600;
-  }
-  
-  .gradient-redStorm {
-    @apply bg-gradient-to-r from-rose-700 to-red-600;
-  }
-  
-  .gradient-deepJungle {
-    @apply bg-gradient-to-r from-green-700 to-lime-500;
-  }
-}
-
-/* Animation classes */
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
-  background-size: 200% 100%;
-  animation: shimmer 2s linear infinite;
-  will-change: background-position;
-  transform: translateZ(0);
-}
-
-.animate-pulse-slow {
-  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  will-change: opacity, transform;
-  transform: translateZ(0);
-}
-
-.animation-delay-1000 {
-  animation-delay: 1s;
-}
-
-.animate-gradient-x {
-  background-size: 200% 200%;
-  animation: gradient 8s linear infinite;
-  will-change: background-position;
-  transform: translateZ(0);
-}
-
-/* Standard transition class based on design system */
-.transition-standard {
-  transition-property: all;
-  transition-duration: var(--animation-duration-medium);
-  transition-timing-function: var(--animation-timing);
-}
-
-/* Animation keyframes */
-@keyframes float {
-  0%,100% { transform: translateY(0) translateZ(0); }
-  50% { transform: translateY(-10px) translateZ(0); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
-}
-
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* House colors */
-.bg-house-theHoo {
-  background-color: rgb(var(--color-house-theHoo));
-}
-
-.bg-house-brewCrew {
-  background-color: rgb(var(--color-house-brewCrew));
-}
-
-.bg-house-redStorm {
-  background-color: rgb(var(--color-house-redStorm));
-}
-
-.bg-house-deepJungle {
-  background-color: rgb(var(--color-house-deepJungle));
-}
-
-.text-house-theHoo {
-  color: rgb(var(--color-house-theHoo-light));
-}
-
-.text-house-brewCrew {
-  color: rgb(var(--color-house-brewCrew-light));
-}
-
-.text-house-redStorm {
-  color: rgb(var(--color-house-redStorm-light));
-}
-
-.text-house-deepJungle {
-  color: rgb(var(--color-house-deepJungle-light));
-}
-
-.border-house-theHoo {
-  border-color: rgb(var(--color-house-theHoo));
-}
-
-.border-house-brewCrew {
-  border-color: rgb(var(--color-house-brewCrew));
-}
-
-.border-house-redStorm {
-  border-color: rgb(var(--color-house-redStorm));
-}
-
-.border-house-deepJungle {
-  border-color: rgb(var(--color-house-deepJungle));
-}
-
-/* House background opacities */
-.bg-house-theHoo\/10 {
-  background-color: rgba(var(--color-house-theHoo), 0.1);
-}
-
-.bg-house-brewCrew\/10 {
-  background-color: rgba(var(--color-house-brewCrew), 0.1);
-}
-
-.bg-house-redStorm\/10 {
-  background-color: rgba(var(--color-house-redStorm), 0.1);
-}
-
-.bg-house-deepJungle\/10 {
-  background-color: rgba(var(--color-house-deepJungle), 0.1);
-}
-
-/* Viewport height utils */
-.min-h-dynamic-screen {
-  min-height: 100vh;
-  min-height: calc(var(--vh, 1vh) * 100);
-}
-
-.h-dynamic-screen {
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
 }

@@ -4,7 +4,7 @@
     "subtitle": "Join us for a definitely-not-a-cult showdown among fearless Erasmus adventurers, proudly governed by the House Cup Rules 2025.",
     "backgroundImage": "/assets/logos/house-cup-cover.png",
     "buttons": [
-      { "text": "Join the Competition", "link": "/events", "styleType": "primary" },
+      { "text": "Read The Rules", "link": "/rules", "styleType": "primary" },
       { "text": "Check Scoreboard", "link": "/scoreboard", "styleType": "secondary" }
     ]
   },
@@ -14,19 +14,19 @@
     "highlights": [
       {
         "text": "No, it’s not a cult",
-        "ruleReference": "section 2(3)"
+        "ruleReference": "section-2"
       },
       {
         "text": "<em class=\"text-accent-400\">Murder</em> is not punished",
-        "ruleReference": "section 17"
+        "ruleReference": "section-17"
       },
       {
         "text": "If your House fails, you’ll have one last chance to perform a <em class=\"text-accent-400\">Yardie</em> (beer-chug) or suffer <em class=\"text-accent-400\">public hanging</em>",
-        "ruleReference": "section 18"
+        "ruleReference": "section-18"
       },
       {
         "text": "Public Nudity can snag you 30 points. Round up ten or more streakers for a 1000-point jackpot. Seriously.",
-        "ruleReference": "section 16"
+        "ruleReference": "section-16"
       }
     ],
     "footerHtml": "Insanity is calling! Check out the <a href=\"/rules\" class=\"font-bold text-brand-400 underline hover:text-accent-400 transition-colors\">Full Rules</a> to learn how \"Buffaloed\" can cost you points and how \"Constructive Feedback\" can land you in hot water—or at the gallows."
@@ -80,7 +80,7 @@
       },
       {
         "title": "Gambits & Super Gambits",
-        "description": "Earn extra points on the fly. But if you get caught cheating thrice before midnight, expect harsh retribution.",
+        "description": "Earn extra points on the fly. But if you get caught cheating before midnight, expect harsh retribution.",
         "iconPath": "https://cdn.jsdelivr.net/npm/lucide-static@0.313.0/icons/dices.svg"
       },
       {

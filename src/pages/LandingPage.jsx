@@ -1,25 +1,50 @@
-import React, { useEffect } from "react"
-import landingData from "../data/landingData.json"
-import HeroSection from "../components/landing/HeroSection"
-import WelcomeSection from "../components/landing/WelcomeSection"
-import HousesSection from "../components/landing/HousesSection"
-import FeaturesSection from "../components/landing/FeaturesSection"
-import PrincipleSection from "../components/landing/PrincipleSection"
-import InstagramSection from "../components/landing/InstagramSection"
+import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
+import HeroSection from '../components/landing/HeroSection';
+import WelcomeSection from '../components/landing/WelcomeSection';
+import HousesSection from '../components/landing/HousesSection';
+import FeaturesSection from '../components/landing/FeaturesSection';
+import PrincipleSection from '../components/landing/PrincipleSection';
+import InstagramSection from '../components/landing/InstagramSection';
+import landingData from '../data/landingData.json';
 
-export default function LandingPage() {
+const LandingPage = () => {
+  // Scroll restoration on component mount
   useEffect(() => {
-    document.title = "House Cup 2025 | Home"
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
-    <main className="min-h-dynamic-screen bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950 overflow-hidden">
-      <HeroSection data={landingData.heroSection} />
-      <WelcomeSection data={landingData.welcomeSection} />
-      <HousesSection data={landingData.housesSection} />
-      <FeaturesSection data={landingData.featuresSection} />
-      <PrincipleSection data={landingData.principleSection} />
-      <InstagramSection data={landingData.instagramSection} />
-    </main>
-  )
-}
+    <>
+      <Helmet>
+        <title>Erasmus House Cup 2025 | Join the Competition</title>
+        <meta 
+          name="description" 
+          content="Join the Erasmus House Cup 2025 competition. Get sorted into a house, earn points, and compete in weekly events. Definitely not a cult."
+        />
+      </Helmet>
+
+      <div className="landing-page">
+        {/* Hero Section */}
+        <HeroSection data={landingData.heroSection} />
+
+        {/* Welcome Section */}
+        <WelcomeSection data={landingData.welcomeSection} />
+
+        {/* Houses Section */}
+        <HousesSection data={landingData.housesSection} />
+
+        {/* Features Section */}
+        <FeaturesSection data={landingData.featuresSection} />
+
+        {/* Principle Section */}
+        <PrincipleSection data={landingData.principleSection} />
+
+        {/* Instagram Section */}
+        <InstagramSection data={landingData.instagramSection} />
+      </div>
+    </>
+  );
+};
+
+export default LandingPage;

@@ -1,159 +1,129 @@
-import React, { memo } from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { FaInstagram, FaGithub, FaHeart } from "react-icons/fa";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
-// Configuration
-const QUICK_LINKS = [
-  { name: "Current Standings", path: "/scoreboard" },
-  { name: "Rules & Guidelines", path: "/rules" },
-  { name: "Upcoming Events", path: "/events" },
-];
-
-const SOCIAL_LINKS = [
-  {
-    name: "Instagram",
-    href: "https://www.instagram.com/house_cup_erasmus/",
-    icon: <FaInstagram size={18} className="sm:text-xl" />,
-    hoverColor: "hover:text-pink-400",
-  },
-  {
-    name: "GitHub",
-    href: "https://github.com/SereMark/erasmuscup",
-    icon: <FaGithub size={18} className="sm:text-xl" />,
-    hoverColor: "hover:text-gray-300",
-  },
-];
-
-// Animation variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
-
-// Memoized sub-components
-const FooterBrand = memo(() => (
-  <motion.div variants={itemVariants} className="space-y-4 sm:space-y-6">
-    <Link to="/" className="group flex items-center space-x-3 mb-4">
-      <div className="relative w-10 h-10 overflow-hidden rounded-full">
-        <motion.div
-          whileHover={{ rotate: 15, scale: 1.1 }}
-          className="absolute inset-0 bg-gradient-to-br from-brand-400 to-brand-700 opacity-80 rounded-full"
-        />
-        <img
-          src="/assets/logos/house-cup-logo.png"
-          alt="House Cup Logo"
-          className="relative z-10 w-full h-full object-contain p-1"
-          loading="lazy"
-        />
-      </div>
-      <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-300">
-        House Cup
-      </span>
-    </Link>
-    <p className="text-gray-400 text-sm sm:text-base max-w-md">
-      Bringing together students through competition, celebration, and
-      possibly public nudity. A definitely-not-a-cult experience for
-      Erasmus students.
-    </p>
-  </motion.div>
-));
-
-const QuickLinks = memo(() => (
-  <motion.div variants={itemVariants} className="space-y-4 sm:space-y-6">
-    <h3 className="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-300">
-      Quick Links
-    </h3>
-    <ul className="space-y-2 sm:space-y-3">
-      {QUICK_LINKS.map((link) => (
-        <li key={link.path}>
-          <Link
-            to={link.path}
-            className="text-gray-400 hover:text-brand-300 transition-colors inline-flex items-center group text-sm sm:text-base"
-          >
-            <span className="mr-2 text-brand-500 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all">
-              →
-            </span>
-            {link.name}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  </motion.div>
-));
-
-const SocialLinks = memo(() => (
-  <motion.div variants={itemVariants} className="space-y-4 sm:space-y-6">
-    <h3 className="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-300">
-      Connect With Us
-    </h3>
-    <div className="flex space-x-3 sm:space-x-4">
-      {SOCIAL_LINKS.map((social) => (
-        <a
-          key={social.name}
-          href={social.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`text-gray-400 ${social.hoverColor} transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 p-2 rounded-full bg-dark-800/50 border border-white/5`}
-          aria-label={social.name}
-        >
-          {social.icon}
-          <span className="sr-only">{social.name}</span>
-        </a>
-      ))}
-    </div>
-    <p className="text-gray-400 text-xs sm:text-sm">
-      Follow us for behind-the-scenes action and upcoming events!
-    </p>
-  </motion.div>
-));
-
-export default function Footer() {
+const Footer = () => {
   const currentYear = new Date().getFullYear();
+  
+  // Footer links
+  const quickLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'Scoreboard', path: '/scoreboard' },
+    { name: 'Rules', path: '/rules' },
+    { name: 'Events', path: '/events' },
+  ];
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }
+  };
 
   return (
-    <motion.footer
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={containerVariants}
-      className="relative mt-12 sm:mt-20 pt-10 sm:pt-16 pb-8 sm:pb-12 border-t border-brand-900/50 overflow-hidden"
-    >
-      {/* Background Elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-t from-dark-950 to-transparent" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[200%] h-[300px] sm:h-[500px] bg-gradient-radial from-brand-900/10 via-dark-950/5 to-transparent opacity-50" />
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8 sm:mb-10">
-          <FooterBrand />
-          <QuickLinks />
-          <SocialLinks />
-        </div>
-
-        <motion.div
-          variants={itemVariants}
-          className="pt-6 mt-6 sm:pt-8 sm:mt-8 border-t border-brand-900/30 flex flex-col sm:flex-row justify-between items-center text-xs sm:text-sm text-gray-500"
+    <footer className="bg-dark-950 border-t border-dark-800 py-6">
+      <div className="container mx-auto px-4">
+        <motion.div 
+          className="flex flex-wrap items-center justify-between"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <p>© {currentYear} Erasmus House Cup. All absurd rules apply.</p>
-          <p className="mt-3 sm:mt-0 flex items-center">
-            By participating, you consent to possible public humiliation{" "}
-            <FaHeart
-              className="text-brand-500 ml-1 inline animate-pulse-slow"
-              size={10}
-            />
+          {/* Logo and brief description */}
+          <motion.div variants={itemVariants} className="flex items-center space-x-4 mb-4 lg:mb-0">
+            <Link to="/" className="flex-shrink-0">
+              <img 
+                src="/assets/logos/house-cup-logo.png" 
+                alt="Erasmus House Cup Logo" 
+                className="h-10 w-auto" 
+              />
+            </Link>
+            <div>
+              <h3 className="text-white text-sm font-bold">Erasmus House Cup</h3>
+              <p className="text-dark-400 text-xs max-w-xs">
+                The official digital hub of the Erasmus House Cup 2025.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Quick Links and Social */}
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8">
+            {/* Navigation Links */}
+            <ul className="flex flex-wrap gap-4">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link 
+                    to={link.path} 
+                    className="text-dark-300 hover:text-brand-400 transition-colors text-sm"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            
+            {/* Instagram only */}
+            <a 
+              href="https://www.instagram.com/house_cup_erasmus/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-dark-300 hover:text-accent-400 transition-colors"
+              aria-label="Instagram"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="20" 
+                height="20" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+          </motion.div>
+        </motion.div>
+
+        {/* Bottom bar */}
+        <motion.div 
+          className="border-t border-dark-800 mt-4 pt-4 flex flex-wrap justify-between items-center"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+        >
+          <p className="text-dark-400 text-xs">
+            &copy; {currentYear} House Cup Parliament. Not associated with Anyone frfr.
+          </p>
+          
+          {/* Disclaimer */}
+          <p className="text-dark-500 text-xs mt-2 sm:mt-0">
+            This is not a cult. We promise. See section 2(3) of the House Cup Rules 2025.
           </p>
         </motion.div>
       </div>
-    </motion.footer>
+    </footer>
   );
-}
+};
+
+export default Footer;
