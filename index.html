@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Erasmus House Cup 2025</title>
     <meta
       name="description"
@@ -14,50 +15,46 @@
       content="Erasmus, House Cup, events, scoreboard, party games"
     />
     <meta name="theme-color" content="#9146ff" />
-    
+
     <!-- Favicon and app icons -->
     <link rel="canonical" href="https://erasmushousecup.com/" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
-    
-    <!-- PWA settings -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Erasmus House Cup" />
-    
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png"/>
+
+    <!-- PWA manifest -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+
     <!-- Social media tags -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://erasmushousecup.com/" />
     <meta property="og:title" content="Erasmus House Cup 2025" />
     <meta property="og:description" content="The official digital hub of the Erasmus House Cup 2025." />
     <meta property="og:image" content="/assets/logos/house-cup-cover.png" />
-    
+
     <!-- Twitter tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://erasmushousecup.com/" />
     <meta name="twitter:title" content="Erasmus House Cup 2025" />
     <meta name="twitter:description" content="The official digital hub of the Erasmus House Cup 2025." />
     <meta name="twitter:image" content="/assets/logos/house-cup-cover.png" />
-    
+
     <!-- Preconnects for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    
-    <!-- Font preloading -->
+
+    <!-- Font stylesheet -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    
-    <!-- Critical preloads -->
-    <link rel="modulepreload" href="/src/main.jsx" />
+
+    <!-- Critical image preload -->
     <link rel="preload" href="/assets/logos/house-cup-logo.png" as="image" />
-    
+
     <!-- Security headers -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    
+
     <!-- SEO structured data -->
     <script type="application/ld+json">
       {
@@ -76,7 +73,7 @@
             "addressCountry": "AT"
           }
         },
-        "image": ["https://erasmushousecup.com/assets/logos/house-cup-logo.png"],
+        "image": ["/assets/logos/house-cup-logo.png"],
         "organizer": {
           "@type": "Organization",
           "name": "House Cup Parliament 2025",
@@ -87,6 +84,7 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- Vite rewrites the following during build; in dev it loads the raw JSX -->
     <script type="module" src="/src/main.jsx"></script>
     <noscript>
       <div style="text-align: center; padding: 2rem;">

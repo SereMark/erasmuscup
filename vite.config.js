@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => {
         fastRefresh: !isProd,
       }),
 
-      // PWA & service‑worker only in **production**
+      // PWA & service-worker only in **production**
       isProd &&
         VitePWA({
           registerType: 'autoUpdate',
@@ -30,12 +30,12 @@ export default defineConfig(({ mode }) => {
             display: 'standalone',
             icons: [
               {
-                src: '/assets/icons/android-chrome-192x192.png',
+                src: '/icons/android-chrome-192x192.png',
                 sizes: '192x192',
                 type: 'image/png',
               },
               {
-                src: '/assets/icons/android-chrome-512x512.png',
+                src: '/icons/android-chrome-512x512.png',
                 sizes: '512x512',
                 type: 'image/png',
                 purpose: 'any maskable',
@@ -43,6 +43,7 @@ export default defineConfig(({ mode }) => {
             ],
           },
           workbox: {
+            navigationPreload: false, // disable to avoid navigation-preload warning
             runtimeCaching: [
               {
                 urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -96,7 +97,7 @@ export default defineConfig(({ mode }) => {
           devOptions: { enabled: false },
         }),
 
-      // Content‑Security‑Policy – prod only
+      // Content-Security-Policy – prod only
       isProd &&
         generateCspPlugin({
           policy: {
