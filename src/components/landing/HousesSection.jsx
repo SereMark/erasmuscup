@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 import { getHouseTheme } from '../../utils/houseTheme';
 
-const HouseCard = ({ house, index }) => {
+const HouseCard = memo(({ house, index }) => {
   // Get house theme using the global utility
   const houseTheme = getHouseTheme(house.key);
   
@@ -16,7 +16,7 @@ const HouseCard = ({ house, index }) => {
     >
       <div className={`relative rounded-xl overflow-hidden bg-dark-800 transition-all duration-300 group-hover:shadow-lg group-hover:${houseTheme.glow} group-hover:-translate-y-2 h-full flex flex-col`}>
         {/* Accent top bar */}
-        <div className={`h-1.5 w-full ${houseTheme.bg}`}></div>
+        <div className={`h-1.5 w-full ${houseTheme.bg}`} aria-hidden="true"></div>
         
         {/* House Logo */}
         <div className="relative pt-6 md:pt-8 px-4 md:px-6 flex justify-center">
@@ -25,6 +25,7 @@ const HouseCard = ({ house, index }) => {
               src={house.logo}
               alt={`${house.name} Logo`}
               className="w-full h-full object-cover rounded-full"
+              loading="lazy"
             />
           </div>
         </div>
@@ -47,19 +48,22 @@ const HouseCard = ({ house, index }) => {
         </div>
         
         {/* Subtle background pattern */}
-        <div className="absolute inset-0 opacity-5 dot-pattern pointer-events-none"></div>
+        <div className="absolute inset-0 opacity-5 dot-pattern pointer-events-none" aria-hidden="true"></div>
       </div>
     </motion.div>
   );
-};
+});
+
+// Set display name for the memoized component
+HouseCard.displayName = 'HouseCard';
 
 const HousesSection = ({ data }) => {
   const { title, subtitle, houseList } = data;
   
   return (
-    <section className="bg-dark-950 py-16 md:py-24 relative">
+    <section className="bg-dark-950 py-16 md:py-24 relative" id="houses">
       {/* Background elements */}
-      <div className="absolute inset-0 bg-gradient-radial from-dark-900/50 to-transparent opacity-60"></div>
+      <div className="absolute inset-0 bg-gradient-radial from-dark-900/50 to-transparent opacity-60" aria-hidden="true"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Heading */}
@@ -104,6 +108,7 @@ const HousesSection = ({ data }) => {
               className="h-4 w-4 md:h-5 md:w-5 ml-2" 
               viewBox="0 0 20 20" 
               fill="currentColor"
+              aria-hidden="true"
             >
               <path 
                 fillRule="evenodd" 
@@ -119,4 +124,4 @@ const HousesSection = ({ data }) => {
   );
 };
 
-export default HousesSection;
+export default memo(HousesSection);

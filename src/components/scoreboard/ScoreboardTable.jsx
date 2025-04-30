@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { getPointBadgeClass, getHouseClass } from '../../utils/houseTheme';
 
-const ScoreboardTable = ({ houses, scores }) => {
-  // Filter out the total row (we'll display it separately)
-  const eventScores = scores.filter(score => score.type !== 'total');
-  const totalScore = scores.find(score => score.type === 'total');
-
-  // Animation variants for table rows
+// Memoized table row component
+const ScoreboardRow = memo(({ score, houses, index, isTotal = false }) => {
   const tableRowVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: (i) => ({
@@ -22,6 +18,60 @@ const ScoreboardTable = ({ houses, scores }) => {
   };
 
   return (
+    <motion.tr 
+      className={`border-b border-dark-800/30 hover:bg-dark-800/30 transition-colors ${
+        score.type === 'adjustment' ? 'bg-dark-800/10' : ''
+      }`}
+      custom={index}
+      initial="hidden"
+      animate="visible"
+      variants={tableRowVariants}
+    >
+      <td className="p-3 md:p-4 font-medium text-sm md:text-base">
+        {score.eventName}
+        {score.type === 'adjustment' && (
+          <span className="badge-accent ml-2 text-xs py-0">Adjustment</span>
+        )}
+      </td>
+      <td className="p-3 md:p-4 text-dark-300 text-sm md:text-base">{score.date}</td>
+      {houses.map((house) => {
+        const points = score.points[house.key] || 0;
+        
+        // Find if this is the highest score for this event
+        const highestPoint = Math.max(...Object.values(score.points).filter(p => !isNaN(p)));
+        const isHighest = points === highestPoint && points > 0;
+        
+        return (
+          <td 
+            key={`${score.id}-${house.key}`} 
+            className="p-3 md:p-4"
+          >
+            <span 
+              className={`inline-block px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-center min-w-[40px] md:min-w-[60px] text-xs md:text-sm ${getPointBadgeClass(points)} ${isHighest ? 'shadow-sm' : ''}`}
+              title={`${house.name}: ${points} points`}
+            >
+              {points > 0 ? `+${points}` : points}
+            </span>
+          </td>
+        );
+      })}
+    </motion.tr>
+  );
+});
+
+// Set display name for memoized component
+ScoreboardRow.displayName = 'ScoreboardRow';
+
+const ScoreboardTable = ({ houses, scores }) => {
+  // Filter scores and find total in a memoized way
+  const { eventScores, totalScore } = useMemo(() => {
+    return {
+      eventScores: scores.filter(score => score.type !== 'total'),
+      totalScore: scores.find(score => score.type === 'total')
+    };
+  }, [scores]);
+
+  return (
     <div className="overflow-x-auto w-full mb-8 md:mb-12 -mx-4 px-4 sm:mx-0 sm:px-0">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -29,19 +79,21 @@ const ScoreboardTable = ({ houses, scores }) => {
         transition={{ duration: 0.5 }}
         className="glass-card rounded-xl shadow-lg overflow-hidden border border-dark-800/50 min-w-[768px]" // Set a minimum width to ensure table doesn't get too cramped
       >
-        <table className="w-full text-left text-white">
+        <table className="w-full text-left text-white" role="table" aria-label="House Cup Scoreboard">
           <thead>
             <tr className="border-b border-dark-700 bg-dark-800/70">
-              <th className="p-3 md:p-4 font-semibold text-sm md:text-base">Event</th>
-              <th className="p-3 md:p-4 font-semibold text-sm md:text-base">Date</th>
+              <th className="p-3 md:p-4 font-semibold text-sm md:text-base" scope="col">Event</th>
+              <th className="p-3 md:p-4 font-semibold text-sm md:text-base" scope="col">Date</th>
               {houses.map((house) => (
-                <th key={house.key} className="p-3 md:p-4 font-semibold text-sm md:text-base">
+                <th key={house.key} className="p-3 md:p-4 font-semibold text-sm md:text-base" scope="col">
                   <div className="flex items-center">
                     <div className="w-6 h-6 md:w-8 md:h-8 bg-dark-900/60 rounded-full p-1 flex items-center justify-center mr-2 hidden sm:flex">
                       <img 
                         src={house.logo} 
-                        alt={house.name}
+                        alt=""
                         className="w-4 h-4 md:w-6 md:h-6" 
+                        aria-hidden="true"
+                        loading="lazy"
                       />
                     </div>
                     <span className={`${getHouseClass(house.key, 'textPrimary')} whitespace-nowrap`}>
@@ -54,42 +106,12 @@ const ScoreboardTable = ({ houses, scores }) => {
           </thead>
           <tbody>
             {eventScores.map((score, index) => (
-              <motion.tr 
+              <ScoreboardRow 
                 key={score.id}
-                className={`border-b border-dark-800/30 hover:bg-dark-800/30 transition-colors ${
-                  score.type === 'adjustment' ? 'bg-dark-800/10' : ''
-                }`}
-                custom={index}
-                initial="hidden"
-                animate="visible"
-                variants={tableRowVariants}
-              >
-                <td className="p-3 md:p-4 font-medium text-sm md:text-base">
-                  {score.eventName}
-                  {score.type === 'adjustment' && (
-                    <span className="badge-accent ml-2 text-xs py-0">Adjustment</span>
-                  )}
-                </td>
-                <td className="p-3 md:p-4 text-dark-300 text-sm md:text-base">{score.date}</td>
-                {houses.map((house) => {
-                  const points = score.points[house.key] || 0;
-                  
-                  // Find if this is the highest score for this event
-                  const highestPoint = Math.max(...Object.values(score.points));
-                  const isHighest = points === highestPoint && points > 0;
-                  
-                  return (
-                    <td 
-                      key={`${score.id}-${house.key}`} 
-                      className="p-3 md:p-4"
-                    >
-                      <span className={`inline-block px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-center min-w-[40px] md:min-w-[60px] text-xs md:text-sm ${getPointBadgeClass(points)} ${isHighest ? 'shadow-sm' : ''}`}>
-                        {points > 0 ? `+${points}` : points}
-                      </span>
-                    </td>
-                  );
-                })}
-              </motion.tr>
+                score={score}
+                houses={houses}
+                index={index}
+              />
             ))}
           </tbody>
           {totalScore && (
@@ -113,6 +135,7 @@ const ScoreboardTable = ({ houses, scores }) => {
                       strokeLinecap="round" 
                       strokeLinejoin="round" 
                       className="text-brand-400 mr-2"
+                      aria-hidden="true"
                     >
                       <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
                       <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
@@ -128,7 +151,7 @@ const ScoreboardTable = ({ houses, scores }) => {
                   const totalPoints = totalScore.points[house.key] || 0;
                   
                   // Find highest total score
-                  const highestTotal = Math.max(...Object.values(totalScore.points));
+                  const highestTotal = Math.max(...Object.values(totalScore.points).filter(p => !isNaN(p)));
                   const isHighest = totalPoints === highestTotal;
                   
                   return (
@@ -153,4 +176,4 @@ const ScoreboardTable = ({ houses, scores }) => {
   );
 };
 
-export default ScoreboardTable;
+export default memo(ScoreboardTable);

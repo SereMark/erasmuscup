@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, memo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 const PrincipleSection = ({ data }) => {
@@ -19,11 +19,13 @@ const PrincipleSection = ({ data }) => {
     <section 
       ref={sectionRef}
       className="relative py-16 md:py-24 overflow-hidden bg-dark-950"
+      id="principles"
     >
       {/* Background Pattern */}
       <motion.div 
         className="absolute inset-0 z-0 opacity-10"
         style={{ y: backgroundY }}
+        aria-hidden="true"
       >
         <div className="absolute inset-0">
           {/* Decorative Pattern */}
@@ -70,7 +72,7 @@ const PrincipleSection = ({ data }) => {
             className="glass-card p-6 md:p-8 lg:p-10 mb-8 relative z-10 border border-dark-800/50 shadow-xl"
           >
             {/* Decorative Quotation Mark */}
-            <div className="absolute -top-4 md:-top-6 -left-2 md:-left-6 text-6xl md:text-8xl text-brand-500/20 font-serif hidden sm:block">
+            <div className="absolute -top-4 md:-top-6 -left-2 md:-left-6 text-6xl md:text-8xl text-brand-500/20 font-serif hidden sm:block" aria-hidden="true">
               "
             </div>
             
@@ -87,7 +89,7 @@ const PrincipleSection = ({ data }) => {
             />
             
             {/* Closing Quotation Mark */}
-            <div className="absolute -bottom-8 md:-bottom-12 -right-2 md:-right-6 text-6xl md:text-8xl text-brand-500/20 font-serif rotate-180 hidden sm:block">
+            <div className="absolute -bottom-8 md:-bottom-12 -right-2 md:-right-6 text-6xl md:text-8xl text-brand-500/20 font-serif rotate-180 hidden sm:block" aria-hidden="true">
               "
             </div>
           </motion.div>
@@ -99,6 +101,7 @@ const PrincipleSection = ({ data }) => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="flex justify-center mt-12 md:mt-16"
+            aria-hidden="true"
           >
             <div className="relative">
               <div className="w-12 h-12 md:w-16 md:h-16 rounded-full border-4 border-brand-400/30 flex items-center justify-center">
@@ -114,4 +117,4 @@ const PrincipleSection = ({ data }) => {
   );
 };
 
-export default PrincipleSection;
+export default memo(PrincipleSection);

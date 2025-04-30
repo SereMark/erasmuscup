@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -7,10 +7,11 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  // Array of navigation links
+  // Array of navigation links - memoized
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Scoreboard', path: '/scoreboard' },
+    { name: 'Events', path: '/events' },
     { name: 'Rules', path: '/rules' },
   ];
 
@@ -20,7 +21,8 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 20);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Use passive event listeners for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -36,13 +38,18 @@ const Navbar = () => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     }
     
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     };
   }, [isMobileMenuOpen]);
+
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(prev => !prev);
+  };
 
   return (
     <header
@@ -55,7 +62,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 sm:space-x-3">
+          <Link to="/" className="flex items-center space-x-2 sm:space-x-3 z-10">
             <motion.img
               src="/assets/logos/house-cup-logo.png"
               alt="Erasmus House Cup Logo"
@@ -64,6 +71,7 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
               whileHover={{ scale: 1.05 }}
+              draggable="false"
             />
             <div>
               <h1 className="text-base sm:text-xl font-bold leading-none mb-0.5 sm:mb-1">
@@ -91,6 +99,7 @@ const Navbar = () => {
                   className={`navbar-link font-medium inline-flex items-center ${
                     location.pathname === link.path ? 'active' : ''
                   }`}
+                  aria-current={location.pathname === link.path ? 'page' : undefined}
                 >
                   {link.name}
                 </Link>
@@ -100,9 +109,11 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden flex items-center justify-center h-10 w-10 text-dark-100 rounded-lg hover:bg-dark-800/30 transition-colors"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+            className="md:hidden flex items-center justify-center h-10 w-10 text-dark-100 rounded-lg hover:bg-dark-800/30 transition-colors z-10"
+            onClick={toggleMobileMenu}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -110,6 +121,7 @@ const Navbar = () => {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
+              aria-hidden="true"
             >
               {isMobileMenuOpen ? (
                 <path
@@ -133,7 +145,8 @@ const Navbar = () => {
         {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div
+            <motion.nav
+              id="mobile-menu"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
@@ -150,17 +163,19 @@ const Navbar = () => {
                         ? 'text-white bg-dark-800'
                         : 'text-dark-300 hover:text-white hover:bg-dark-800/50'
                     }`}
+                    aria-current={location.pathname === link.path ? 'page' : undefined}
+                    onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {link.name}
                   </Link>
                 ))}
               </div>
-            </motion.div>
+            </motion.nav>
           )}
         </AnimatePresence>
       </div>
       
-      {/* Full screen overlay for mobile menu background - appears when menu open */}
+      {/* Full screen overlay for mobile menu background */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 
@@ -170,6 +185,7 @@ const Navbar = () => {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 bg-dark-950/80 backdrop-blur-sm -z-10 md:hidden"
             onClick={() => setIsMobileMenuOpen(false)}
+            aria-hidden="true"
           />
         )}
       </AnimatePresence>
@@ -177,4 +193,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

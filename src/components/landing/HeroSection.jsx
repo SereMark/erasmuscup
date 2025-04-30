@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
@@ -7,7 +7,6 @@ const HeroSection = ({ data }) => {
   const { title, subtitle, backgroundImage, buttons } = data;
   const heroRef = useRef(null);
   const imageRef = useRef(null);
-  const contentRef = useRef(null);
   const overlayRef = useRef(null);
 
   // GSAP animations
@@ -18,25 +17,37 @@ const HeroSection = ({ data }) => {
     
     if (!hero || !image || !overlay) return;
 
-    // Parallax effect
+    // Parallax effect - use requestAnimationFrame for better performance
+    let ticking = false;
+    let lastScrollY = window.scrollY;
+    
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const scrollSpeed = 0.35;
+      lastScrollY = window.scrollY;
       
-      // Move background image at a controlled rate
-      gsap.to(image, {
-        y: scrollPosition * scrollSpeed,
-        duration: 0.4,
-        ease: 'power1.out',
-      });
-      
-      // Ensure the overlay follows the image exactly
-      gsap.set(overlay, {
-        y: scrollPosition * scrollSpeed,
-      });
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollSpeed = 0.35;
+          
+          // Move background image at a controlled rate
+          gsap.to(image, {
+            y: lastScrollY * scrollSpeed,
+            duration: 0.4,
+            ease: 'power1.out',
+          });
+          
+          // Ensure the overlay follows the image exactly
+          gsap.set(overlay, {
+            y: lastScrollY * scrollSpeed,
+          });
+          
+          ticking = false;
+        });
+        
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -62,6 +73,7 @@ const HeroSection = ({ data }) => {
               src={backgroundImage}
               alt="House Cup Background"
               className="w-full h-full object-cover object-center"
+              fetchpriority="high"
             />
           </motion.div>
         </div>
@@ -70,16 +82,14 @@ const HeroSection = ({ data }) => {
         <div 
           ref={overlayRef} 
           className="absolute inset-0 w-full h-[120%] -top-[10%]"
+          aria-hidden="true"
         >
           <div className="absolute inset-0 bg-gradient-to-b from-dark-950/95 via-dark-950/85 to-dark-950 backdrop-blur-sm"></div>
         </div>
       </div>
 
       {/* Content */}
-      <div
-        ref={contentRef}
-        className="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-32"
-      >
+      <div className="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-32">
         <div className="max-w-3xl mx-auto text-center">
           {/* Animated Title */}
           <motion.h1
@@ -121,6 +131,7 @@ const HeroSection = ({ data }) => {
                 <motion.span
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  className="flex w-full items-center justify-center"
                 >
                   {button.text}
                 </motion.span>
@@ -134,6 +145,7 @@ const HeroSection = ({ data }) => {
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 1 }}
             className="absolute bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center hidden sm:flex"
+            aria-hidden="true"
           >
             <span className="text-dark-200 text-xs md:text-sm mb-2">Scroll Down</span>
             <motion.div
@@ -168,9 +180,9 @@ const HeroSection = ({ data }) => {
       </div>
 
       {/* Bottom gradient */}
-      <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-gradient-to-t from-dark-950 via-dark-950/90 to-transparent z-10"></div>
+      <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-gradient-to-t from-dark-950 via-dark-950/90 to-transparent z-10" aria-hidden="true"></div>
     </section>
   );
 };
 
-export default HeroSection;
+export default memo(HeroSection);

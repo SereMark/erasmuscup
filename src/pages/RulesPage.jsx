@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import rulesData from '../data/rulesData.json';
 
 // Import components
@@ -11,17 +12,26 @@ import PartHeading from '../components/rules/PartHeading';
 import RuleSection from '../components/rules/RuleSection';
 import Schedule from '../components/rules/Schedule';
 
+/**
+ * Rules Page Component
+ * Displays the complete House Cup rules with navigation
+ */
 const RulesPage = () => {
   const location = useLocation();
   const [activeSectionId, setActiveSectionId] = useState('');
   const [tocVisible, setTocVisible] = useState(false);
   const mainContentRef = useRef(null);
   
-  // Extract all section IDs once
-  const allSectionIds = useMemo(() => [
-    ...rulesData.sections.map(section => section.id),
-    rulesData.schedule.id
-  ], []);
+  // Prepare term definitions for highlighting
+  const termDefinitions = useMemo(() => rulesData.termDefinitions, []);
+  
+  // Extract all section IDs for navigation
+  const allSectionIds = useMemo(() => {
+    return [
+      ...rulesData.sections.map(section => section.id),
+      rulesData.schedule.id
+    ];
+  }, []);
   
   // Handle URL hash navigation on initial load and route changes
   useEffect(() => {
@@ -67,76 +77,48 @@ const RulesPage = () => {
     setTocVisible(prev => !prev);
   }, []);
 
-  // Render intro sections
-  const introSections = useMemo(() => {
-    return rulesData.tableOfContents[0].items.map(tocItem => {
-      const section = rulesData.sections.find(s => s.id === tocItem.id);
-      if (!section) return null;
-      
-      return (
-        <RuleSection 
-          key={section.id}
-          section={section}
-          terms={rulesData.termHighlighting}
-          isActive={activeSectionId === section.id}
-        />
-      );
-    });
-  }, [activeSectionId]);
-
-  // Render parts and their sections
-  const partSections = useMemo(() => {
-    return rulesData.partHeadings.map((part, partIndex) => {
-      // Get the section IDs from tableOfContents for this part (partIndex + 1 because first TOC group is intro)
-      const tocGroup = rulesData.tableOfContents[partIndex + 1];
-      if (!tocGroup || !tocGroup.items) return null;
-      
-      const sectionIds = tocGroup.items.map(item => item.id);
-      
-      // Find the matching sections from the sections array
-      const partSections = rulesData.sections.filter(section => 
-        sectionIds.includes(section.id)
-      );
-      
-      return (
-        <div key={part.id}>
-          <PartHeading 
-            partNumber={part.partNumber}
-            title={part.title}
-            id={part.id}
-          />
-          
-          {partSections.map(section => (
-            <RuleSection 
-              key={section.id}
-              section={section}
-              terms={rulesData.termHighlighting}
-              isActive={activeSectionId === section.id}
-            />
-          ))}
-        </div>
-      );
-    });
-  }, [activeSectionId]);
-
-  // Render schedule
-  const scheduleSection = useMemo(() => {
-    const scheduleToc = rulesData.tableOfContents[7];
-    if (!scheduleToc || !scheduleToc.items) return null;
+  // Group sections by part for rendering
+  const sectionsByPart = useMemo(() => {
+    // Part definitions
+    const parts = {};
     
-    return scheduleToc.items.map(tocItem => {
-      if (tocItem.id === rulesData.schedule.id) {
-        return (
-          <Schedule 
-            key={rulesData.schedule.id}
-            schedule={rulesData.schedule}
-            isActive={activeSectionId === rulesData.schedule.id}
-          />
-        );
-      }
-      return null;
+    // Initialize parts from part headings
+    rulesData.partHeadings.forEach(part => {
+      parts[part.partNumber] = {
+        ...part,
+        sections: []
+      };
     });
-  }, [activeSectionId]);
+    
+    // Group intro sections (no part)
+    const introSections = rulesData.sections.filter(section => 
+      section.id === 'section-1' || section.id === 'section-2'
+    );
+    
+    // Group remaining sections by their part number
+    rulesData.sections.forEach(section => {
+      if (section.id !== 'section-1' && section.id !== 'section-2') {
+        // Extract part number from section number (e.g., section-3 is part 1)
+        const sectionNumber = parseInt(section.id.split('-')[1]);
+        
+        // Determine part number based on section number ranges
+        let partNumber;
+        if (sectionNumber >= 3 && sectionNumber <= 5) partNumber = 1;
+        else if (sectionNumber >= 6 && sectionNumber <= 7) partNumber = 2;
+        else if (sectionNumber >= 8 && sectionNumber <= 10) partNumber = 3;
+        else if (sectionNumber >= 11 && sectionNumber <= 12 || section.id.startsWith('section-12')) partNumber = 4;
+        else if (sectionNumber >= 13 && sectionNumber <= 18) partNumber = 5;
+        else if (sectionNumber >= 19) partNumber = 6;
+        
+        // Add section to the appropriate part
+        if (partNumber && parts[partNumber]) {
+          parts[partNumber].sections.push(section);
+        }
+      }
+    });
+    
+    return { introSections, parts };
+  }, []);
 
   return (
     <>
@@ -164,7 +146,7 @@ const RulesPage = () => {
                 onClick={toggleToc}
                 aria-expanded={tocVisible}
                 aria-controls="mobile-toc"
-                className="flex items-center justify-between w-full px-4 py-3 bg-dark-800 rounded-lg shadow-md"
+                className="flex items-center justify-between w-full px-4 py-3 bg-dark-800 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-brand-500"
               >
                 <span className="font-medium text-white">Table of Contents</span>
                 <svg 
@@ -185,18 +167,24 @@ const RulesPage = () => {
               </button>
               
               {/* Mobile ToC dropdown */}
-              <div 
-                id="mobile-toc"
-                className={`mt-2 transition-all duration-300 overflow-hidden ${
-                  tocVisible ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                }`}
-              >
-                <TableOfContents 
-                  data={rulesData.tableOfContents}
-                  currentSectionId={activeSectionId}
-                  onSectionClick={handleSectionClick}
-                />
-              </div>
+              <AnimatePresence>
+                {tocVisible && (
+                  <motion.div 
+                    id="mobile-toc"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="mt-2 overflow-hidden"
+                  >
+                    <TableOfContents 
+                      data={rulesData.tableOfContents}
+                      currentSectionId={activeSectionId}
+                      onSectionClick={handleSectionClick}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
             
             {/* Content Area with Sidebar */}
@@ -213,13 +201,40 @@ const RulesPage = () => {
               {/* Main Content */}
               <div ref={mainContentRef} className="lg:col-span-3">
                 {/* Render introduction sections (no part heading) */}
-                {introSections}
+                {sectionsByPart.introSections.map(section => (
+                  <RuleSection 
+                    key={section.id}
+                    section={section}
+                    termDefinitions={termDefinitions}
+                    isActive={activeSectionId === section.id}
+                  />
+                ))}
                 
                 {/* Render each part with its sections */}
-                {partSections}
+                {Object.values(sectionsByPart.parts).map(part => (
+                  <div key={part.id}>
+                    <PartHeading 
+                      partNumber={part.partNumber}
+                      title={part.title}
+                      id={part.id}
+                    />
+                    
+                    {part.sections.map(section => (
+                      <RuleSection 
+                        key={section.id}
+                        section={section}
+                        termDefinitions={termDefinitions}
+                        isActive={activeSectionId === section.id}
+                      />
+                    ))}
+                  </div>
+                ))}
                 
-                {/* Render Schedule (last item in TOC) */}
-                {scheduleSection}
+                {/* Render Schedule */}
+                <Schedule 
+                  schedule={rulesData.schedule}
+                  isActive={activeSectionId === rulesData.schedule.id}
+                />
               </div>
             </div>
           </div>
@@ -228,22 +243,33 @@ const RulesPage = () => {
         {/* Call-to-Action Section */}
         <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-dark-900 to-dark-950 relative overflow-hidden">
           {/* Decorative pattern */}
-          <div className="absolute inset-0 dot-pattern opacity-5"></div>
+          <div className="absolute inset-0 dot-pattern opacity-5" aria-hidden="true"></div>
           
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Ready to Join the Competition?</h2>
               <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-brand-400 to-brand-500 mx-auto rounded-full mb-4 sm:mb-6"></div>
               <p className="text-dark-200 max-w-2xl mx-auto mb-6 sm:mb-10 text-sm sm:text-base">
                 Now that you've read the rules, it's time to discover your House and compete for the Cup.
                 Take the quiz and join the excitement!
               </p>
-            </div>
+            </motion.div>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-5">
-              <a 
+              <motion.a 
                 href="/events" 
                 className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold text-white bg-gradient-to-r from-brand-500 to-brand-600 rounded-lg shadow-lg hover:shadow-xl hover:shadow-brand-500/20 transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
                 Join the next event!
                 <svg 
@@ -259,14 +285,20 @@ const RulesPage = () => {
                     clipRule="evenodd" 
                   />
                 </svg>
-              </a>
+              </motion.a>
               
-              <a 
+              <motion.a 
                 href="/scoreboard" 
                 className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold text-white bg-dark-800 hover:bg-dark-700 border border-dark-700 hover:border-dark-600 rounded-lg transition-colors duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
               >
                 View Scoreboard
-              </a>
+              </motion.a>
             </div>
           </div>
         </section>

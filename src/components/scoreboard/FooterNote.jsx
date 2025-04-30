@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 
 const FooterNote = ({ messageHtml }) => {
+  // Don't render if no message is provided
+  if (!messageHtml) return null;
+  
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -12,7 +15,7 @@ const FooterNote = ({ messageHtml }) => {
     >
       <div className="glass-card rounded-xl overflow-hidden shadow-lg">
         {/* Top accent bar */}
-        <div className="h-1 w-full bg-gradient-to-r from-brand-400 to-brand-500"></div>
+        <div className="h-1 w-full bg-gradient-to-r from-brand-400 to-brand-500" aria-hidden="true"></div>
         
         <div className="p-4 sm:p-6">
           <div className="flex items-start">
@@ -29,6 +32,7 @@ const FooterNote = ({ messageHtml }) => {
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
                   className="text-brand-400 sm:w-5 sm:h-5"
+                  aria-hidden="true"
                 >
                   <circle cx="12" cy="12" r="10"></circle>
                   <line x1="12" y1="8" x2="12" y2="12"></line>
@@ -39,7 +43,7 @@ const FooterNote = ({ messageHtml }) => {
             <div>
               <h4 className="text-base sm:text-lg font-semibold text-white mb-1 sm:mb-2">Strategy Tip</h4>
               <div 
-                className="text-dark-200 prose prose-xs sm:prose-sm prose-invert text-sm"
+                className="text-dark-200 prose prose-sm max-w-none text-sm sm:text-base"
                 dangerouslySetInnerHTML={{ __html: messageHtml }}
               />
             </div>
@@ -47,10 +51,10 @@ const FooterNote = ({ messageHtml }) => {
         </div>
         
         {/* Decorative bottom pattern */}
-        <div className="h-1 w-full bg-dark-800"></div>
+        <div className="h-1 w-full bg-dark-800" aria-hidden="true"></div>
       </div>
     </motion.div>
   );
 };
 
-export default FooterNote;
+export default memo(FooterNote);

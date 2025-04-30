@@ -26,78 +26,32 @@
     ],
     "note": "This document includes every word of the original Act (including <strong>4 April 2025 amendments</strong>) with improved styling, emojis, and clickable anchors for easy navigation. <em>No text has been removed or altered.</em>"
   },
-  "termHighlighting": [
-    {
-      "term": "Basic Rules",
-      "level": "strong",
-      "type": "brand"
-    },
-    {
-      "term": "Buffaloed",
-      "level": "strong",
-      "type": "accent"
-    },
-    {
-      "term": "Cool Shit",
-      "level": "emphasis",
-      "type": "brand"
-    },
-    {
-      "term": "House Cup",
-      "level": "strong",
-      "type": "brand"
-    },
-    {
-      "term": "Murder",
-      "level": "emphasis",
-      "type": "accent"
-    },
-    {
-      "term": "Cheating",
-      "level": "strong",
-      "type": "danger"
-    },
-    {
-      "term": "Treason",
-      "level": "strong",
-      "type": "danger"
-    },
-    {
-      "term": "public hanging",
-      "level": "emphasis",
-      "type": "accent"
-    },
-    {
-      "term": "Yardie",
-      "level": "emphasis",
-      "type": "success"
-    },
-    {
-      "term": "Super Gambit",
-      "level": "strong",
-      "type": "brand"
-    },
-    {
-      "term": "Gambit",
-      "level": "strong",
-      "type": "brand"
-    },
-    {
-      "term": "Armistice",
-      "level": "strong",
-      "type": "info"
-    },
-    {
-      "term": "House Points",
-      "level": "strong",
-      "type": "accent"
-    },
-    {
-      "term": "How's That'ed",
-      "level": "strong",
-      "type": "accent"
-    }
-  ],
+  "termDefinitions": {
+    "brand": [
+      { "term": "Basic Rules", "level": "strong" },
+      { "term": "Cool Shit", "level": "emphasis" },
+      { "term": "House Cup", "level": "strong" },
+      { "term": "Super Gambit", "level": "strong" },
+      { "term": "Gambit", "level": "strong" }
+    ],
+    "accent": [
+      { "term": "Buffaloed", "level": "strong" },
+      { "term": "Murder", "level": "emphasis" },
+      { "term": "public hanging", "level": "emphasis" },
+      { "term": "House Points", "level": "strong" },
+      { "term": "How's That'ed", "level": "strong" }
+    ],
+    "success": [
+      { "term": "Yardie", "level": "emphasis" }
+    ],
+    "danger": [
+      { "term": "Cheating", "level": "strong" },
+      { "term": "Treason", "level": "strong" }
+    ],
+    "info": [
+      { "term": "Armistice", "level": "strong" }
+    ]
+  },
   "tableOfContents": [
     {
       "title": null,
@@ -287,133 +241,947 @@
       "id": "section-1",
       "title": "1 Interpretation",
       "emoji": "🔍",
-      "text": "(1) In this Act, unless the context otherwise requires,—\n\nBasic Rules are the rules as outlined in section 3(a) and (b).\nBuffaloed is being caught drinking with your right hand, when another Participant says \"buffalo\" to you.\nCool Shit is any shit that is cool, as decided by a Judge from the House Cup Courts Act 2025, or by 3 out of the 4 House Captains in their collective capacity.\nFounders are the 12 initial participants, taking part in the opening ceremony of 21 March 2025.\nFour Houses are the four groups given identity by the Founders on 21 March 2025.\nGambits are impromptu House Events that occur outside regular House Events. They can be any game/challenge of the Participants' choice.\nHouse Captains are elected representatives, being one from each house, as selected on the 21 March 2025.\nHouse Cup refers to the competition this Act prescribes.\nHouse Events are games, challenges, matches or any other method of point derivation, as agreed upon by the Participants.\nHouse Points are intangible units of scoring that can be cashed in at any point for jelly beans.\nHouse Pokal is the physical cup that the winning House receives.\nHouse Rules are the rules as defined in this Act.\nHow's That'ed is being caught opening a can or bottle without first saying \"not out\", when another Participant says \"how's that\" to you.\nParticipant is any natural person organised into a house by the personality quiz, and signed onto the House Cup Registration sheet in Schedule 1.\nPoint System is the system of point award and revocation as prescribed in Part 2.\nYardie is a yard glass full of beer. And doing a Yardie is drinking the entire thing in one go."
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "(1) In this Act, unless the context otherwise requires,—"
+        },
+        {
+          "type": "definition-list",
+          "items": [
+            { "term": "Basic Rules", "definition": "are the rules as outlined in section 3(a) and (b)." },
+            { "term": "Buffaloed", "definition": "is being caught drinking with your right hand, when another Participant says \"buffalo\" to you." },
+            { "term": "Cool Shit", "definition": "is any shit that is cool, as decided by a Judge from the House Cup Courts Act 2025, or by 3 out of the 4 House Captains in their collective capacity." },
+            { "term": "Founders", "definition": "are the 12 initial participants, taking part in the opening ceremony of 21 March 2025." },
+            { "term": "Four Houses", "definition": "are the four groups given identity by the Founders on 21 March 2025." },
+            { "term": "Gambits", "definition": "are impromptu House Events that occur outside regular House Events. They can be any game/challenge of the Participants' choice." },
+            { "term": "House Captains", "definition": "are elected representatives, being one from each house, as selected on the 21 March 2025." },
+            { "term": "House Cup", "definition": "refers to the competition this Act prescribes." },
+            { "term": "House Events", "definition": "are games, challenges, matches or any other method of point derivation, as agreed upon by the Participants." },
+            { "term": "House Points", "definition": "are intangible units of scoring that can be cashed in at any point for jelly beans." },
+            { "term": "House Pokal", "definition": "is the physical cup that the winning House receives." },
+            { "term": "House Rules", "definition": "are the rules as defined in this Act." },
+            { "term": "How's That'ed", "definition": "is being caught opening a can or bottle without first saying \"not out\", when another Participant says \"how's that\" to you." },
+            { "term": "Participant", "definition": "is any natural person organised into a house by the personality quiz, and signed onto the House Cup Registration sheet in Schedule 1." },
+            { "term": "Point System", "definition": "is the system of point award and revocation as prescribed in Part 2." },
+            { "term": "Yardie", "definition": "is a yard glass full of beer. And doing a Yardie is drinking the entire thing in one go." }
+          ]
+        }
+      ]
     },
     {
       "id": "section-2",
       "title": "2 Object and Purpose",
       "emoji": "🎯",
-      "text": "(1) The objective of the House Competition is to determine the strongest Erasmus students to breed\nthe next wave of Erasmus students by virtue of Darwinian Evolution.\n\n(2) The Purpose of these House Rules are to establish and clarify the mechanisms of the House\nCompetition.\n\n(3) This is not a cult; admission is not to be restricted for any reason."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "The objective of the House Competition is to determine the strongest Erasmus students to breed the next wave of Erasmus students by virtue of Darwinian Evolution."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "The Purpose of these House Rules are to establish and clarify the mechanisms of the House Competition."
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "This is not a cult; admission is not to be restricted for any reason."
+        }
+      ]
     },
     {
       "id": "section-3",
       "title": "3 House Rules",
       "emoji": "📝",
-      "text": "(1) This Act hereby establishes the House Cup.\n(2) These House Rules come into effect upon assent and signature of the four House Captains at the\nfoot of each page, and cease to take effect at midnight on the date of the Strawberry Moon.\n(3) The Basic Rules are as follows—\n(a) On 21 March 2025, the 12 Founders are to convene, each taking the 16Personalities Test\nand forming the Four Houses.\n(b) Upon the constitution of the Four Houses, the Founders are to determine the following for\neach of their houses.\n    (i) House Name\n    (ii) House Colour and Trim\n    (iii) House Animal\n    (iv) House Sigil\n    (v) House Anthem\n    (vi) House Motto\n    (vii) House Values\n    (viii) House Captain\n(c) The Four Houses will compete in weekly House Events, earning points for their house in\naccordance with the Point System outlined in Part 2.\n(d) Participants may be added to the House Cup by registration in the House Cup Register,\nappended to this Act in Schedule 1.\n(e) The winning house by the date of the Strawberry Moon will receive the House Pokal, and\nwill not be executed by public hanging.\n(f) The losing houses will receive nothing, and will be executed by public hanging unless\nthey successfully perform a Yardie no later than one week after the date of the Strawberry\nMoon.\n\n(4) These rules may be subject to change if I fucked them up."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "This Act hereby establishes the House Cup."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "These House Rules come into effect upon assent and signature of the four House Captains at the foot of each page, and cease to take effect at midnight on the date of the Strawberry Moon."
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "The Basic Rules are as follows—",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "On 21 March 2025, the 12 Founders are to convene, each taking the 16Personalities Test and forming the Four Houses."
+            },
+            {
+              "type": "lettered",
+              "letter": "b",
+              "text": "Upon the constitution of the Four Houses, the Founders are to determine the following for each of their houses.",
+              "children": [
+                {
+                  "type": "roman",
+                  "numeral": "i",
+                  "text": "House Name"
+                },
+                {
+                  "type": "roman",
+                  "numeral": "ii",
+                  "text": "House Colour and Trim"
+                },
+                {
+                  "type": "roman",
+                  "numeral": "iii",
+                  "text": "House Animal"
+                },
+                {
+                  "type": "roman",
+                  "numeral": "iv",
+                  "text": "House Sigil"
+                },
+                {
+                  "type": "roman",
+                  "numeral": "v",
+                  "text": "House Anthem"
+                },
+                {
+                  "type": "roman",
+                  "numeral": "vi",
+                  "text": "House Motto"
+                },
+                {
+                  "type": "roman",
+                  "numeral": "vii",
+                  "text": "House Values"
+                },
+                {
+                  "type": "roman",
+                  "numeral": "viii",
+                  "text": "House Captain"
+                }
+              ]
+            },
+            {
+              "type": "lettered",
+              "letter": "c",
+              "text": "The Four Houses will compete in weekly House Events, earning points for their house in accordance with the Point System outlined in Part 2."
+            },
+            {
+              "type": "lettered",
+              "letter": "d",
+              "text": "Participants may be added to the House Cup by registration in the House Cup Register, appended to this Act in Schedule 1."
+            },
+            {
+              "type": "lettered",
+              "letter": "e",
+              "text": "The winning house by the date of the Strawberry Moon will receive the House Pokal, and will not be executed by public hanging."
+            },
+            {
+              "type": "lettered",
+              "letter": "f",
+              "text": "The losing houses will receive nothing, and will be executed by public hanging unless they successfully perform a Yardie no later than one week after the date of the Strawberry Moon."
+            }
+          ]
+        },
+        {
+          "type": "numbered",
+          "number": "4",
+          "text": "These rules may be subject to change if I fucked them up."
+        }
+      ]
     },
     {
       "id": "section-4",
       "title": "4 Participants",
       "emoji": "👥",
-      "text": "(1) Participants are to be periodically added to the House Cup.\n(2) Participants are to take the 16Personalities Test to determine their house, and may not switch\nfrom that House prior to the date of the Strawberry Moon.\n(3) Participants shall support their Houses in House Events, with at least one Participant being\npresent at each House Event.\n(4) Participants must be registered to the House Cup on the House Cup Register in Schedule 1."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "Participants are to be periodically added to the House Cup."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "Participants are to take the 16Personalities Test to determine their house, and may not switch from that House prior to the date of the Strawberry Moon."
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "Participants shall support their Houses in House Events, with at least one Participant being present at each House Event."
+        },
+        {
+          "type": "numbered",
+          "number": "4",
+          "text": "Participants must be registered to the House Cup on the House Cup Register in Schedule 1."
+        }
+      ]
     },
     {
       "id": "section-5",
       "title": "5 House Events",
       "emoji": "🎉",
-      "text": "(1) House Events—\n    (a) Are to take place weekly, with no less than one House Event taking place per week.\n    (b) Are to be decided by consensus of Participants, irrespective of Founders or House\n    Captains.\n    (c) May not take place on a Blood Moon.\n\n(2) Failure to have at least one representative from your House at a House Event will result in lost\npoints in accordance with the Point System outlined in Part 2.\n(3) These House Event rules do not limit the rules relating to Gambits outlined in section 12."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "House Events—",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "Are to take place weekly, with no less than one House Event taking place per week."
+            },
+            {
+              "type": "lettered",
+              "letter": "b",
+              "text": "Are to be decided by consensus of Participants, irrespective of Founders or House Captains."
+            },
+            {
+              "type": "lettered",
+              "letter": "c",
+              "text": "May not take place on a Blood Moon."
+            }
+          ]
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "Failure to have at least one representative from your House at a House Event will result in lost points in accordance with the Point System outlined in Part 2."
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "These House Event rules do not limit the rules relating to Gambits outlined in section 12."
+        }
+      ]
     },
     {
       "id": "section-6",
       "title": "6 Award of House Points",
       "emoji": "✨",
-      "text": "(1) The following, agglutinated to the rules pertaining to the Revocation of House Points in section 7,\nare to be known as the Point System.\n\n(2) House Points are awarded on the following rules:\n    (a) Winning a House Event results in 100 points.\n    (b) Second place in a House Event results in 75 points.\n    (c) Third place in a House Event results in 50 points.\n    (d) Last place in a House Event results in 25 points.\n\n(3) Bonus Points may be awarded on consensus of all four House Captains for doing Cool Shit.\n(4) Bonus points may be awarded to houses in accordance with situations outlined in Part 4."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "The following, agglutinated to the rules pertaining to the Revocation of House Points in section 7, are to be known as the Point System."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "House Points are awarded on the following rules:",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "Winning a House Event results in 100 points."
+            },
+            {
+              "type": "lettered",
+              "letter": "b",
+              "text": "Second place in a House Event results in 75 points."
+            },
+            {
+              "type": "lettered",
+              "letter": "c",
+              "text": "Third place in a House Event results in 50 points."
+            },
+            {
+              "type": "lettered",
+              "letter": "d",
+              "text": "Last place in a House Event results in 25 points."
+            }
+          ]
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "Bonus Points may be awarded on consensus of all four House Captains for doing Cool Shit."
+        },
+        {
+          "type": "numbered",
+          "number": "4",
+          "text": "Bonus points may be awarded to houses in accordance with situations outlined in Part 4."
+        }
+      ]
     },
     {
       "id": "section-7",
       "title": "7 Revocation of House Points",
       "emoji": "⚠️",
-      "text": "(1) Points will be revoked from Houses in the following circumstances—\n    (a) Failure to have one representative at a House Event will result in the loss of 50 points.\n    (b) Establishment of any of the House Cup Crimes will result in a loss of points outlined in\n    their respective sections.\n    (c) Getting Buffaloed 3 times in one night will result in the loss of 10 points.\n    (d) Getting How's That'ed 3 times in one night will result in the loss of 50 points."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "Points will be revoked from Houses in the following circumstances—",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "Failure to have one representative at a House Event will result in the loss of 50 points."
+            },
+            {
+              "type": "lettered",
+              "letter": "b",
+              "text": "Establishment of any of the House Cup Crimes will result in a loss of points outlined in their respective sections."
+            },
+            {
+              "type": "lettered",
+              "letter": "c",
+              "text": "Getting Buffaloed 3 times in one night will result in the loss of 10 points."
+            },
+            {
+              "type": "lettered",
+              "letter": "d",
+              "text": "Getting How's That'ed 3 times in one night will result in the loss of 50 points."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "section-8",
       "title": "8 Event Selection and Decision",
       "emoji": "🤝",
-      "text": "(1) There is no prescribed mechanism of event selection, and;\n    (a) Activity;\n    (b) Date;\n    (c) and Time; are to be decided by consensus.\n\n(2) Events are to be advertised in the House Cup WhatsApp group.\n(3) Any suggestions for future House Events are to be put into the WhatsApp group and/or noted\ndown for future reference."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "There is no prescribed mechanism of event selection, and;",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "Activity;"
+            },
+            {
+              "type": "lettered",
+              "letter": "b",
+              "text": "Date;"
+            },
+            {
+              "type": "lettered",
+              "letter": "c",
+              "text": "and Time; are to be decided by consensus."
+            }
+          ]
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "Events are to be advertised in the House Cup WhatsApp group."
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "Any suggestions for future House Events are to be put into the WhatsApp group and/or noted down for future reference."
+        }
+      ]
     },
     {
       "id": "section-9",
       "title": "9 Overthrowing the Event Organisers",
       "emoji": "💥",
-      "text": "(1) Overthrowing Event Organisers by means of—\n    (a) Treason\n    (b) Bomb Threats\n    (c) Magical Wishes and/or Spells\nis strictly prohibited, and establishes the actus reus for Treason under section 15."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "Overthrowing Event Organisers by means of—",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "Treason"
+            },
+            {
+              "type": "lettered",
+              "letter": "b",
+              "text": "Bomb Threats"
+            },
+            {
+              "type": "lettered",
+              "letter": "c",
+              "text": "Magical Wishes and/or Spells"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "is strictly prohibited, and establishes the actus reus for Treason under section 15."
+        }
+      ]
     },
     {
       "id": "section-10",
       "title": "10 Constructive Feedback",
       "emoji": "🧐",
-      "text": "(1) Attempting to give Constructive Feedback also establishes the actus reus for Treason under\nsection 15.\n\n(2) Anyone found giving Constructive Feedback shall be executed on the evening of the Strawberry\nMoon without exception."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "Attempting to give Constructive Feedback also establishes the actus reus for Treason under section 15."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "Anyone found giving Constructive Feedback shall be executed on the evening of the Strawberry Moon without exception."
+        }
+      ]
     },
     {
       "id": "section-11",
       "title": "11 Attendance and Pride",
       "emoji": "🎖",
-      "text": "(1) Bonus points will be awarded for attendance—\n    (a) For each attending member at an event, the attending House will be awarded 1 point per\n    person.\n    (b) The points for attendance is limited in number to the number of people of the smallest\n    house attending.\n    (c) In order to get this point, the attending member must be dressed in their House colour or\n    Trim, or have on hand any animal paraphernalia.\n\n(2) At each indoor event, an attending Participant that shows exceptional House Pride through dress\nor action will be awarded 5 points.\n(3) At each outdoor event, the house that cheers the loudest will receive an additional 10 points.\n(4) Contrary to the title of this section, no points will be awarded for being homosexual."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "Bonus points will be awarded for attendance—",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "For each attending member at an event, the attending House will be awarded 1 point per person."
+            },
+            {
+              "type": "lettered",
+              "letter": "b",
+              "text": "The points for attendance is limited in number to the number of people of the smallest house attending."
+            },
+            {
+              "type": "lettered",
+              "letter": "c",
+              "text": "In order to get this point, the attending member must be dressed in their House colour or Trim, or have on hand any animal paraphernalia."
+            }
+          ]
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "At each indoor event, an attending Participant that shows exceptional House Pride through dress or action will be awarded 5 points."
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "At each outdoor event, the house that cheers the loudest will receive an additional 10 points."
+        },
+        {
+          "type": "numbered",
+          "number": "4",
+          "text": "Contrary to the title of this section, no points will be awarded for being homosexual."
+        }
+      ]
     },
     {
       "id": "section-12",
       "title": "12 Gambits",
       "emoji": "🎲",
-      "text": "(1) Gambits carry the definition outlined in section 1.\n(2) Gambits abide by the following rules—\n    (a) Gambits may be initiated if there is at least one representative from each house, and all\n    Participants agree that the following activity will be a Gambit.\n    (b) Participants may engage in a game of their choosing, awarding points in the following\n    way:\n        (i) Winner gets 20 points.\n        (ii) Second gets 14 points.\n        (iii) Third gets 10 Points.\n        (iv) Last gets 4 Points.\n    (c) Participants may only participate in one Gambit between each week.\n\n(3) Gambits have the following limitations—\n    (a) A Gambit is void if the status of the game as a Gambit is not established prior to the game\n    being played.\n    (b) A Gambit is void if there is not one representative of each House taking part.\n    (c) A Gambit is void if any of the Participants has already taken part in another Gambit that\n    week.\n    (d) The week is defined from Monday to Sunday, and therefore a Participant who competed\n    on Sunday, may compete the next day on the following Monday.\n\n(4) Failure to abide by the Gambit rules will establish the actus reus for Cheating as defined in\nsection 15."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "Gambits carry the definition outlined in section 1."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "Gambits abide by the following rules—",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "Gambits may be initiated if there is at least one representative from each house, and all Participants agree that the following activity will be a Gambit."
+            },
+            {
+              "type": "lettered",
+              "letter": "b",
+              "text": "Participants may engage in a game of their choosing, awarding points in the following way:",
+              "children": [
+                {
+                  "type": "roman",
+                  "numeral": "i",
+                  "text": "Winner gets 20 points."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "ii",
+                  "text": "Second gets 14 points."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "iii",
+                  "text": "Third gets 10 Points."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "iv",
+                  "text": "Last gets 4 Points."
+                }
+              ]
+            },
+            {
+              "type": "lettered",
+              "letter": "c",
+              "text": "Participants may only participate in one Gambit between each week."
+            }
+          ]
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "Gambits have the following limitations—",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "A Gambit is void if the status of the game as a Gambit is not established prior to the game being played."
+            },
+            {
+              "type": "lettered",
+              "letter": "b",
+              "text": "A Gambit is void if there is not one representative of each House taking part."
+            },
+            {
+              "type": "lettered",
+              "letter": "c",
+              "text": "A Gambit is void if any of the Participants has already taken part in another Gambit that week."
+            },
+            {
+              "type": "lettered",
+              "letter": "d",
+              "text": "The week is defined from Monday to Sunday, and therefore a Participant who competed on Sunday, may compete the next day on the following Monday."
+            }
+          ]
+        },
+        {
+          "type": "numbered",
+          "number": "4",
+          "text": "Failure to abide by the Gambit rules will establish the actus reus for Cheating as defined in section 15."
+        }
+      ]
     },
     {
       "id": "section-12a",
       "title": "12a Super Gambits",
       "emoji": "💥",
-      "text": "(1) Super Gambits are hereby instated.\n(2) The purpose of Super Gambits is to award higher player numbers in Gambit participation.\n(3) Super Gambits are defined as having the same rules as Gambits but with the following alterations;\n    (a) Super Gambits have a dynamic point totalling system, according to the minimum\n    common number of participants from each house.\n    (b) The point totalling system is hereby dictated by the following equation:\n        (i) First place: (n x 20) points.\n        (ii) Second Place: (n x 14) points.\n        (iii) Third Place: (n x 10) points.\n        (iv) Fourth Place: (n x 4) points.\n(4) Super Gambits' point totalling system maxes out at 4 participants from each House; any increase\nin number will not increase the total point value.\n(5) Super Gambits must include active participation of all participants included in the dynamic point\ntotalling system count.\n(6) Contrary to the rules on Gambits, Super Gambits may be performed twice a week per participant."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "Super Gambits are hereby instated."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "The purpose of Super Gambits is to award higher player numbers in Gambit participation."
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "Super Gambits are defined as having the same rules as Gambits but with the following alterations;",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "Super Gambits have a dynamic point totalling system, according to the minimum common number of participants from each house."
+            },
+            {
+              "type": "lettered",
+              "letter": "b",
+              "text": "The point totalling system is hereby dictated by the following equation:",
+              "children": [
+                {
+                  "type": "roman",
+                  "numeral": "i",
+                  "text": "First place: (n x 20) points."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "ii",
+                  "text": "Second Place: (n x 14) points."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "iii",
+                  "text": "Third Place: (n x 10) points."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "iv",
+                  "text": "Fourth Place: (n x 4) points."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "numbered",
+          "number": "4",
+          "text": "Super Gambits' point totalling system maxes out at 4 participants from each House; any increase in number will not increase the total point value."
+        },
+        {
+          "type": "numbered",
+          "number": "5",
+          "text": "Super Gambits must include active participation of all participants included in the dynamic point totalling system count."
+        },
+        {
+          "type": "numbered",
+          "number": "6",
+          "text": "Contrary to the rules on Gambits, Super Gambits may be performed twice a week per participant."
+        }
+      ]
     },
     {
       "id": "section-12b",
       "title": "12b Armistices",
       "emoji": "🤝",
-      "text": "(1) House Captains may declare an Armistice for Gambits or Super Gambits.\n(2) An Armistice is defined as a temporary truce between two houses in order to compete in a Gambit\nor Super Gambit, whether this be to claim the higher point amounts, or simply take part.\n(3) An Armistice cannot be declared for any reason other than competing in Gambits or Super Gambits.\n(4) Armistices can be composed of 2 or 3 Houses, however not 1 or 4.\n(5) Contracting Parties to an Armistice will divide the resultant points 50:50."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "House Captains may declare an Armistice for Gambits or Super Gambits."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "An Armistice is defined as a temporary truce between two houses in order to compete in a Gambit or Super Gambit, whether this be to claim the higher point amounts, or simply take part."
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "An Armistice cannot be declared for any reason other than competing in Gambits or Super Gambits."
+        },
+        {
+          "type": "numbered",
+          "number": "4",
+          "text": "Armistices can be composed of 2 or 3 Houses, however not 1 or 4."
+        },
+        {
+          "type": "numbered",
+          "number": "5",
+          "text": "Contracting Parties to an Armistice will divide the resultant points 50:50."
+        }
+      ]
     },
     {
       "id": "section-13",
       "title": "13 House Crimes",
       "emoji": "🚫",
-      "text": "(1) It is hereby established that the following actions are considered House Crimes.\n(2) The proven establishment of a House Crime's actus reus and mens rea, in the absence of defenses,\nwill attract punishment.\n(3) Any attempted execution of any of the House Crimes will receive a punishment half that of the\nfull offence."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "It is hereby established that the following actions are considered House Crimes."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "The proven establishment of a House Crime's actus reus and mens rea, in the absence of defenses, will attract punishment."
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "Any attempted execution of any of the House Crimes will receive a punishment half that of the full offence."
+        }
+      ]
     },
     {
       "id": "section-14",
       "title": "14 Cheating",
       "emoji": "❌",
-      "text": "(1) Any person who intentionally cheats, or diminishes the integrity of any House Event, shall lose 30\npoints.\n(2) The limitation period for cheating is the evening on which the event occurs at midnight.\n    (a) A cheater who makes it to midnight undetected is granted a full defense to the offence of\n    Cheating."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "Any person who intentionally cheats, or diminishes the integrity of any House Event, shall lose 30 points."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "The limitation period for cheating is the evening on which the event occurs at midnight.",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "A cheater who makes it to midnight undetected is granted a full defense to the offence of Cheating."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "section-15",
       "title": "15 Treason",
       "emoji": "⚔️",
-      "text": "(1) Any person who intentionally betrays their House, or aids/abets another House contrary to the\ninterests of their house, will be deemed a Traitor and shall be removed from their House.\n(2) Any person found to have stopped treason shall be celebrated with fireworks every year on 5\nNovember.\n(3) Treason has no limitation period."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "Any person who intentionally betrays their House, or aids/abets another House contrary to the interests of their house, will be deemed a Traitor and shall be removed from their House."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "Any person found to have stopped treason shall be celebrated with fireworks every year on 5 November."
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "Treason has no limitation period."
+        }
+      ]
     },
     {
       "id": "section-16",
       "title": "16 Public Nudity",
       "emoji": "🍑",
-      "text": "(1) Public Nudity is highly discouraged.\n(2) Any person who is documented naked in a public space will be awarded 30 points.\n(3) \"Naked\" is defined as having no fabricated items on at all.\n\nAmendment of 4 April 2025\n\n(4) The crime of Public Nudity is hereby restricted as follows;\n    (a) Each participant may claim the points for public nudity once per half-semester.\n    (b) Public Nudity may not be performed in the same place twice; once points are awarded at a particular\n    location, that place is disallowed.\n    (c) Any house with more than 10 members publicly nude in the same place at the same time will receive 1000\n    house points."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "Public Nudity is highly discouraged."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "Any person who is documented naked in a public space will be awarded 30 points."
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "\"Naked\" is defined as having no fabricated items on at all."
+        },
+        {
+          "type": "amendment",
+          "title": "Amendment of 4 April 2025",
+          "content": [
+            {
+              "type": "numbered",
+              "number": "4",
+              "text": "The crime of Public Nudity is hereby restricted as follows;",
+              "children": [
+                {
+                  "type": "lettered",
+                  "letter": "a",
+                  "text": "Each participant may claim the points for public nudity once per half-semester."
+                },
+                {
+                  "type": "lettered",
+                  "letter": "b",
+                  "text": "Public Nudity may not be performed in the same place twice; once points are awarded at a particular location, that place is disallowed."
+                },
+                {
+                  "type": "lettered",
+                  "letter": "c",
+                  "text": "Any house with more than 10 members publicly nude in the same place at the same time will receive 1000 house points."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "section-17",
       "title": "17 Murder",
       "emoji": "🔪",
-      "text": "(1) Culpable homicide is murder in each of the following cases:\n(a) if the offender means to cause the death of the person killed:\n(b) if the offender means to cause to the person killed any bodily injury that is known to the\noffender to be likely to cause death, and is reckless whether death ensues or not:\n(c) if the offender means to cause death, or, being so reckless as aforesaid, means to cause such\nbodily injury as aforesaid to one person, and by accident or mistake kills another person,\nthough he or she does not mean to hurt the person killed:\n(d) if the offender for any unlawful object does an act that he or she knows to be likely to\ncause death, and thereby kills any person, though he or\nshe may have desired that his or\nher object should be effected without hurting any one.\n\n(2) There is no punishment for murder."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "Culpable homicide is murder in each of the following cases:",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "if the offender means to cause the death of the person killed:"
+            },
+            {
+              "type": "lettered",
+              "letter": "b",
+              "text": "if the offender means to cause to the person killed any bodily injury that is known to the offender to be likely to cause death, and is reckless whether death ensues or not:"
+            },
+            {
+              "type": "lettered",
+              "letter": "c",
+              "text": "if the offender means to cause death, or, being so reckless as aforesaid, means to cause such bodily injury as aforesaid to one person, and by accident or mistake kills another person, though he or she does not mean to hurt the person killed:"
+            },
+            {
+              "type": "lettered",
+              "letter": "d",
+              "text": "if the offender for any unlawful object does an act that he or she knows to be likely to cause death, and thereby kills any person, though he or she may have desired that his or her object should be effected without hurting any one."
+            }
+          ]
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "There is no punishment for murder."
+        }
+      ]
     },
     {
       "id": "section-18",
       "title": "18 Losing the House Cup",
       "emoji": "⚰️",
-      "text": "(1) The three losing houses are to be executed by public hanging unless they successfully perform a\nYardie no later than one week after the date of the Strawberry Moon.\n(2) Successfully performing a Yardie is a full defense to the crime of Losing."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "The three losing houses are to be executed by public hanging unless they successfully perform a Yardie no later than one week after the date of the Strawberry Moon."
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "Successfully performing a Yardie is a full defense to the crime of Losing."
+        }
+      ]
     },
     {
       "id": "section-19",
       "title": "19 House Roles",
       "emoji": "🎩",
-      "text": "(1) The following roles are also to be selected for each house—\n    (a) House Captain\n        (i) Responsible for organizing their House for events.\n        (ii) Elected by the initial Founders.\n        (iii) Until the finalization of the House Cup Courts Act, the House Captains, in their collective presence,\n             are the final decision makers on any rules in this Act.\n    (b) Bursar\n        (i) Responsible for accounting for House Points and verifying points of other Houses.\n        (ii) All four House Bursars collaborate to account for points awarded and revoked during events.\n        (iii) Elected by their House when a majority of members are present.\n        (iv) Bursars collectively organize the allocation of jelly beans if a Participant converts points.\n    (c) House Judge\n        (i) Responsible for adjudicating rules and interpreting the House Cup Rules.\n        (ii) Hears cases in the House Cup Court regarding penalties, House Crimes, or other infractions.\n        (iii) Elected by democratic vote within each House, with a majority present.\n        (iv) In case of a failure to reach consensus, all Houses party to the dispute will be docked 10 points.\n        (v) Only Judges from the involved House may adjudicate disputes.\n(2) After initial election, any role holder may abdicate, and a new role holder may be elected from the current pool.\n(3) More Roles may be added in the future.\n(4) Each Participant may not hold more than one role."
+      "content": [
+        {
+          "type": "numbered",
+          "number": "1",
+          "text": "The following roles are also to be selected for each house—",
+          "children": [
+            {
+              "type": "lettered",
+              "letter": "a",
+              "text": "House Captain",
+              "children": [
+                {
+                  "type": "roman",
+                  "numeral": "i",
+                  "text": "Responsible for organizing their House for events."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "ii",
+                  "text": "Elected by the initial Founders."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "iii",
+                  "text": "Until the finalization of the House Cup Courts Act, the House Captains, in their collective presence, are the final decision makers on any rules in this Act."
+                }
+              ]
+            },
+            {
+              "type": "lettered",
+              "letter": "b",
+              "text": "Bursar",
+              "children": [
+                {
+                  "type": "roman",
+                  "numeral": "i",
+                  "text": "Responsible for accounting for House Points and verifying points of other Houses."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "ii",
+                  "text": "All four House Bursars collaborate to account for points awarded and revoked during events."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "iii",
+                  "text": "Elected by their House when a majority of members are present."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "iv",
+                  "text": "Bursars collectively organize the allocation of jelly beans if a Participant converts points."
+                }
+              ]
+            },
+            {
+              "type": "lettered",
+              "letter": "c",
+              "text": "House Judge",
+              "children": [
+                {
+                  "type": "roman",
+                  "numeral": "i",
+                  "text": "Responsible for adjudicating rules and interpreting the House Cup Rules."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "ii",
+                  "text": "Hears cases in the House Cup Court regarding penalties, House Crimes, or other infractions."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "iii",
+                  "text": "Elected by democratic vote within each House, with a majority present."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "iv",
+                  "text": "In case of a failure to reach consensus, all Houses party to the dispute will be docked 10 points."
+                },
+                {
+                  "type": "roman",
+                  "numeral": "v",
+                  "text": "Only Judges from the involved House may adjudicate disputes."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "numbered",
+          "number": "2",
+          "text": "After initial election, any role holder may abdicate, and a new role holder may be elected from the current pool."
+        },
+        {
+          "type": "numbered",
+          "number": "3",
+          "text": "More Roles may be added in the future."
+        },
+        {
+          "type": "numbered",
+          "number": "4",
+          "text": "Each Participant may not hold more than one role."
+        }
+      ]
     }
   ],
   "schedule": {
     "id": "schedule-1",
     "title": "Schedule 1: House Cup Register",
     "emoji": "📜",
-    "text": "The following natural persons are hereby Participants in the House Cup:\n\nName:           Signature:\n\nHouse Captains:\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n\nParticipants:\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n_______________________________________  _____________\n\nAssent of the House Captains:         Date:"
+    "fields": {
+      "title": "The following natural persons are hereby Participants in the House Cup:",
+      "headers": [
+        { "name": "Name", "type": "text" },
+        { "name": "Signature", "type": "signature" }
+      ],
+      "sections": [
+        {
+          "title": "House Captains",
+          "rows": 4,
+          "required": true
+        },
+        {
+          "title": "Participants",
+          "rows": 24,
+          "required": false
+        }
+      ],
+      "footer": {
+        "left": {
+          "label": "Assent of the House Captains",
+          "type": "signature"
+        },
+        "right": {
+          "label": "Date",
+          "type": "date"
+        }
+      }
+    }
   }
 }

@@ -1,373 +1,340 @@
+/**
+ * Term highlighting utility for rule documents
+ * 
+ * Provides functions to render structured rule content with term highlighting
+ */
+
 import React from 'react';
 
 /**
- * Process rule text to highlight special terms and properly indent nested structure
- * @param {string} text - Raw text content
- * @param {Array} terms - Array of terms to highlight
- * @returns {JSX.Element} - React element with highlighted terms and proper indentation
+ * Generate term styling classes based on type and level
+ * @param {string} type - Type of term (brand, accent, success, danger, info)
+ * @param {string} level - Emphasis level (emphasis, strong, normal)
+ * @returns {string} - CSS classes for the term
  */
-export const processRuleText = (text, terms) => {
-  if (!terms || terms.length === 0) {
-    // If no terms to highlight, simply process the paragraphs with indentation
-    return formatTextWithIndentation(text);
-  }
-
-  // Define term colors based on category
-  const termColors = {
-    brand: 'text-brand-400 font-medium hover:underline cursor-help transition-colors',
-    accent: 'text-accent-400 font-medium hover:underline cursor-help transition-colors',
-    success: 'text-success-400 font-medium hover:underline cursor-help transition-colors',
-    danger: 'text-red-400 font-medium hover:underline cursor-help transition-colors',
-    info: 'text-info-400 font-medium hover:underline cursor-help transition-colors'
+export const getTermClasses = (type, level) => {
+  // Base classes by type
+  const baseClasses = {
+    brand: 'text-brand-400',
+    accent: 'text-accent-400',
+    success: 'text-success-400',
+    danger: 'text-red-400',
+    info: 'text-info-400'
   };
 
-  // Split the text into paragraphs and process each one
-  return (
-    <>
-      {text.split('\n\n').map((paragraph, pIndex) => {
-        // Skip empty paragraphs
-        if (!paragraph.trim()) return null;
-
-        // Check if this is a paragraph with nested content
-        if (hasNestedStructure(paragraph)) {
-          return formatNestedStructure(paragraph, pIndex, terms, termColors);
-        }
-        
-        // Process regular paragraphs with term highlighting
-        return formatRegularParagraph(paragraph, pIndex, terms, termColors);
-      })}
-    </>
-  );
+  // Default to brand if type not found
+  const colorClass = baseClasses[type] || baseClasses.brand;
+  
+  return `${colorClass} font-medium hover:underline cursor-help transition-colors`;
 };
 
 /**
- * Format text with proper indentation without term highlighting
- * @param {string} text - Text to format
- * @returns {JSX.Element} - Formatted text with indentation
+ * Highlight special terms in text content
+ * @param {string} text - The text to process
+ * @param {Object} termDefinitions - Object with terms grouped by type
+ * @returns {React.ReactNode} - Text with highlighted terms
  */
-const formatTextWithIndentation = (text) => {
-  return (
-    <>
-      {text.split('\n\n').map((paragraph, pIndex) => {
-        // Skip empty paragraphs
-        if (!paragraph.trim()) return null;
-        
-        // Check if this is a paragraph with nested content
-        if (hasNestedStructure(paragraph)) {
-          return formatNestedStructureNoHighlight(paragraph, pIndex);
-        }
-        
-        // Regular paragraph
-        return <p key={`p-${pIndex}`} className="mb-4 last:mb-0">{paragraph}</p>;
-      })}
-    </>
-  );
-};
+export const highlightTerms = (text, termDefinitions) => {
+  if (!text || !termDefinitions) return text;
 
-/**
- * Check if a paragraph contains nested structure (numbered or lettered items)
- * @param {string} paragraph - Paragraph to check
- * @returns {boolean} - True if paragraph contains nested structure
- */
-const hasNestedStructure = (paragraph) => {
-  // Check for patterns like (a), (b), (i), (ii), etc.
-  return /\([a-z]+\)|\([ivx]+\)|\(\d+\)/.test(paragraph) || 
-         // Check for patterns like (a), (b) at the beginning
-         /^\s*\([a-z]+\)|\([ivx]+\)|\(\d+\)/.test(paragraph) || 
-         // Check for numbered items
-         /^\s*\d+\.\s/.test(paragraph);
-};
-
-/**
- * Format a nested structure without highlighting terms
- * @param {string} paragraph - Paragraph with nested structure
- * @param {number} pIndex - Paragraph index
- * @returns {JSX.Element} - Formatted nested structure
- */
-const formatNestedStructureNoHighlight = (paragraph, pIndex) => {
-  // Split the paragraph into lines to find the nested structure
-  const lines = splitNestedStructure(paragraph);
-  
-  return (
-    <div key={`nested-${pIndex}`} className="mb-4 last:mb-0">
-      {lines.map((line, lineIndex) => {
-        const { text, level, marker } = line;
-        
-        return (
-          <div 
-            key={`line-${pIndex}-${lineIndex}`} 
-            className={`flex items-start mb-1 last:mb-0`}
-            style={{ paddingLeft: `${level * 1.5}rem` }}
-          >
-            {marker && (
-              <span className="mr-2 font-medium text-brand-300 whitespace-nowrap">{marker}</span>
-            )}
-            <span>{text}</span>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-/**
- * Format a nested structure with term highlighting
- * @param {string} paragraph - Paragraph with nested structure
- * @param {number} pIndex - Paragraph index
- * @param {Array} terms - Terms to highlight
- * @param {Object} termColors - Colors for different term types
- * @returns {JSX.Element} - Formatted nested structure with highlighted terms
- */
-const formatNestedStructure = (paragraph, pIndex, terms, termColors) => {
-  // Split the paragraph into lines to find the nested structure
-  const lines = splitNestedStructure(paragraph);
-  
-  return (
-    <div key={`nested-${pIndex}`} className="mb-4 last:mb-0">
-      {lines.map((line, lineIndex) => {
-        const { text, level, marker } = line;
-        
-        // Highlight terms in this line
-        const highlightedText = highlightTerms(text, terms, termColors);
-        
-        return (
-          <div 
-            key={`line-${pIndex}-${lineIndex}`} 
-            className={`flex items-start mb-1 last:mb-0`}
-            style={{ paddingLeft: `${level * 1.5}rem` }}
-          >
-            {marker && (
-              <span className="mr-2 font-medium text-brand-300 whitespace-nowrap">{marker}</span>
-            )}
-            <div className="flex-1">{highlightedText}</div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-/**
- * Split a paragraph into lines with nested structure information
- * @param {string} paragraph - Paragraph to split
- * @returns {Array} - Array of objects with text, level, and marker
- */
-const splitNestedStructure = (paragraph) => {
-  // Handle different types of nested structures
-  
-  // Check if this is a simple numbered item
-  if (/^\d+\.\s/.test(paragraph)) {
-    const matches = paragraph.match(/^(\d+\.\s)(.*)/s);
-    if (matches) {
-      return [{ text: matches[2], level: 0, marker: matches[1] }];
-    }
-  }
-  
-  // Process paragraph to extract nested structures
-  const lines = [];
-  
-  // Main pattern regex for nested items
-  const patterns = [
-    // For (a), (b), etc.
-    { regex: /\(([a-z])\)\s/g, level: 1 },
-    // For (i), (ii), etc.
-    { regex: /\(([ivx]+)\)\s/g, level: 2 },
-    // For (1), (2), etc.
-    { regex: /\((\d+)\)\s/g, level: 1 }
-  ];
-  
-  // Find all matches for all patterns
-  let allMatches = [];
-  
-  patterns.forEach(pattern => {
-    let match;
-    const { regex } = pattern;
-    regex.lastIndex = 0; // Reset regex state
-    
-    while ((match = regex.exec(paragraph)) !== null) {
-      allMatches.push({
-        pattern,
-        match,
-        index: match.index,
-        endIndex: match.index + match[0].length
+  // Create a flat array of all terms with their type and level
+  const allTerms = [];
+  Object.keys(termDefinitions).forEach(type => {
+    termDefinitions[type].forEach(term => {
+      allTerms.push({
+        ...term,
+        type
       });
-    }
+    });
   });
   
-  // Sort matches by their position in the text
-  allMatches.sort((a, b) => a.index - b.index);
+  // Sort terms by length (longest first) to avoid partial matches
+  allTerms.sort((a, b) => b.term.length - a.term.length);
   
-  // If no matches, return the whole paragraph as one line
-  if (allMatches.length === 0) {
-    return [{ text: paragraph, level: 0, marker: null }];
-  }
+  // If no terms, return the plain text
+  if (allTerms.length === 0) return text;
   
-  // Process the beginning of the paragraph if needed
-  if (allMatches[0].index > 0) {
-    lines.push({
-      text: paragraph.substring(0, allMatches[0].index).trim(),
-      level: 0,
-      marker: null
-    });
-  }
+  // Find term positions in text
+  const matches = findTermMatches(text, allTerms);
   
-  // Process each match and the text between matches
-  for (let i = 0; i < allMatches.length; i++) {
-    const currentMatch = allMatches[i];
-    const nextMatch = allMatches[i + 1];
-    
-    const marker = `(${currentMatch.match[1]})`;
-    const endIndex = nextMatch ? nextMatch.index : paragraph.length;
-    let text = paragraph.substring(currentMatch.endIndex, endIndex).trim();
-    
-    // Add this line
-    lines.push({
-      text,
-      level: currentMatch.pattern.level,
-      marker
-    });
-  }
+  // If no matches, return the plain text
+  if (matches.length === 0) return text;
   
-  return lines;
+  // Sort matches by position
+  matches.sort((a, b) => a.startIndex - b.startIndex);
+  
+  // Build result with highlighted terms
+  return buildHighlightedContent(text, matches);
 };
 
 /**
- * Format a regular paragraph with term highlighting
- * @param {string} paragraph - Paragraph to format
- * @param {number} pIndex - Paragraph index
- * @param {Array} terms - Terms to highlight
- * @param {Object} termColors - Colors for different term types
- * @returns {JSX.Element} - Formatted paragraph with highlighted terms
+ * Find all term matches in a text
+ * @param {string} text - Text to search in
+ * @param {Array} terms - Terms to find
+ * @returns {Array} - Array of match objects with position and term info
  */
-const formatRegularParagraph = (paragraph, pIndex, terms, termColors) => {
-  // Check for special paragraph formats
-  if (paragraph.startsWith('•')) {
-    // Handle bullet points
-    return (
-      <div key={`p-${pIndex}`} className="flex mb-4 last:mb-0">
-        <span className="mr-2">•</span>
-        <div>{highlightTerms(paragraph.substring(1).trim(), terms, termColors)}</div>
-      </div>
-    );
-  } else if (paragraph.match(/^\d+\.\s/)) {
-    // Handle numbered items
-    const matches = paragraph.match(/^(\d+\.\s)(.*)/s);
-    if (matches) {
-      return (
-        <div key={`p-${pIndex}`} className="flex mb-4 last:mb-0">
-          <span className="mr-2 font-medium text-brand-300">{matches[1]}</span>
-          <div>{highlightTerms(matches[2], terms, termColors)}</div>
-        </div>
-      );
-    }
-  }
-  
-  // Regular paragraphs
-  return (
-    <p key={`p-${pIndex}`} className="mb-4 last:mb-0">
-      {highlightTerms(paragraph, terms, termColors)}
-    </p>
-  );
-};
+const findTermMatches = (text, terms) => {
+  const matches = [];
 
-/**
- * Highlight terms in a text
- * @param {string} text - Text to process
- * @param {Array} terms - Terms to highlight
- * @param {Object} termColors - Colors for different term types
- * @returns {Array} - Array of React elements with highlighted terms
- */
-const highlightTerms = (text, terms, termColors) => {
-  const segments = [];
-  let lastIndex = 0;
-  
-  // Sort terms by length (longest first) to avoid highlighting substrings
-  const sortedTerms = [...terms].sort((a, b) => b.term.length - a.term.length);
-  
-  // Create a map to efficiently find all term occurrences in the text
-  const occurrences = [];
-  
-  for (const termObj of sortedTerms) {
-    const { term, type, level } = termObj;
-    
-    // Case-insensitive global search
-    const regex = new RegExp(`\\b${escapeRegExp(term)}\\b`, 'gi');
+  terms.forEach(term => {
+    const regex = new RegExp(`\\b${escapeRegExp(term.term)}\\b`, 'gi');
     let match;
     
     while ((match = regex.exec(text)) !== null) {
-      occurrences.push({
-        term: match[0], // Use the actual case from the text
-        type,
-        level,
-        start: match.index,
-        end: match.index + match[0].length
+      matches.push({
+        term: term.term,
+        type: term.type,
+        level: term.level,
+        startIndex: match.index,
+        endIndex: match.index + match[0].length,
+        originalText: match[0] // Preserve original case
       });
     }
-  }
-  
-  // Sort occurrences by start position
-  occurrences.sort((a, b) => a.start - b.start);
-  
-  // Filter out overlapping occurrences
-  const filteredOccurrences = [];
-  let lastEnd = -1;
-  
-  for (const occurrence of occurrences) {
-    if (occurrence.start >= lastEnd) {
-      filteredOccurrences.push(occurrence);
-      lastEnd = occurrence.end;
-    }
-  }
-  
-  // Build the segments
-  for (const occurrence of filteredOccurrences) {
-    // Add text before the term
-    if (occurrence.start > lastIndex) {
-      segments.push(
-        <span key={`text-${lastIndex}`}>
-          {text.substring(lastIndex, occurrence.start)}
-        </span>
-      );
-    }
-    
-    // Determine styling based on level and type
-    const className = termColors[occurrence.type] || 'text-brand-400 font-medium';
-    const emphasize = occurrence.level === 'emphasis';
-    const strengthen = occurrence.level === 'strong';
-    
-    // Add the highlighted term
-    segments.push(
-      <span 
-        key={`term-${occurrence.start}`}
-        className={className}
-        title={`${occurrence.type.charAt(0).toUpperCase() + occurrence.type.slice(1)} term`}
-      >
-        {emphasize ? <em>{occurrence.term}</em> : 
-         strengthen ? <strong>{occurrence.term}</strong> : 
-         occurrence.term}
-      </span>
-    );
-    
-    lastIndex = occurrence.end;
-  }
-  
-  // Add remaining text
-  if (lastIndex < text.length) {
-    segments.push(
-      <span key={`text-${lastIndex}`}>
-        {text.substring(lastIndex)}
-      </span>
-    );
-  }
-  
-  return segments.length > 0 ? segments : text;
+  });
+
+  // Filter out overlapping matches
+  return filterOverlappingMatches(matches);
 };
 
 /**
- * Escape special characters in a string for use in a regular expression
+ * Filter out overlapping term matches, keeping longer terms
+ * @param {Array} matches - All term matches
+ * @returns {Array} - Filtered matches with no overlaps
+ */
+const filterOverlappingMatches = (matches) => {
+  // Sort by position then by length (longer terms first)
+  matches.sort((a, b) => {
+    if (a.startIndex !== b.startIndex) return a.startIndex - b.startIndex;
+    return b.endIndex - a.endIndex; // Longer terms first
+  });
+  
+  const filteredMatches = [];
+  let lastEndIndex = 0;
+  
+  for (const match of matches) {
+    if (match.startIndex >= lastEndIndex) {
+      filteredMatches.push(match);
+      lastEndIndex = match.endIndex;
+    }
+  }
+  
+  return filteredMatches;
+};
+
+/**
+ * Build the final text with highlighted terms
+ * @param {string} text - Original text
+ * @param {Array} matches - Term matches
+ * @returns {Array} - Array of React elements
+ */
+const buildHighlightedContent = (text, matches) => {
+  const parts = [];
+  let lastIndex = 0;
+  
+  matches.forEach((match, index) => {
+    // Add text before this match
+    if (match.startIndex > lastIndex) {
+      parts.push(
+        <React.Fragment key={`text-${lastIndex}`}>
+          {text.substring(lastIndex, match.startIndex)}
+        </React.Fragment>
+      );
+    }
+    
+    // Add the highlighted term
+    const termClasses = getTermClasses(match.type, match.level);
+    let termContent = match.originalText;
+    
+    // Apply styling based on level
+    if (match.level === 'emphasis') {
+      termContent = <em>{termContent}</em>;
+    } else if (match.level === 'strong') {
+      termContent = <strong>{termContent}</strong>;
+    }
+    
+    parts.push(
+      <span 
+        key={`term-${match.startIndex}`}
+        className={termClasses}
+        title={`${match.type.charAt(0).toUpperCase() + match.type.slice(1)} term`}
+      >
+        {termContent}
+      </span>
+    );
+    
+    lastIndex = match.endIndex;
+  });
+  
+  // Add remaining text
+  if (lastIndex < text.length) {
+    parts.push(
+      <React.Fragment key={`text-${lastIndex}`}>
+        {text.substring(lastIndex)}
+      </React.Fragment>
+    );
+  }
+  
+  return parts;
+};
+
+/**
+ * Escape special regex characters in a string
  * @param {string} string - String to escape
- * @returns {string} - Escaped string
+ * @returns {string} - Escaped string safe for regex
  */
 const escapeRegExp = (string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
+/**
+ * Renders a definition list item with term and definition
+ * @param {Object} item - Definition item with term and definition
+ * @param {number} index - Index for key
+ * @param {Object} termDefinitions - Term definitions for highlighting
+ * @returns {React.ReactNode} - Rendered definition item
+ */
+export const renderDefinitionItem = (item, index, termDefinitions) => {
+  return (
+    <div key={`def-${index}`} className="flex mb-2 last:mb-0">
+      <dt className="font-semibold text-white min-w-[120px] sm:min-w-[150px] pr-2">
+        {highlightTerms(item.term, termDefinitions)}
+      </dt>
+      <dd>{highlightTerms(item.definition, termDefinitions)}</dd>
+    </div>
+  );
+};
+
+/**
+ * Renders a nested list structure for rules content
+ * @param {Array} content - Array of content objects
+ * @param {Object} termDefinitions - Term definitions for highlighting
+ * @param {number} level - Current indentation level
+ * @returns {React.ReactNode} - Rendered nested content
+ */
+export const renderNestedContent = (content, termDefinitions, level = 0) => {
+  if (!content || content.length === 0) return null;
+  
+  return content.map((item, index) => {
+    const paddingLeft = `${level * 1.5}rem`;
+    
+    // Handle different content types
+    switch (item.type) {
+      case 'paragraph':
+        return (
+          <p 
+            key={`p-${index}`} 
+            className="mb-4 last:mb-0"
+            style={level > 0 ? { paddingLeft } : {}}
+          >
+            {highlightTerms(item.text, termDefinitions)}
+          </p>
+        );
+        
+      case 'numbered':
+        return (
+          <div 
+            key={`num-${index}`} 
+            className="mb-2 last:mb-0 flex items-start"
+            style={level > 0 ? { paddingLeft } : {}}
+          >
+            <span className="font-medium text-brand-300 mr-2 whitespace-nowrap">
+              ({item.number})
+            </span>
+            <div className="flex-1">
+              <div className="mb-2">{highlightTerms(item.text, termDefinitions)}</div>
+              {item.children && renderNestedContent(item.children, termDefinitions, level + 1)}
+            </div>
+          </div>
+        );
+        
+      case 'lettered':
+        return (
+          <div 
+            key={`let-${index}`} 
+            className="mb-2 last:mb-0 flex items-start"
+            style={{ paddingLeft }}
+          >
+            <span className="font-medium text-brand-300 mr-2 whitespace-nowrap">
+              ({item.letter})
+            </span>
+            <div className="flex-1">
+              <div className="mb-2">{highlightTerms(item.text, termDefinitions)}</div>
+              {item.children && renderNestedContent(item.children, termDefinitions, level + 1)}
+            </div>
+          </div>
+        );
+        
+      case 'roman':
+        return (
+          <div 
+            key={`rom-${index}`} 
+            className="mb-2 last:mb-0 flex items-start"
+            style={{ paddingLeft }}
+          >
+            <span className="font-medium text-brand-300 mr-2 whitespace-nowrap">
+              ({item.numeral})
+            </span>
+            <div className="flex-1">
+              <div className="mb-2">{highlightTerms(item.text, termDefinitions)}</div>
+              {item.children && renderNestedContent(item.children, termDefinitions, level + 1)}
+            </div>
+          </div>
+        );
+        
+      case 'definition-list':
+        return (
+          <dl 
+            key={`def-list-${index}`} 
+            className="mb-4 last:mb-0"
+            style={level > 0 ? { paddingLeft } : {}}
+          >
+            {item.items.map((defItem, defIndex) => 
+              renderDefinitionItem(defItem, defIndex, termDefinitions)
+            )}
+          </dl>
+        );
+        
+      case 'amendment':
+        return (
+          <div 
+            key={`amend-${index}`}
+            className="mt-4 sm:mt-6 p-3 sm:p-5 rounded-lg bg-dark-800/50 border-l-4 border-accent-500"
+            style={level > 0 ? { paddingLeft } : {}}
+          >
+            <div className="flex items-start">
+              <div className="flex-shrink-0 mr-2 sm:mr-3 mt-1">
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  width="16" 
+                  height="16" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  className="text-accent-400"
+                  aria-hidden="true"
+                >
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <path d="M14 2v6h6"></path>
+                  <path d="M16 13H8"></path>
+                  <path d="M16 17H8"></path>
+                  <path d="M10 9H9H8"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 className="text-accent-400 font-semibold text-xs sm:text-sm mb-1">{item.title}</h4>
+                <div>
+                  {renderNestedContent(item.content, termDefinitions, 0)}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+        
+      default:
+        return null;
+    }
+  });
 };

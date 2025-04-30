@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 
 const InstagramSection = ({ data }) => {
   const { title, description, username, profileLink, postCount, followerCount, followingCount, logoImage } = data;
   
+  // Animation variants
+  const statVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: i => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 0.3 + (i * 0.1),
+        duration: 0.5
+      }
+    })
+  };
+  
   return (
-    <section className="bg-dark-900 py-16 md:py-24 relative overflow-hidden">
+    <section className="bg-dark-900 py-16 md:py-24 relative overflow-hidden" id="social">
       {/* Background elements */}
-      <div className="absolute top-0 right-0 w-32 md:w-64 h-32 md:h-64 bg-brand-500/5 rounded-full filter blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-32 md:w-64 h-32 md:h-64 bg-accent-500/5 rounded-full filter blur-3xl"></div>
+      <div className="absolute top-0 right-0 w-32 md:w-64 h-32 md:h-64 bg-brand-500/5 rounded-full filter blur-3xl" aria-hidden="true"></div>
+      <div className="absolute bottom-0 left-0 w-32 md:w-64 h-32 md:h-64 bg-accent-500/5 rounded-full filter blur-3xl" aria-hidden="true"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto">
@@ -36,11 +49,12 @@ const InstagramSection = ({ data }) => {
             {/* Profile Header */}
             <div className="bg-gradient-to-r from-brand-500 via-accent-400 to-brand-400 h-16 md:h-24 relative">
               {/* Floating Profile Image */}
-              <div className="absolute -bottom-10 md:-bottom-12 left-1/2 transform -translate-x-1/2 w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-dark-900 overflow-hidden">
+              <div className="absolute -bottom-10 md:-bottom-12 left-1/2 transform -translate-x-1/2 w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-dark-900 overflow-hidden shadow-lg">
                 <img
                   src={logoImage}
-                  alt="Instagram Profile"
+                  alt={`${username} Instagram Profile`}
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -54,18 +68,24 @@ const InstagramSection = ({ data }) => {
               
               {/* Stats */}
               <div className="flex justify-center space-x-6 md:space-x-8 mb-6">
-                <div className="text-center">
-                  <div className="text-white font-bold text-lg md:text-xl">{postCount}</div>
-                  <div className="text-dark-300 text-xs md:text-sm">posts</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-white font-bold text-lg md:text-xl">{followerCount}</div>
-                  <div className="text-dark-300 text-xs md:text-sm">followers</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-white font-bold text-lg md:text-xl">{followingCount}</div>
-                  <div className="text-dark-300 text-xs md:text-sm">following</div>
-                </div>
+                {[
+                  { label: "posts", value: postCount, index: 0 },
+                  { label: "followers", value: followerCount, index: 1 },
+                  { label: "following", value: followingCount, index: 2 }
+                ].map((stat) => (
+                  <motion.div 
+                    className="text-center"
+                    key={stat.label}
+                    custom={stat.index}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={statVariants}
+                  >
+                    <div className="text-white font-bold text-lg md:text-xl">{stat.value}</div>
+                    <div className="text-dark-300 text-xs md:text-sm">{stat.label}</div>
+                  </motion.div>
+                ))}
               </div>
               
               {/* Follow Button */}
@@ -88,6 +108,7 @@ const InstagramSection = ({ data }) => {
                   strokeLinecap="round" 
                   strokeLinejoin="round"
                   className="mr-2"
+                  aria-hidden="true"
                 >
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -103,4 +124,4 @@ const InstagramSection = ({ data }) => {
   );
 };
 
-export default InstagramSection;
+export default memo(InstagramSection);

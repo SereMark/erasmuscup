@@ -1,15 +1,38 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 
+/**
+ * Document header component showing official information about the rules document
+ */
 const DocumentHeader = ({ data }) => {
   const { title, icon, info, note } = data;
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.3 } }
+  };
+
+  const infoCardVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: (i) => ({ 
+      opacity: 1, 
+      y: 0, 
+      transition: { duration: 0.4, delay: 0.4 + (i * 0.1) } 
+    })
+  };
+
+  const noteVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.5, delay: 0.7 } }
+  };
+
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.3 }}
-      className="glass-card mb-8 sm:mb-12 overflow-hidden rounded-xl shadow-lg border border-dark-800/50"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="glass-card mb-8 sm:mb-12 overflow-hidden rounded-xl shadow-lg border border-dark-800/50 relative"
     >
       {/* Top accent bar */}
       <div className="h-1 w-full bg-gradient-to-r from-brand-500 to-brand-600"></div>
@@ -18,7 +41,7 @@ const DocumentHeader = ({ data }) => {
       <div className="p-4 sm:p-6 md:p-8 border-b border-dark-800">
         <div className="flex items-center mb-4 sm:mb-6">
           <div className="flex-shrink-0 bg-brand-500/20 text-brand-400 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center">
-            <span className="text-xl sm:text-2xl">{icon}</span>
+            <span className="text-xl sm:text-2xl" aria-hidden="true">{icon}</span>
           </div>
           <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white ml-3 sm:ml-4">{title}</h2>
         </div>
@@ -28,9 +51,8 @@ const DocumentHeader = ({ data }) => {
             <motion.div 
               key={index} 
               className="bg-dark-800/30 rounded-lg p-3 sm:p-4"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.4 + (index * 0.1) }}
+              custom={index}
+              variants={infoCardVariants}
             >
               <div className="flex flex-col">
                 <span className="text-dark-400 text-xs sm:text-sm mb-1">{item.label}</span>
@@ -44,9 +66,7 @@ const DocumentHeader = ({ data }) => {
       {/* Note Section */}
       <motion.div 
         className="p-4 sm:p-6 md:p-8 bg-dark-800/30"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.7 }}
+        variants={noteVariants}
       >
         <div className="flex items-start">
           <div className="flex-shrink-0 mr-3 sm:mr-4 mt-1">
@@ -61,6 +81,7 @@ const DocumentHeader = ({ data }) => {
               strokeLinecap="round" 
               strokeLinejoin="round" 
               className="text-brand-400"
+              aria-hidden="true"
             >
               <circle cx="12" cy="12" r="10"></circle>
               <line x1="12" y1="8" x2="12" y2="12"></line>
@@ -75,11 +96,11 @@ const DocumentHeader = ({ data }) => {
       </motion.div>
       
       {/* Decorative corner accent */}
-      <div className="absolute top-0 right-0 w-8 sm:w-12 h-8 sm:h-12 overflow-hidden">
+      <div className="absolute top-0 right-0 w-8 sm:w-12 h-8 sm:h-12 overflow-hidden" aria-hidden="true">
         <div className="absolute -top-4 sm:-top-6 -right-4 sm:-right-6 w-8 sm:w-12 h-8 sm:h-12 rotate-45 bg-brand-500/20"></div>
       </div>
     </motion.div>
   );
 };
 
-export default DocumentHeader;
+export default memo(DocumentHeader);

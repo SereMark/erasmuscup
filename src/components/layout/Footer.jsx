@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
   
-  // Footer links
-  const quickLinks = [
+  // Footer navigation links
+  const quickLinks = useMemo(() => [
     { name: 'Home', path: '/' },
     { name: 'Scoreboard', path: '/scoreboard' },
     { name: 'Rules', path: '/rules' },
     { name: 'Events', path: '/events' },
-  ];
+  ], []);
 
   // Animation variants
   const containerVariants = {
@@ -45,16 +45,21 @@ const Footer = () => {
           viewport={{ once: true, amount: 0.2 }}
         >
           {/* Logo and brief description */}
-          <motion.div variants={itemVariants} className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-0 text-center sm:text-left">
+          <motion.div 
+            variants={itemVariants} 
+            className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-0 text-center sm:text-left"
+          >
             <Link to="/" className="flex-shrink-0">
               <img 
                 src="/assets/logos/house-cup-logo.png" 
                 alt="Erasmus House Cup Logo" 
                 className="h-8 sm:h-10 w-auto" 
+                draggable="false"
+                loading="lazy"
               />
             </Link>
             <div>
-              <h3 className="text-white text-xs sm:text-sm font-bold">Erasmus House Cup</h3>
+              <h2 className="text-white text-xs sm:text-sm font-bold">Erasmus House Cup</h2>
               <p className="text-dark-400 text-xs max-w-xs">
                 The official digital hub of the Erasmus House Cup 2025.
               </p>
@@ -62,28 +67,33 @@ const Footer = () => {
           </motion.div>
 
           {/* Quick Links and Social */}
-          <motion.div variants={itemVariants} className="flex flex-col items-center sm:items-end space-y-3 sm:space-y-4">
+          <motion.div 
+            variants={itemVariants} 
+            className="flex flex-col items-center sm:items-end space-y-3 sm:space-y-4"
+          >
             {/* Navigation Links */}
-            <ul className="flex flex-wrap justify-center gap-3 sm:gap-4">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <Link 
-                    to={link.path} 
-                    className="text-dark-300 hover:text-brand-400 transition-colors text-xs sm:text-sm px-2 py-1"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <nav aria-label="Footer Navigation">
+              <ul className="flex flex-wrap justify-center gap-3 sm:gap-4">
+                {quickLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link 
+                      to={link.path} 
+                      className="text-dark-300 hover:text-brand-400 transition-colors text-xs sm:text-sm px-2 py-1 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:ring-offset-dark-950 focus:ring-offset-2 rounded"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
             
             {/* Instagram link */}
             <a 
               href="https://www.instagram.com/house_cup_erasmus/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-dark-300 hover:text-accent-400 transition-colors p-2"
-              aria-label="Instagram"
+              className="text-dark-300 hover:text-accent-400 transition-colors p-2 rounded-full hover:bg-dark-800/20 focus:outline-none focus:ring-2 focus:ring-accent-500/50 focus:ring-offset-dark-950 focus:ring-offset-2"
+              aria-label="Follow us on Instagram"
             >
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
@@ -95,6 +105,7 @@ const Footer = () => {
                 strokeWidth="2" 
                 strokeLinecap="round" 
                 strokeLinejoin="round"
+                aria-hidden="true"
               >
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>

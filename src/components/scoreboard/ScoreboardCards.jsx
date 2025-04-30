@@ -1,22 +1,33 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useTiltEffect } from '../../utils/animationUtils';
 import { getHouseTheme } from '../../utils/houseTheme';
 
-const EventCard = ({ event, houses, index }) => {
+const EventCard = memo(({ event, houses, index }) => {
   const tiltRef = useTiltEffect({ max: 5, scale: 1.02 });
   
   // Find the highest score in this event
-  const highestScore = Math.max(...Object.values(event.points).filter(score => !isNaN(score)));
+  const highestScore = useMemo(() => 
+    Math.max(...Object.values(event.points).filter(score => !isNaN(score))), 
+    [event.points]
+  );
   
   // Determine if this is a special event
   const isAdjustment = event.type === 'adjustment';
   const isTotal = event.type === 'total';
   
   // Get the house with the highest score for this event
-  const winningHouse = houses.find(house => event.points[house.key] === highestScore);
-  const winningHouseTheme = winningHouse ? getHouseTheme(winningHouse.key) : getHouseTheme('theHoo');
-  const brandTheme = getHouseTheme('theHoo'); // For total card and defaults
+  const winningHouse = useMemo(() => 
+    houses.find(house => event.points[house.key] === highestScore),
+    [houses, event.points, highestScore]
+  );
+  
+  const winningHouseTheme = useMemo(() => 
+    winningHouse ? getHouseTheme(winningHouse.key) : getHouseTheme('theHoo'),
+    [winningHouse]
+  );
+  
+  const brandTheme = useMemo(() => getHouseTheme('theHoo'), []); // For total card and defaults
 
   return (
     <motion.div
@@ -29,8 +40,8 @@ const EventCard = ({ event, houses, index }) => {
     >
       <div className={`h-full flex flex-col ${isTotal ? 'bg-dark-900 ring-1 ' + brandTheme.ringLight : 'bg-dark-800'} rounded-xl relative`}>
         {/* Top accent bar for special events */}
-        {isTotal && <div className="h-1 w-full bg-gradient-to-r from-brand-400 to-brand-500"></div>}
-        {isAdjustment && <div className="h-1 w-full bg-accent-500"></div>}
+        {isTotal && <div className="h-1 w-full bg-gradient-to-r from-brand-400 to-brand-500" aria-hidden="true"></div>}
+        {isAdjustment && <div className="h-1 w-full bg-accent-500" aria-hidden="true"></div>}
         
         {/* Event Header */}
         <div className="p-3 sm:p-4 md:p-5 border-b border-dark-700/50">
@@ -63,6 +74,7 @@ const EventCard = ({ event, houses, index }) => {
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
                   className={brandTheme.textPrimary}
+                  aria-hidden="true"
                 >
                   <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
                   <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
@@ -84,13 +96,17 @@ const EventCard = ({ event, houses, index }) => {
             const houseTheme = getHouseTheme(house.key);
             
             return (
-              <div key={house.key} className={`flex items-center justify-between ${isHighest && !isTotal ? 'p-1.5 sm:p-2 -mx-1.5 sm:-mx-2 rounded-lg ' + houseTheme.bgLight : ''}`}>
+              <div 
+                key={house.key} 
+                className={`flex items-center justify-between ${isHighest && !isTotal ? 'p-1.5 sm:p-2 -mx-1.5 sm:-mx-2 rounded-lg ' + houseTheme.bgLight : ''}`}
+              >
                 <div className="flex items-center">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 mr-2 sm:mr-3 bg-dark-900/60 rounded-full p-1 flex items-center justify-center">
                     <img
                       src={house.logo}
                       alt={house.name}
                       className="w-full h-full object-contain"
+                      loading="lazy"
                     />
                   </div>
                   <span className={`text-sm sm:text-base ${isHighest ? 'font-medium text-white' : 'text-dark-200'}`}>{house.name}</span>
@@ -123,14 +139,14 @@ const EventCard = ({ event, houses, index }) => {
         
         {/* Gradient background for winner */}
         {isTotal && (
-          <div className="absolute inset-0 -z-10 opacity-20 rounded-xl overflow-hidden">
+          <div className="absolute inset-0 -z-10 opacity-20 rounded-xl overflow-hidden" aria-hidden="true">
             <div className={`absolute inset-0 bg-gradient-to-br ${brandTheme.gradient}`}></div>
           </div>
         )}
         
         {/* Highlight for highest scoring house */}
         {!isTotal && isAdjustment === false && highestScore > 0 && (
-          <div className="absolute top-0 right-0">
+          <div className="absolute top-0 right-0" aria-hidden="true">
             <div className={`w-6 h-6 sm:w-8 sm:h-8 ${winningHouseTheme.textPrimary} flex items-center justify-center`}>
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
@@ -152,12 +168,18 @@ const EventCard = ({ event, houses, index }) => {
       </div>
     </motion.div>
   );
-};
+});
+
+// Set display name for memoized component
+EventCard.displayName = 'EventCard';
 
 const ScoreboardCards = ({ houses, scores }) => {
   // Filter to show total at top
-  const totalEvent = scores.find(event => event.type === 'total');
-  const regularEvents = scores.filter(event => event.type !== 'total');
+  const { totalEvent, regularEvents } = useMemo(() => {
+    const total = scores.find(event => event.type === 'total');
+    const regular = scores.filter(event => event.type !== 'total');
+    return { totalEvent: total, regularEvents: regular };
+  }, [scores]);
   
   // Stagger animation for container
   const containerVariants = {
@@ -205,4 +227,4 @@ const ScoreboardCards = ({ houses, scores }) => {
   );
 };
 
-export default ScoreboardCards;
+export default memo(ScoreboardCards);

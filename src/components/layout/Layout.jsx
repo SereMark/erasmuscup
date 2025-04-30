@@ -48,19 +48,11 @@ const Layout = () => {
       {/* Background elements */}
       <BackgroundElements />
       
-      {/* Skip to content link for accessibility */}
-      <a 
-        href="#main-content" 
-        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-brand-500 focus:text-white focus:p-4"
-      >
-        Skip to content
-      </a>
-      
       {/* Navigation */}
       <Navbar />
       
       {/* Main content area */}
-      <main id="main-content" className="flex-grow">
+      <main className="flex-grow">
         <Outlet />
       </main>
       

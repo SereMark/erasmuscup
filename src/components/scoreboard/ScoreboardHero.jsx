@@ -1,8 +1,37 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 const ScoreboardHero = ({ data }) => {
   const { title, subtitle, backgroundImage, gradient } = data;
+
+  // Animation variants
+  const contentVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } }
+  };
+  
+  const subtitleVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { duration: 0.7, delay: 0.2, ease: 'easeOut' } 
+    }
+  };
+  
+  const badgeVariants = {
+    hidden: { scale: 0, opacity: 0 },
+    visible: { 
+      scale: 1, 
+      opacity: 1, 
+      transition: { duration: 0.5, delay: 0.4, type: 'spring' } 
+    }
+  };
+  
+  const clockIconAnimation = {
+    rotate: 360,
+    transition: { duration: 20, repeat: Infinity, ease: "linear" }
+  };
 
   return (
     <section className="relative min-h-[40vh] sm:min-h-[50vh] flex items-center justify-center overflow-hidden">
@@ -16,14 +45,17 @@ const ScoreboardHero = ({ data }) => {
           >
             <img
               src={backgroundImage}
-              alt="Scoreboard Background"
+              alt=""
               className="w-full h-full object-cover object-center"
+              loading="eager"
+              fetchpriority="high"
+              aria-hidden="true"
             />
           </motion.div>
           
           {/* Custom gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-dark-950/80 via-dark-950/70 to-dark-950/90 backdrop-blur-sm"></div>
-          <div className={`absolute inset-0 bg-gradient-to-tr ${gradient} opacity-30`}></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-dark-950/80 via-dark-950/70 to-dark-950/90 backdrop-blur-sm" aria-hidden="true"></div>
+          <div className={`absolute inset-0 bg-gradient-to-tr ${gradient} opacity-30`} aria-hidden="true"></div>
         </div>
       </div>
 
@@ -32,9 +64,9 @@ const ScoreboardHero = ({ data }) => {
         <div className="max-w-3xl mx-auto text-center">
           {/* Title */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: 'easeOut' }}
+            initial="hidden"
+            animate="visible"
+            variants={contentVariants}
           >
             <h1 className="mb-3 md:mb-4 text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl">{title}</h1>
             <div className="w-16 md:w-20 h-1 bg-brand-500 mx-auto rounded-full mb-4 md:mb-6"></div>
@@ -42,9 +74,9 @@ const ScoreboardHero = ({ data }) => {
 
           {/* Animated Subtitle */}
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
+            initial="hidden"
+            animate="visible"
+            variants={subtitleVariants}
             className="text-base sm:text-lg md:text-xl text-white/90"
           >
             {subtitle}
@@ -52,16 +84,16 @@ const ScoreboardHero = ({ data }) => {
 
           {/* Animated Badge */}
           <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4, type: 'spring' }}
+            initial="hidden"
+            animate="visible"
+            variants={badgeVariants}
             className="mt-6 md:mt-8 inline-flex"
           >
             <div className="flex items-center px-3 py-1.5 sm:px-4 sm:py-2 bg-brand-500/20 border border-brand-500/30 rounded-lg">
               <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                animate={clockIconAnimation}
                 className="mr-2"
+                aria-hidden="true"
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
@@ -80,7 +112,7 @@ const ScoreboardHero = ({ data }) => {
                 </svg>
               </motion.div>
               <span className="text-xs sm:text-sm font-medium text-brand-300">
-                Last Updated: 4/29/2025
+                Last Updated: 29/04/2025
               </span>
             </div>
           </motion.div>
@@ -89,9 +121,9 @@ const ScoreboardHero = ({ data }) => {
       </div>
 
       {/* Bottom gradient */}
-      <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-gradient-to-t from-dark-950 via-dark-950/90 to-transparent z-10"></div>
+      <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-gradient-to-t from-dark-950 via-dark-950/90 to-transparent z-10" aria-hidden="true"></div>
     </section>
   );
 };
 
-export default ScoreboardHero;
+export default memo(ScoreboardHero);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, memo, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { 
   BarChart, 
@@ -18,7 +18,7 @@ import {
 import { getChartTheme } from '../../utils/houseTheme';
 
 // Reusable chart container component
-const ChartContainer = ({ title, children, delay = 0 }) => (
+const ChartContainer = memo(({ title, children, delay = 0 }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -36,7 +36,40 @@ const ChartContainer = ({ title, children, delay = 0 }) => (
       </ResponsiveContainer>
     </div>
   </motion.div>
-);
+));
+
+// Set display name for memoized component
+ChartContainer.displayName = 'ChartContainer';
+
+// Custom tooltip component
+const CustomTooltip = memo(({ active, payload, label, houses }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-dark-900 p-3 rounded-lg shadow-lg border border-dark-700 text-xs sm:text-sm">
+        <p className="text-white font-bold mb-1.5">{payload[0]?.payload?.fullName || label}</p>
+        {payload.map((entry, index) => {
+          const house = houses.find(h => h.key === entry.dataKey);
+          return (
+            <div key={index} className="flex items-center mb-1 last:mb-0">
+              <div 
+                className="w-2 h-2 rounded-full mr-1.5" 
+                style={{ backgroundColor: entry.color }}
+              />
+              <span className="text-dark-200">{house ? house.name : entry.dataKey}:</span>
+              <span className="text-white ml-1 font-medium">
+                {entry.value}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+  return null;
+});
+
+// Set display name for memoized component
+CustomTooltip.displayName = 'CustomTooltip';
 
 const ScoreboardStats = ({ houses, scores }) => {
   // State to track chart data
@@ -47,6 +80,11 @@ const ScoreboardStats = ({ houses, scores }) => {
   
   // Memoize the chart theme to prevent infinite re-renders
   const chartTheme = useMemo(() => getChartTheme(houses), [houses]);
+  
+  // Memoize gradient definitions
+  const gradientDefs = useMemo(() => {
+    return chartTheme.getGradientDefinitions();
+  }, [chartTheme]);
   
   // Process data for charts
   useEffect(() => {
@@ -142,37 +180,8 @@ const ScoreboardStats = ({ houses, scores }) => {
     }
   }, [houses, scores, chartTheme]);
   
-  // Custom tooltip for charts
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-dark-900 p-3 rounded-lg shadow-lg border border-dark-700 text-xs sm:text-sm">
-          <p className="text-white font-bold mb-1.5">{payload[0]?.payload?.fullName || label}</p>
-          {payload.map((entry, index) => {
-            const house = houses.find(h => h.key === entry.dataKey);
-            return (
-              <div key={index} className="flex items-center mb-1 last:mb-0">
-                <div 
-                  className="w-2 h-2 rounded-full mr-1.5" 
-                  style={{ backgroundColor: entry.color }}
-                />
-                <span className="text-dark-200">{house ? house.name : entry.dataKey}:</span>
-                <span className="text-white ml-1 font-medium">
-                  {entry.value}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      );
-    }
-    return null;
-  };
-
   // Render the gradient definitions
   const renderGradients = () => {
-    const gradientDefs = chartTheme.getGradientDefinitions();
-    
     return (
       <defs>
         {gradientDefs.map(gradient => (
@@ -198,6 +207,32 @@ const ScoreboardStats = ({ houses, scores }) => {
     );
   };
 
+  // Recharts common configuration
+  const chartConfig = {
+    xAxisConfig: {
+      tick: { fill: '#a1a3ac', fontSize: 10 },
+      axisLine: { stroke: '#404149' },
+      angle: -45,
+      textAnchor: "end",
+      height: 60,
+      padding: { left: 0, right: 0 }
+    },
+    yAxisConfig: {
+      tick: { fill: '#a1a3ac', fontSize: 10 },
+      axisLine: { stroke: '#404149' },
+      tickMargin: 5
+    },
+    gridConfig: {
+      strokeDasharray: "3 3",
+      stroke: "#2a2a2a"
+    },
+    legendConfig: {
+      wrapperStyle: { paddingTop: 15, fontSize: 12 },
+      iconSize: 8,
+      iconType: "circle"
+    }
+  };
+
   return (
     <div className="space-y-4 mb-8 md:mb-12">
       {/* Cumulative Performance Line/Area Chart */}
@@ -207,27 +242,11 @@ const ScoreboardStats = ({ houses, scores }) => {
           margin={{ top: 10, right: 10, left: -10, bottom: 30 }}
         >
           {renderGradients()}
-          <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
-          <XAxis 
-            dataKey="name" 
-            tick={{ fill: '#a1a3ac', fontSize: 10 }} 
-            axisLine={{ stroke: '#404149' }}
-            angle={-45}
-            textAnchor="end"
-            height={60}
-            padding={{ left: 0, right: 0 }}
-          />
-          <YAxis 
-            tick={{ fill: '#a1a3ac', fontSize: 10 }} 
-            axisLine={{ stroke: '#404149' }}
-            tickMargin={5}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend
-            wrapperStyle={{ paddingTop: 15, fontSize: 12 }}
-            iconSize={8}
-            iconType="circle"
-          />
+          <CartesianGrid {...chartConfig.gridConfig} />
+          <XAxis dataKey="name" {...chartConfig.xAxisConfig} />
+          <YAxis {...chartConfig.yAxisConfig} />
+          <Tooltip content={<CustomTooltip houses={houses} />} />
+          <Legend {...chartConfig.legendConfig} />
           
           {houses.map(house => (
             <Area
@@ -253,27 +272,15 @@ const ScoreboardStats = ({ houses, scores }) => {
           barGap={2}
           barSize={12}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" vertical={false} />
+          <CartesianGrid {...chartConfig.gridConfig} vertical={false} />
           <XAxis 
             dataKey="name" 
-            tick={{ fill: '#a1a3ac', fontSize: 10 }} 
-            axisLine={{ stroke: '#404149' }}
-            angle={-45}
-            textAnchor="end"
-            height={60}
+            {...chartConfig.xAxisConfig}
             padding={{ left: 20, right: 20 }}
           />
-          <YAxis 
-            tick={{ fill: '#a1a3ac', fontSize: 10 }} 
-            axisLine={{ stroke: '#404149' }}
-            tickMargin={5}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend 
-            wrapperStyle={{ paddingTop: 15, fontSize: 12 }}
-            iconSize={8}
-            iconType="circle"
-          />
+          <YAxis {...chartConfig.yAxisConfig} />
+          <Tooltip content={<CustomTooltip houses={houses} />} />
+          <Legend {...chartConfig.legendConfig} />
           
           {houses.map(house => (
             <Bar
@@ -312,7 +319,7 @@ const ScoreboardStats = ({ houses, scores }) => {
               ))}
             </Pie>
             <Tooltip 
-              content={<CustomTooltip />}
+              content={<CustomTooltip houses={houses} />}
               formatter={(value, name, props) => {
                 return [`${value}p`, houses.find(h => h.key === props.key)?.name];
               }} 
@@ -374,4 +381,4 @@ const ScoreboardStats = ({ houses, scores }) => {
   );
 };
 
-export default ScoreboardStats;
+export default memo(ScoreboardStats);
