@@ -40,7 +40,7 @@ const FeaturesSection = ({ data }) => {
   const { title, featureList } = data;
   
   // Animation reference for staggered animation
-  const featuresRef = useStaggerAnimation({
+  const [featuresRef, featuresInView] = useStaggerAnimation({
     childSelector: '.feature-item',
     animation: 'slideUp',
     stagger: 0.1,

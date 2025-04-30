@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import rulesData from '../data/rulesData.json';
@@ -17,11 +17,11 @@ const RulesPage = () => {
   const [tocVisible, setTocVisible] = useState(false);
   const mainContentRef = useRef(null);
   
-  // Extract section IDs for all sections including schedule
-  const allSectionIds = [
+  // Extract all section IDs once
+  const allSectionIds = useMemo(() => [
     ...rulesData.sections.map(section => section.id),
     rulesData.schedule.id
-  ];
+  ], []);
   
   // Handle URL hash navigation on initial load and route changes
   useEffect(() => {
@@ -31,7 +31,7 @@ const RulesPage = () => {
     // If there's a hash in the URL and it's a valid section ID
     if (sectionId && allSectionIds.includes(sectionId)) {
       // Small delay to ensure the DOM is fully loaded
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
           element.scrollIntoView({
@@ -43,11 +43,13 @@ const RulesPage = () => {
           setTocVisible(false);
         }
       }, 100);
+      
+      return () => clearTimeout(timeoutId);
     }
   }, [location, allSectionIds]);
   
   // Function to handle TOC clicks
-  const handleSectionClick = (sectionId) => {
+  const handleSectionClick = useCallback((sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({
@@ -58,7 +60,83 @@ const RulesPage = () => {
       // Close mobile TOC after clicking
       setTocVisible(false);
     }
-  };
+  }, []);
+
+  // Toggle TOC visibility for mobile
+  const toggleToc = useCallback(() => {
+    setTocVisible(prev => !prev);
+  }, []);
+
+  // Render intro sections
+  const introSections = useMemo(() => {
+    return rulesData.tableOfContents[0].items.map(tocItem => {
+      const section = rulesData.sections.find(s => s.id === tocItem.id);
+      if (!section) return null;
+      
+      return (
+        <RuleSection 
+          key={section.id}
+          section={section}
+          terms={rulesData.termHighlighting}
+          isActive={activeSectionId === section.id}
+        />
+      );
+    });
+  }, [activeSectionId]);
+
+  // Render parts and their sections
+  const partSections = useMemo(() => {
+    return rulesData.partHeadings.map((part, partIndex) => {
+      // Get the section IDs from tableOfContents for this part (partIndex + 1 because first TOC group is intro)
+      const tocGroup = rulesData.tableOfContents[partIndex + 1];
+      if (!tocGroup || !tocGroup.items) return null;
+      
+      const sectionIds = tocGroup.items.map(item => item.id);
+      
+      // Find the matching sections from the sections array
+      const partSections = rulesData.sections.filter(section => 
+        sectionIds.includes(section.id)
+      );
+      
+      return (
+        <div key={part.id}>
+          <PartHeading 
+            partNumber={part.partNumber}
+            title={part.title}
+            id={part.id}
+          />
+          
+          {partSections.map(section => (
+            <RuleSection 
+              key={section.id}
+              section={section}
+              terms={rulesData.termHighlighting}
+              isActive={activeSectionId === section.id}
+            />
+          ))}
+        </div>
+      );
+    });
+  }, [activeSectionId]);
+
+  // Render schedule
+  const scheduleSection = useMemo(() => {
+    const scheduleToc = rulesData.tableOfContents[7];
+    if (!scheduleToc || !scheduleToc.items) return null;
+    
+    return scheduleToc.items.map(tocItem => {
+      if (tocItem.id === rulesData.schedule.id) {
+        return (
+          <Schedule 
+            key={rulesData.schedule.id}
+            schedule={rulesData.schedule}
+            isActive={activeSectionId === rulesData.schedule.id}
+          />
+        );
+      }
+      return null;
+    });
+  }, [activeSectionId]);
 
   return (
     <>
@@ -83,7 +161,9 @@ const RulesPage = () => {
             {/* Mobile ToC toggle */}
             <div className="lg:hidden mb-6">
               <button 
-                onClick={() => setTocVisible(!tocVisible)}
+                onClick={toggleToc}
+                aria-expanded={tocVisible}
+                aria-controls="mobile-toc"
                 className="flex items-center justify-between w-full px-4 py-3 bg-dark-800 rounded-lg shadow-md"
               >
                 <span className="font-medium text-white">Table of Contents</span>
@@ -98,15 +178,19 @@ const RulesPage = () => {
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
                   className={`transition-transform duration-300 ${tocVisible ? 'rotate-180' : ''}`}
+                  aria-hidden="true"
                 >
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </button>
               
               {/* Mobile ToC dropdown */}
-              <div className={`mt-2 transition-all duration-300 overflow-hidden ${
-                tocVisible ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-              }`}>
+              <div 
+                id="mobile-toc"
+                className={`mt-2 transition-all duration-300 overflow-hidden ${
+                  tocVisible ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}
+              >
                 <TableOfContents 
                   data={rulesData.tableOfContents}
                   currentSectionId={activeSectionId}
@@ -129,68 +213,13 @@ const RulesPage = () => {
               {/* Main Content */}
               <div ref={mainContentRef} className="lg:col-span-3">
                 {/* Render introduction sections (no part heading) */}
-                {rulesData.tableOfContents[0].items.map(tocItem => {
-                  const section = rulesData.sections.find(s => s.id === tocItem.id);
-                  if (!section) return null;
-                  
-                  return (
-                    <RuleSection 
-                      key={section.id}
-                      section={section}
-                      terms={rulesData.termHighlighting}
-                      isActive={activeSectionId === section.id}
-                    />
-                  );
-                })}
+                {introSections}
                 
                 {/* Render each part with its sections */}
-                {rulesData.partHeadings.map((part, partIndex) => {
-                  // Get the section IDs from tableOfContents for this part (partIndex + 1 because first TOC group is intro)
-                  const tocGroup = rulesData.tableOfContents[partIndex + 1];
-                  if (!tocGroup || !tocGroup.items) return null;
-                  
-                  const sectionIds = tocGroup.items.map(item => item.id);
-                  
-                  // Find the matching sections from the sections array
-                  const partSections = rulesData.sections.filter(section => 
-                    sectionIds.includes(section.id)
-                  );
-                  
-                  return (
-                    <div key={part.id}>
-                      <PartHeading 
-                        partNumber={part.partNumber}
-                        title={part.title}
-                        id={part.id}
-                      />
-                      
-                      {partSections.map(section => (
-                        <RuleSection 
-                          key={section.id}
-                          section={section}
-                          terms={rulesData.termHighlighting}
-                          isActive={activeSectionId === section.id}
-                        />
-                      ))}
-                    </div>
-                  );
-                })}
+                {partSections}
                 
                 {/* Render Schedule (last item in TOC) */}
-                {rulesData.tableOfContents[7] && rulesData.tableOfContents[7].items && (
-                  rulesData.tableOfContents[7].items.map(tocItem => {
-                    if (tocItem.id === rulesData.schedule.id) {
-                      return (
-                        <Schedule 
-                          key={rulesData.schedule.id}
-                          schedule={rulesData.schedule}
-                          isActive={activeSectionId === rulesData.schedule.id}
-                        />
-                      );
-                    }
-                    return null;
-                  })
-                )}
+                {scheduleSection}
               </div>
             </div>
           </div>
@@ -222,6 +251,7 @@ const RulesPage = () => {
                   className="h-4 w-4 sm:h-5 sm:w-5 ml-2" 
                   viewBox="0 0 20 20" 
                   fill="currentColor"
+                  aria-hidden="true"
                 >
                   <path 
                     fillRule="evenodd" 

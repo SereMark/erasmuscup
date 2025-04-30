@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { gsap } from 'gsap';
 
@@ -59,7 +59,7 @@ export const useTiltEffect = ({ max = 15, scale = 1.05 } = {}) => {
       });
     };
     
-    // Passive events
+    // Use passive event listeners for better performance
     element.addEventListener('mousemove', handleMouseMove, { passive: true });
     element.addEventListener('mouseenter', handleMouseEnter, { passive: true });
     element.addEventListener('mouseleave', handleMouseLeave, { passive: true });
@@ -79,7 +79,7 @@ export const useTiltEffect = ({ max = 15, scale = 1.05 } = {}) => {
  * @param {Object} options - Animation options
  * @param {string} options.animation - Animation type ('fadeIn', 'slideUp', etc.)
  * @param {number} options.delay - Delay before animation starts
- * @returns {React.RefObject} - Reference to attach to the element
+ * @returns {Array} - [ref, inView] tuple
  */
 export const useScrollAnimation = ({ animation = 'fadeIn', delay = 0 } = {}) => {
   const [ref, inView] = useInView({
@@ -87,42 +87,42 @@ export const useScrollAnimation = ({ animation = 'fadeIn', delay = 0 } = {}) => 
     threshold: 0.2,
   });
   
+  // Predefined animations
+  const animations = useMemo(() => ({
+    fadeIn: {
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power2.out',
+      delay
+    },
+    slideUp: {
+      y: 30,
+      opacity: 0,
+      duration: 0.6,
+      ease: 'power2.out',
+      delay
+    },
+    scaleIn: {
+      scale: 0.95,
+      opacity: 0,
+      duration: 0.5,
+      ease: 'back.out(1.5)',
+      delay
+    }
+  }), [delay]);
+  
   useEffect(() => {
     if (!inView) return;
     
     const element = ref.current;
     if (!element) return;
     
-    // Define animations
-    const animations = {
-      fadeIn: {
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        delay
-      },
-      slideUp: {
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-        delay
-      },
-      scaleIn: {
-        scale: 0.95,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'back.out(1.5)',
-        delay
-      }
-    };
-    
     // Apply animation
-    gsap.from(element, animations[animation]);
+    gsap.from(element, animations[animation] || animations.fadeIn);
     
-  }, [inView, animation, delay]);
+  }, [inView, animation, animations]);
   
-  return ref;
+  return [ref, inView];
 };
 
 /**
@@ -132,7 +132,7 @@ export const useScrollAnimation = ({ animation = 'fadeIn', delay = 0 } = {}) => 
  * @param {string} options.animation - Animation type
  * @param {number} options.stagger - Stagger delay between elements
  * @param {number} options.delay - Initial delay
- * @returns {React.RefObject} - Reference to attach to the parent element
+ * @returns {Array} - [ref, inView] tuple
  */
 export const useStaggerAnimation = ({ 
   childSelector, 
@@ -145,6 +145,25 @@ export const useStaggerAnimation = ({
     threshold: 0.1,
   });
   
+  // Predefined animations
+  const animations = useMemo(() => ({
+    fadeIn: {
+      opacity: 0,
+      duration: 0.6,
+      stagger,
+      ease: 'power2.out',
+      delay
+    },
+    slideUp: {
+      y: 30,
+      opacity: 0,
+      duration: 0.6,
+      stagger,
+      ease: 'power2.out',
+      delay
+    }
+  }), [stagger, delay]);
+  
   useEffect(() => {
     if (!inView) return;
     
@@ -154,34 +173,19 @@ export const useStaggerAnimation = ({
     const children = parent.querySelectorAll(childSelector);
     if (!children.length) return;
     
-    // Define animations
-    const animations = {
-      fadeIn: {
-        opacity: 0,
-        duration: 0.6,
-        stagger,
-        ease: 'power2.out',
-        delay
-      },
-      slideUp: {
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        stagger,
-        ease: 'power2.out',
-        delay
-      }
-    };
-    
     // Apply animation
-    gsap.from(children, animations[animation]);
+    gsap.from(children, animations[animation] || animations.fadeIn);
     
-  }, [inView, childSelector, animation, stagger, delay]);
+  }, [inView, childSelector, animation, animations]);
   
-  return ref;
+  return [ref, inView];
 };
 
 /**
  * Utility for clamping a value between min and max
+ * @param {number} num - Value to clamp
+ * @param {number} min - Minimum value
+ * @param {number} max - Maximum value
+ * @returns {number} - Clamped value
  */
 export const clamp = (num, min, max) => Math.min(Math.max(num, min), max);

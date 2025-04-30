@@ -7,12 +7,12 @@ const WelcomeSection = ({ data }) => {
   const { title, descriptionHtml, highlights, footerHtml } = data;
   
   // Animation refs
-  const sectionRef = useScrollAnimation({
+  const [sectionRef, sectionInView] = useScrollAnimation({
     animation: 'fadeIn',
     delay: 0.2,
   });
   
-  const highlightsRef = useStaggerAnimation({
+  const [highlightsRef, highlightsInView] = useStaggerAnimation({
     childSelector: '.highlight-item',
     animation: 'slideUp',
     stagger: 0.1,

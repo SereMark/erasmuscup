@@ -127,11 +127,31 @@ export default {
       },
     },
   },
+  // Future flag for optimizations
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
+  // Experimental features
+  experimental: {
+    optimizeUniversalDefaults: true,
+  },
   plugins: [
     require('tailwind-scrollbar-hide'),
     require('tailwind-scrollbar')({
       nocompatible: true,
       variants: ['rounded']
     }),
+  ],
+  // Safelist for dynamically generated classes
+  safelist: [
+    // House-related classes that might be generated dynamically
+    {
+      pattern: /(bg|text|border|shadow|ring)-(brand|accent|yellow|green)-(300|400|500|600|700)/,
+      variants: ['hover', 'focus'],
+    },
+    {
+      pattern: /(from|to|via)-(brand|accent|yellow|green)-(300|400|500|600|700)/,
+      variants: [],
+    },
   ],
 }

@@ -171,29 +171,32 @@
   .dot-pattern {
     background-image: radial-gradient(circle, theme('colors.dark.700') 1px, transparent 1px);
     background-size: 16px 16px;
-    @screen md {
+  }
+  
+  @screen md {
+    .dot-pattern {
       background-size: 20px 20px;
     }
   }
+}
 
-  /* Mobile-first media query helpers */
-  @media (max-width: 640px) {
-    .display-on-mobile-only {
-      display: block;
-    }
-    
-    .hide-on-mobile {
-      display: none;
-    }
+/* Responsive utility classes */
+@media (max-width: 640px) {
+  .display-on-mobile-only {
+    display: block;
   }
   
-  @media (min-width: 641px) {
-    .display-on-mobile-only {
-      display: none;
-    }
-    
-    .hide-on-mobile {
-      display: block;
-    }
+  .hide-on-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 641px) {
+  .display-on-mobile-only {
+    display: none;
+  }
+  
+  .hide-on-mobile {
+    display: block;
   }
 }

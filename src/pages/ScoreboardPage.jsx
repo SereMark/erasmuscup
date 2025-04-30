@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import scoreboardData from '../data/scoreboardData.json';
@@ -12,14 +12,20 @@ import ScoreboardCards from '../components/scoreboard/ScoreboardCards';
 import ScoreboardStats from '../components/scoreboard/ScoreboardStats';
 import FooterNote from '../components/scoreboard/FooterNote';
 
+// Animation variants
+const contentAnimations = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+  transition: { duration: 0.4 }
+};
+
 const ScoreboardPage = () => {
   // Get data from JSON
   const { config, heroSection, houses, scores, footerNote } = scoreboardData;
   
   // State for view mode
   const [viewMode, setViewMode] = useState(config.defaultViewMode);
-  
-  // Determine if we're on mobile
   const [isMobile, setIsMobile] = useState(false);
   
   // Effect to check screen size and adjust view mode if needed
@@ -51,7 +57,14 @@ const ScoreboardPage = () => {
     setViewMode(mode);
   };
   
-  // Function to render the current view based on viewMode
+  // Filtered view options for mobile
+  const viewOptions = useMemo(() => {
+    return isMobile 
+      ? config.viewOptions.filter(option => option !== 'table') 
+      : config.viewOptions;
+  }, [isMobile, config.viewOptions]);
+  
+  // Render the current view based on viewMode
   const renderScoreView = () => {
     switch (viewMode) {
       case 'table':
@@ -93,7 +106,7 @@ const ScoreboardPage = () => {
               className="overflow-x-auto py-2 -mx-4 px-4 sm:mx-0 sm:px-0"
             >
               <ViewSelector 
-                viewOptions={isMobile ? config.viewOptions.filter(option => option !== 'table') : config.viewOptions}
+                viewOptions={viewOptions}
                 currentView={viewMode}
                 onChange={handleViewChange}
               />
@@ -102,10 +115,10 @@ const ScoreboardPage = () => {
             {/* Render current view with content transition */}
             <motion.div
               key={viewMode}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
+              initial={contentAnimations.initial}
+              animate={contentAnimations.animate}
+              exit={contentAnimations.exit}
+              transition={contentAnimations.transition}
             >
               {renderScoreView()}
             </motion.div>
@@ -157,6 +170,7 @@ const ScoreboardPage = () => {
                 className="h-4 w-4 md:h-5 md:w-5 ml-2" 
                 viewBox="0 0 20 20" 
                 fill="currentColor"
+                aria-hidden="true"
               >
                 <path 
                   fillRule="evenodd" 
