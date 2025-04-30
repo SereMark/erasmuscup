@@ -10,12 +10,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      // React with Fast Refresh in dev
-      react({
-        fastRefresh: !isProd,
-      }),
+      react({ fastRefresh: !isProd }),
 
-      // PWA & service-worker only in **production**
+      // PWA & service-worker only in production
       isProd &&
         VitePWA({
           registerType: 'autoUpdate',
@@ -24,7 +21,7 @@ export default defineConfig(({ mode }) => {
             'robots.txt',
             'apple-touch-icon.png',
             'assets/icons/android-chrome-192x192.png',
-            'assets/icons/android-chrome-512x512.png',
+            'assets/icons/android-chrome-512x512.png'
           ],
           manifest: {
             name: 'Erasmus House Cup 2025',
@@ -38,43 +35,48 @@ export default defineConfig(({ mode }) => {
               {
                 src: '/assets/icons/android-chrome-192x192.png',
                 sizes: '192x192',
-                type: 'image/png',
+                type: 'image/png'
               },
               {
                 src: '/assets/icons/android-chrome-512x512.png',
                 sizes: '512x512',
                 type: 'image/png',
-                purpose: 'any maskable',
-              },
-            ],
+                purpose: 'any maskable'
+              }
+            ]
           },
           workbox: {
-            navigationPreload: false, // silence Chrome warning
+            navigationPreload: false,
             runtimeCaching: [
+              // Google-Fonts stylesheet → Stale-While-Revalidate + no-cors
               {
                 urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*$/i,
-                handler: 'CacheFirst',
+                handler: 'StaleWhileRevalidate',
                 options: {
-                  cacheName: 'google-fonts-cache',
+                  cacheName: 'google-fonts-stylesheets',
+                  fetchOptions: { mode: 'no-cors' },
                   expiration: {
                     maxEntries: 10,
-                    maxAgeSeconds: 60 * 60 * 24 * 365,
+                    maxAgeSeconds: 60 * 60 * 24 * 365
                   },
-                  cacheableResponse: { statuses: [0, 200] },
-                },
+                  cacheableResponse: { statuses: [0, 200] }
+                }
               },
+              // Google-Fonts files → CacheFirst + no-cors
               {
                 urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*$/i,
                 handler: 'CacheFirst',
                 options: {
-                  cacheName: 'gstatic-fonts-cache',
+                  cacheName: 'gstatic-fonts-files',
+                  fetchOptions: { mode: 'no-cors' },
                   expiration: {
                     maxEntries: 10,
-                    maxAgeSeconds: 60 * 60 * 24 * 365,
+                    maxAgeSeconds: 60 * 60 * 24 * 365
                   },
-                  cacheableResponse: { statuses: [0, 200] },
-                },
+                  cacheableResponse: { statuses: [0, 200] }
+                }
               },
+              // Images
               {
                 urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/i,
                 handler: 'CacheFirst',
@@ -82,10 +84,11 @@ export default defineConfig(({ mode }) => {
                   cacheName: 'images-cache',
                   expiration: {
                     maxEntries: 50,
-                    maxAgeSeconds: 60 * 60 * 24 * 30,
-                  },
-                },
+                    maxAgeSeconds: 60 * 60 * 24 * 30
+                  }
+                }
               },
+              // JS / CSS bundles
               {
                 urlPattern: /\.(?:js|css)$/i,
                 handler: 'StaleWhileRevalidate',
@@ -93,13 +96,13 @@ export default defineConfig(({ mode }) => {
                   cacheName: 'static-resources',
                   expiration: {
                     maxEntries: 30,
-                    maxAgeSeconds: 60 * 60 * 24 * 7,
-                  },
-                },
-              },
-            ],
+                    maxAgeSeconds: 60 * 60 * 24 * 7
+                  }
+                }
+              }
+            ]
           },
-          devOptions: { enabled: false }, // keep SW off in dev
+          devOptions: { enabled: false }
         }),
 
       // Content-Security-Policy – prod only
@@ -107,34 +110,21 @@ export default defineConfig(({ mode }) => {
         generateCspPlugin({
           policy: {
             'default-src': ["'self'"],
-            'script-src': [
-              "'self'",
-              "'unsafe-inline'",
-              'https://cdn.jsdelivr.net',
-            ],
-            'style-src': [
-              "'self'",
-              "'unsafe-inline'",
-              'https://fonts.googleapis.com',
-            ],
+            'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+            'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
             'font-src': ["'self'", 'https://fonts.gstatic.com'],
-            'img-src': [
-              "'self'",
-              'data:',
-              'blob:',
-              'https://cdn.jsdelivr.net',
-            ],
+            'img-src': ["'self'", 'data:', 'blob:', 'https://cdn.jsdelivr.net'],
             'connect-src': [
               "'self'",
-              'ws:', // local preview of prod build
+              'ws:',
               'wss:',
               'https://fonts.googleapis.com',
-              'https://fonts.gstatic.com',
+              'https://fonts.gstatic.com'
             ],
             'frame-src': ["'none'"],
-            'object-src': ["'none'"],
-          },
-        }),
+            'object-src': ["'none'"]
+          }
+        })
     ].filter(Boolean),
 
     resolve: {
@@ -145,8 +135,8 @@ export default defineConfig(({ mode }) => {
         '@assets': resolve(__dirname, './src/assets'),
         '@data': resolve(__dirname, './src/data'),
         '@hooks': resolve(__dirname, './src/hooks'),
-        '@utils': resolve(__dirname, './src/utils'),
-      },
+        '@utils': resolve(__dirname, './src/utils')
+      }
     },
 
     build: {
@@ -162,10 +152,10 @@ export default defineConfig(({ mode }) => {
           manualChunks: {
             'vendor-react': ['react', 'react-dom', 'react-router-dom'],
             'vendor-ui': ['framer-motion', 'gsap', 'recharts'],
-            'vendor-three': ['three'],
-          },
-        },
-      },
+            'vendor-three': ['three']
+          }
+        }
+      }
     },
 
     server: {
@@ -177,18 +167,18 @@ export default defineConfig(({ mode }) => {
         protocol: 'ws',
         host: 'localhost',
         port: 3000,
-        overlay: true,
-      },
+        overlay: true
+      }
     },
 
     preview: {
       port: 5000,
       strictPort: false,
-      open: true,
+      open: true
     },
 
     esbuild: {
-      logOverride: { 'this-is-undefined-in-esm': 'silent' },
-    },
+      logOverride: { 'this-is-undefined-in-esm': 'silent' }
+    }
   };
 });
