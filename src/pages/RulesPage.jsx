@@ -21,6 +21,18 @@ const RulesPage = () => {
   const [activeSectionId, setActiveSectionId] = useState('');
   const [tocVisible, setTocVisible] = useState(false);
   const mainContentRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   // Prepare term definitions for highlighting
   const termDefinitions = useMemo(() => rulesData.termDefinitions, []);
@@ -44,10 +56,15 @@ const RulesPage = () => {
       const timeoutId = setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
-          element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+          const headerOffset = isMobile ? 60 : 80;
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - headerOffset;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
           });
+          
           setActiveSectionId(sectionId);
           // Close mobile TOC after navigation
           setTocVisible(false);
@@ -56,21 +73,30 @@ const RulesPage = () => {
       
       return () => clearTimeout(timeoutId);
     }
-  }, [location, allSectionIds]);
+  }, [location, allSectionIds, isMobile]);
   
   // Function to handle TOC clicks
   const handleSectionClick = useCallback((sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+      const headerOffset = isMobile ? 60 : 80;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerOffset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
       });
+      
       setActiveSectionId(sectionId);
+      
+      // Update URL without triggering a page reload
+      window.history.pushState(null, '', `#${sectionId}`);
+      
       // Close mobile TOC after clicking
       setTocVisible(false);
     }
-  }, []);
+  }, [isMobile]);
 
   // Toggle TOC visibility for mobile
   const toggleToc = useCallback(() => {
@@ -120,6 +146,33 @@ const RulesPage = () => {
     return { introSections, parts };
   }, []);
 
+  // Track scroll for updating active section
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!mainContentRef.current) return;
+      
+      const scrollPosition = window.scrollY + (isMobile ? 100 : 150);
+      
+      // Get all section elements
+      const sections = [...document.querySelectorAll('[id^="section-"], [id^="schedule-"]')];
+      
+      // Find the current section in view
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section.offsetTop <= scrollPosition) {
+          const id = section.getAttribute('id');
+          if (id !== activeSectionId) {
+            setActiveSectionId(id);
+          }
+          break;
+        }
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [activeSectionId, isMobile]);
+
   return (
     <>
       <Helmet>
@@ -130,13 +183,13 @@ const RulesPage = () => {
         />
       </Helmet>
       
-      <div className="rules-page min-h-screen">
+      <div className="rules-page min-h-screen overflow-x-hidden max-w-full">
         {/* Hero Section */}
         <RulesHero data={rulesData.pageHeader} />
         
         {/* Main Content */}
-        <section className="py-8 sm:py-12 md:py-16 lg:py-20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-8 sm:py-12 md:py-16 lg:py-20 overflow-x-hidden max-w-full">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
             {/* Document Header */}
             <DocumentHeader data={rulesData.documentHeader} />
             
@@ -188,7 +241,7 @@ const RulesPage = () => {
             </div>
             
             {/* Content Area with Sidebar */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-8 overflow-hidden">
               {/* Sidebar - Table of Contents (desktop only) */}
               <div className="hidden lg:block lg:col-span-1 sticky top-20 self-start">
                 <TableOfContents 
@@ -199,20 +252,49 @@ const RulesPage = () => {
               </div>
               
               {/* Main Content */}
-              <div ref={mainContentRef} className="lg:col-span-3">
+              <div ref={mainContentRef} className="lg:col-span-3 overflow-x-hidden max-w-full">
+                {/* Inline style to fix nested lists on mobile */}
+                <style jsx>{`
+                  @media (max-width: 640px) {
+                    .prose ol,
+                    .prose ul {
+                      padding-left: 1rem !important;
+                      margin-left: 0 !important;
+                    }
+                    
+                    .prose ol[type="a"],
+                    .prose ol[type="i"] {
+                      padding-left: 1.25rem !important;
+                    }
+                    
+                    .prose p,
+                    .prose li,
+                    .prose dt,
+                    .prose dd {
+                      white-space: normal;
+                      overflow-wrap: break-word;
+                      word-wrap: break-word;
+                      word-break: break-word;
+                      max-width: 100%;
+                    }
+                  }
+                `}</style>
+              
                 {/* Render introduction sections (no part heading) */}
-                {sectionsByPart.introSections.map(section => (
-                  <RuleSection 
-                    key={section.id}
-                    section={section}
-                    termDefinitions={termDefinitions}
-                    isActive={activeSectionId === section.id}
-                  />
-                ))}
+                <div className="overflow-x-hidden max-w-full">
+                  {sectionsByPart.introSections.map(section => (
+                    <RuleSection 
+                      key={section.id}
+                      section={section}
+                      termDefinitions={termDefinitions}
+                      isActive={activeSectionId === section.id}
+                    />
+                  ))}
+                </div>
                 
                 {/* Render each part with its sections */}
                 {Object.values(sectionsByPart.parts).map(part => (
-                  <div key={part.id}>
+                  <div key={part.id} className="overflow-x-hidden max-w-full">
                     <PartHeading 
                       partNumber={part.partNumber}
                       title={part.title}

@@ -1,15 +1,15 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 
 /**
  * Table of Contents component for navigation within rules
  */
 const TableOfContents = ({ data, currentSectionId, onSectionClick }) => {
-  // Handle section click with useCallback for optimization
-  const handleSectionClick = useCallback((e, sectionId) => {
+  // Handle section click
+  const handleSectionClick = (e, sectionId) => {
     e.preventDefault();
     onSectionClick(sectionId);
-  }, [onSectionClick]);
+  };
 
   // Animation variants
   const containerVariants = {
@@ -79,20 +79,18 @@ const TableOfContents = ({ data, currentSectionId, onSectionClick }) => {
                     <a
                       href={`#${item.id}`}
                       onClick={(e) => handleSectionClick(e, item.id)}
-                      className={`flex items-center py-1 sm:py-1.5 px-2 text-xs sm:text-sm rounded-md transition-colors hover:bg-dark-800 focus:outline-none focus:ring-1 focus:ring-brand-500/50 ${
+                      className={`flex items-center py-2 px-3 text-xs sm:text-sm rounded-md transition-colors hover:bg-dark-800 focus:outline-none focus:ring-1 focus:ring-brand-500/50 w-full ${
                         currentSectionId === item.id
-                          ? 'bg-brand-500/10 text-brand-400 font-medium border-l-2 border-brand-500 pl-2'
+                          ? 'bg-brand-500/10 text-brand-400 font-medium border-l-2 border-brand-500'
                           : 'text-dark-200 hover:text-white'
                       }`}
                       aria-current={currentSectionId === item.id ? 'true' : undefined}
                     >
                       {/* Icon */}
-                      {item.icon && (
-                        <span className="mr-2 text-dark-400" aria-hidden="true">{item.icon}</span>
-                      )}
+                      <span className="mr-2 text-dark-400 flex-shrink-0" aria-hidden="true">{item.icon}</span>
                       
                       {/* Label */}
-                      <span>{item.label}</span>
+                      <span className="truncate w-full">{item.label}</span>
                     </a>
                   </motion.li>
                 ))}

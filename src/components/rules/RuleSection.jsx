@@ -39,6 +39,23 @@ const RuleSection = ({ section, isActive, termDefinitions }) => {
     }
   };
 
+  // Custom rendering function with inline styles for prose content
+  const renderContent = () => {
+    return (
+      <div className="max-w-full">
+        <div style={{
+          maxWidth: '100%',
+          overflowWrap: 'break-word',
+          wordWrap: 'break-word',
+          wordBreak: 'break-word',
+          hyphens: 'auto'
+        }}>
+          {renderNestedContent(content, termDefinitions)}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <motion.div
       id={id}
@@ -49,7 +66,7 @@ const RuleSection = ({ section, isActive, termDefinitions }) => {
       viewport={{ once: true, margin: '-50px' }}
       className={`mb-8 sm:mb-12 pb-6 sm:pb-10 border-b border-dark-800/30 scroll-mt-20 sm:scroll-mt-28 ${
         isActive ? 'relative' : ''
-      }`}
+      } overflow-hidden max-w-full`}
     >
       {/* Active section indicator */}
       {isActive && (
@@ -66,13 +83,13 @@ const RuleSection = ({ section, isActive, termDefinitions }) => {
       {/* Section header */}
       <div className="flex items-center mb-4 sm:mb-6 group">
         <div 
-          className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-dark-800 rounded-lg text-base sm:text-xl mr-3 sm:mr-4"
+          className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-dark-800 rounded-lg text-base sm:text-xl mr-3 sm:mr-4 flex-shrink-0"
           aria-hidden="true"
         >
           {emoji}
         </div>
         
-        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white group-hover:text-brand-400 transition-colors">
+        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white group-hover:text-brand-400 transition-colors truncate">
           {title}
         </h3>
         
@@ -84,7 +101,7 @@ const RuleSection = ({ section, isActive, termDefinitions }) => {
           }}
           className="ml-2 sm:ml-3 p-1.5 sm:p-2 text-dark-400 hover:text-brand-400 
                      sm:opacity-0 sm:group-hover:opacity-100 transition-all hover:scale-110 
-                     focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                     focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-brand-500 flex-shrink-0"
           aria-label="Copy link to section"
           title="Copy link to section"
         >
@@ -108,7 +125,7 @@ const RuleSection = ({ section, isActive, termDefinitions }) => {
         
         {/* Amendment badge */}
         {hasAmendment && (
-          <div className="ml-auto">
+          <div className="ml-auto flex-shrink-0">
             <span className="badge-accent py-0.5 sm:py-1 px-1.5 sm:px-2 text-xs">
               Amended
             </span>
@@ -118,12 +135,51 @@ const RuleSection = ({ section, isActive, termDefinitions }) => {
 
       {/* Content */}
       <motion.div 
-        className={`ml-11 sm:ml-14 transition-all duration-300`}
+        className="ml-11 sm:ml-14 transition-all duration-300 overflow-x-hidden max-w-full"
         animate={isInView ? 'visible' : 'hidden'}
         variants={contentVariants}
       >
-        <div className="prose prose-invert prose-xs sm:prose-sm md:prose-base max-w-none">
-          {renderNestedContent(content, termDefinitions)}
+        <div className="prose prose-invert prose-xs sm:prose-sm md:prose-base max-w-none overflow-x-hidden">
+          {/* Custom styling for list content on mobile */}
+          <div className="sm:pl-0 max-w-full overflow-hidden" 
+            style={{
+              maxWidth: '100%',
+              overflowWrap: 'break-word',
+              wordWrap: 'break-word',
+              hyphens: 'auto'
+            }}>
+            {/* Apply mobile-specific styling */}
+            <style jsx>{`
+              @media (max-width: 640px) {
+                ol, ul {
+                  padding-left: 1rem !important;
+                  margin-left: 0 !important;
+                }
+                
+                ol[type="a"],
+                ol[type="i"] {
+                  padding-left: 1.25rem !important;
+                }
+                
+                p, li, dt, dd {
+                  white-space: normal;
+                  overflow-wrap: break-word;
+                  word-wrap: break-word;
+                  word-break: break-word;
+                  max-width: 100%;
+                }
+                
+                dt {
+                  margin-top: 0.75rem;
+                }
+                
+                dd {
+                  margin-left: 0.5rem !important;
+                }
+              }
+            `}</style>
+            {renderContent()}
+          </div>
         </div>
       </motion.div>
     </motion.div>
