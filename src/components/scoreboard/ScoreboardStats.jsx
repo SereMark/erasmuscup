@@ -71,12 +71,46 @@ const CustomTooltip = memo(({ active, payload, label, houses }) => {
 // Set display name for memoized component
 CustomTooltip.displayName = 'CustomTooltip';
 
+// Custom pie chart label component that's responsive to screen size
+const PieChartLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, name, index }) => {
+  // Calculate the position of the label
+  const RADIAN = Math.PI / 180;
+  // Increase this value to move labels further from center (75%-85% of outer radius is good)
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.75;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  // Use window.innerWidth to check viewport width
+  // Only render labels on larger screens
+  const isSmallScreen = typeof window !== 'undefined' && window.innerWidth < 640;
+  
+  if (isSmallScreen) {
+    // Don't render text labels on small screens
+    return null;
+  }
+  
+  return (
+    <text 
+      x={x} 
+      y={y} 
+      textAnchor={x > cx ? 'start' : 'end'} 
+      dominantBaseline="central"
+      fill="#fff"
+      fontSize={10}
+      fontWeight="bold"
+    >
+      {`${name.substring(0, 6)}${name.length > 6 ? '..' : ''} (${(percent * 100).toFixed(0)}%)`}
+    </text>
+  );
+};
+
 const ScoreboardStats = ({ houses, scores }) => {
   // State to track chart data
   const [cumulativeData, setCumulativeData] = useState([]);
   const [eventComparisonData, setEventComparisonData] = useState([]);
   const [distributionData, setDistributionData] = useState([]);
   const [housePerformanceData, setHousePerformanceData] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   
   // Memoize the chart theme to prevent infinite re-renders
   const chartTheme = useMemo(() => getChartTheme(houses), [houses]);
@@ -85,6 +119,18 @@ const ScoreboardStats = ({ houses, scores }) => {
   const gradientDefs = useMemo(() => {
     return chartTheme.getGradientDefinitions();
   }, [chartTheme]);
+  
+  // Handle window resize for responsive adjustments
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
   
   // Process data for charts
   useEffect(() => {
@@ -233,6 +279,29 @@ const ScoreboardStats = ({ houses, scores }) => {
     }
   };
 
+  // Determine pie chart settings based on screen size
+  const getPieChartSettings = () => {
+    // Responsive values for the pie chart
+    if (windowWidth < 640) { // Small screens (phones)
+      return {
+        outerRadius: 70,
+        innerRadius: 35,
+        // No labels for small screens, use tooltip only
+        label: false,
+        labelLine: false
+      };
+    } else { // Larger screens
+      return {
+        outerRadius: 90,
+        innerRadius: 40,
+        label: props => <PieChartLabel {...props} />,
+        labelLine: false
+      };
+    }
+  };
+
+  const pieSettings = getPieChartSettings();
+
   return (
     <div className="space-y-4 mb-8 md:mb-12">
       {/* Cumulative Performance Line/Area Chart */}
@@ -303,14 +372,12 @@ const ScoreboardStats = ({ houses, scores }) => {
               data={distributionData}
               cx="50%"
               cy="50%"
-              labelLine={false}
-              outerRadius={90}
-              innerRadius={40}
+              outerRadius={pieSettings.outerRadius}
+              innerRadius={pieSettings.innerRadius}
               paddingAngle={2}
               dataKey="value"
-              label={({ name, value, percent }) => (
-                `${name.substring(0, 8)}${name.length > 8 ? '..' : ''} (${(percent * 100).toFixed(0)}%)`
-              )}
+              label={pieSettings.label}
+              labelLine={pieSettings.labelLine}
               strokeWidth={1}
               stroke="#121214"
             >
