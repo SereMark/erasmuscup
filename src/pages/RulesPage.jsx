@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import rulesData from '../data/rulesData.json';
 
 // Import components
@@ -21,29 +21,15 @@ const RulesPage = () => {
   const [activeSectionId, setActiveSectionId] = useState('');
   const [tocVisible, setTocVisible] = useState(false);
   const mainContentRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
-  
-  // Check if device is mobile
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
   
   // Prepare term definitions for highlighting
-  const termDefinitions = useMemo(() => rulesData.termDefinitions, []);
+  const termDefinitions = rulesData.termDefinitions;
   
   // Extract all section IDs for navigation
-  const allSectionIds = useMemo(() => {
-    return [
-      ...rulesData.sections.map(section => section.id),
-      rulesData.schedule.id
-    ];
-  }, []);
+  const allSectionIds = [
+    ...rulesData.sections.map(section => section.id),
+    rulesData.schedule.id
+  ];
   
   // Handle URL hash navigation on initial load and route changes
   useEffect(() => {
@@ -56,6 +42,8 @@ const RulesPage = () => {
       const timeoutId = setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
+          // Adjust for header height
+          const isMobile = window.innerWidth < 768;
           const headerOffset = isMobile ? 60 : 80;
           const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
           const offsetPosition = elementPosition - headerOffset;
@@ -66,37 +54,19 @@ const RulesPage = () => {
           });
           
           setActiveSectionId(sectionId);
-          // Close mobile TOC after navigation
           setTocVisible(false);
         }
       }, 100);
       
       return () => clearTimeout(timeoutId);
     }
-  }, [location, allSectionIds, isMobile]);
+  }, [location, allSectionIds]);
   
   // Function to handle TOC clicks
   const handleSectionClick = useCallback((sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const headerOffset = isMobile ? 60 : 80;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - headerOffset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-      
-      setActiveSectionId(sectionId);
-      
-      // Update URL without triggering a page reload
-      window.history.pushState(null, '', `#${sectionId}`);
-      
-      // Close mobile TOC after clicking
-      setTocVisible(false);
-    }
-  }, [isMobile]);
+    setActiveSectionId(sectionId);
+    setTocVisible(false);
+  }, []);
 
   // Toggle TOC visibility for mobile
   const toggleToc = useCallback(() => {
@@ -104,54 +74,56 @@ const RulesPage = () => {
   }, []);
 
   // Group sections by part for rendering
-  const sectionsByPart = useMemo(() => {
-    // Part definitions
-    const parts = {};
-    
-    // Initialize parts from part headings
-    rulesData.partHeadings.forEach(part => {
-      parts[part.partNumber] = {
-        ...part,
-        sections: []
-      };
-    });
-    
+  const sectionsByPart = {
     // Group intro sections (no part)
-    const introSections = rulesData.sections.filter(section => 
+    introSections: rulesData.sections.filter(section => 
       section.id === 'section-1' || section.id === 'section-2'
-    );
+    ),
     
-    // Group remaining sections by their part number
-    rulesData.sections.forEach(section => {
-      if (section.id !== 'section-1' && section.id !== 'section-2') {
-        // Extract part number from section number (e.g., section-3 is part 1)
-        const sectionNumber = parseInt(section.id.split('-')[1]);
-        
-        // Determine part number based on section number ranges
-        let partNumber;
-        if (sectionNumber >= 3 && sectionNumber <= 5) partNumber = 1;
-        else if (sectionNumber >= 6 && sectionNumber <= 7) partNumber = 2;
-        else if (sectionNumber >= 8 && sectionNumber <= 10) partNumber = 3;
-        else if (sectionNumber >= 11 && sectionNumber <= 12 || section.id.startsWith('section-12')) partNumber = 4;
-        else if (sectionNumber >= 13 && sectionNumber <= 18) partNumber = 5;
-        else if (sectionNumber >= 19) partNumber = 6;
-        
-        // Add section to the appropriate part
-        if (partNumber && parts[partNumber]) {
-          parts[partNumber].sections.push(section);
+    // Initialize parts from part headings with their sections
+    parts: (() => {
+      const parts = {};
+      
+      // Initialize parts from part headings
+      rulesData.partHeadings.forEach(part => {
+        parts[part.partNumber] = {
+          ...part,
+          sections: []
+        };
+      });
+      
+      // Group remaining sections by their part number
+      rulesData.sections.forEach(section => {
+        if (section.id !== 'section-1' && section.id !== 'section-2') {
+          // Extract part number from section number (e.g., section-3 is part 1)
+          const sectionNumber = parseInt(section.id.split('-')[1]);
+          
+          // Determine part number based on section number ranges
+          let partNumber;
+          if (sectionNumber >= 3 && sectionNumber <= 5) partNumber = 1;
+          else if (sectionNumber >= 6 && sectionNumber <= 7) partNumber = 2;
+          else if (sectionNumber >= 8 && sectionNumber <= 10) partNumber = 3;
+          else if (sectionNumber >= 11 && sectionNumber <= 12 || section.id.startsWith('section-12')) partNumber = 4;
+          else if (sectionNumber >= 13 && sectionNumber <= 18) partNumber = 5;
+          else if (sectionNumber >= 19) partNumber = 6;
+          
+          // Add section to the appropriate part
+          if (partNumber && parts[partNumber]) {
+            parts[partNumber].sections.push(section);
+          }
         }
-      }
-    });
-    
-    return { introSections, parts };
-  }, []);
+      });
+      
+      return parts;
+    })()
+  };
 
   // Track scroll for updating active section
   useEffect(() => {
     const handleScroll = () => {
       if (!mainContentRef.current) return;
       
-      const scrollPosition = window.scrollY + (isMobile ? 100 : 150);
+      const scrollPosition = window.scrollY + (window.innerWidth < 768 ? 100 : 150);
       
       // Get all section elements
       const sections = [...document.querySelectorAll('[id^="section-"], [id^="schedule-"]')];
@@ -171,7 +143,7 @@ const RulesPage = () => {
     
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeSectionId, isMobile]);
+  }, [activeSectionId]);
 
   return (
     <>
@@ -220,24 +192,20 @@ const RulesPage = () => {
               </button>
               
               {/* Mobile ToC dropdown */}
-              <AnimatePresence>
-                {tocVisible && (
-                  <motion.div 
-                    id="mobile-toc"
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="mt-2 overflow-hidden"
-                  >
-                    <TableOfContents 
-                      data={rulesData.tableOfContents}
-                      currentSectionId={activeSectionId}
-                      onSectionClick={handleSectionClick}
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div
+                id="mobile-toc" 
+                className={`mt-2 overflow-hidden transition-all duration-300 ${
+                  tocVisible 
+                    ? 'max-h-[70vh] opacity-100' 
+                    : 'max-h-0 opacity-0'
+                }`}
+              >
+                <TableOfContents 
+                  data={rulesData.tableOfContents}
+                  currentSectionId={activeSectionId}
+                  onSectionClick={handleSectionClick}
+                />
+              </div>
             </div>
             
             {/* Content Area with Sidebar */}
@@ -253,24 +221,23 @@ const RulesPage = () => {
               
               {/* Main Content */}
               <div ref={mainContentRef} className="lg:col-span-3 overflow-x-hidden max-w-full">
-                {/* Inline style to fix nested lists on mobile */}
+                {/* Add inline style for nested contents */}
                 <style jsx>{`
                   @media (max-width: 640px) {
-                    .prose ol,
-                    .prose ul {
+                    /* Fix list indentation on mobile */
+                    .prose ol, .prose ul {
                       padding-left: 1rem !important;
                       margin-left: 0 !important;
                     }
                     
+                    /* Improve indentation for specific list types */
                     .prose ol[type="a"],
                     .prose ol[type="i"] {
                       padding-left: 1.25rem !important;
                     }
                     
-                    .prose p,
-                    .prose li,
-                    .prose dt,
-                    .prose dd {
+                    /* Ensure proper text wrapping */
+                    .prose p, .prose li, .prose dt, .prose dd {
                       white-space: normal;
                       overflow-wrap: break-word;
                       word-wrap: break-word;

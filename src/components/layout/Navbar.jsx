@@ -1,13 +1,13 @@
 import React, { useState, useEffect, memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  // Array of navigation links - memoized
+  // Array of navigation links
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Scoreboard', path: '/scoreboard' },
@@ -21,19 +21,18 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 20);
     };
 
-    // Use passive event listeners for better performance
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
-  // Close the mobile menu when navigating to a new page
+  // Close menu when location changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
-  }, [location]);
+  }, [location.pathname]);
 
-  // Lock body scroll when mobile menu is open
+  // Lock/unlock body scroll when menu opens/closes
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -143,51 +142,39 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.nav
-              id="mobile-menu"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="md:hidden overflow-hidden"
-            >
-              <div className="py-3 sm:py-4 flex flex-col space-y-2 mt-3 sm:mt-4 border-t border-dark-800">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    to={link.path}
-                    className={`block py-3 px-4 font-medium rounded-lg transition-colors ${
-                      location.pathname === link.path
-                        ? 'text-white bg-dark-800'
-                        : 'text-dark-300 hover:text-white hover:bg-dark-800/50'
-                    }`}
-                    aria-current={location.pathname === link.path ? 'page' : undefined}
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-              </div>
-            </motion.nav>
-          )}
-        </AnimatePresence>
+        {isMobileMenuOpen && (
+          <div
+            id="mobile-menu"
+            className="md:hidden overflow-hidden py-3 sm:py-4 mt-3 sm:mt-4 border-t border-dark-800"
+          >
+            <div className="flex flex-col space-y-2">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`block py-3 px-4 font-medium rounded-lg transition-colors ${
+                    location.pathname === link.path
+                      ? 'text-white bg-dark-800'
+                      : 'text-dark-300 hover:text-white hover:bg-dark-800/50'
+                  }`}
+                  aria-current={location.pathname === link.path ? 'page' : undefined}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       
       {/* Full screen overlay for mobile menu background */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-dark-950/80 backdrop-blur-sm -z-10 md:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-            aria-hidden="true"
-          />
-        )}
-      </AnimatePresence>
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-dark-950/80 backdrop-blur-sm -z-10 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
     </header>
   );
 };

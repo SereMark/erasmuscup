@@ -8,7 +8,29 @@ const TableOfContents = ({ data, currentSectionId, onSectionClick }) => {
   // Handle section click
   const handleSectionClick = (e, sectionId) => {
     e.preventDefault();
-    onSectionClick(sectionId);
+    
+    // Find the section element
+    const element = document.getElementById(sectionId);
+    if (element) {
+      // Get header height for offset (different for mobile/desktop)
+      const headerOffset = window.innerWidth < 768 ? 60 : 80;
+      
+      // Calculate position
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerOffset;
+      
+      // Scroll to position
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      
+      // Update URL without page reload
+      window.history.pushState(null, '', `#${sectionId}`);
+      
+      // Call the parent function to update active state
+      onSectionClick(sectionId);
+    }
   };
 
   // Animation variants
@@ -79,7 +101,7 @@ const TableOfContents = ({ data, currentSectionId, onSectionClick }) => {
                     <a
                       href={`#${item.id}`}
                       onClick={(e) => handleSectionClick(e, item.id)}
-                      className={`flex items-center py-2 px-3 text-xs sm:text-sm rounded-md transition-colors hover:bg-dark-800 focus:outline-none focus:ring-1 focus:ring-brand-500/50 w-full ${
+                      className={`flex items-center py-3 px-3 text-xs sm:text-sm rounded-md transition-colors hover:bg-dark-800 focus:outline-none focus:ring-1 focus:ring-brand-500/50 w-full ${
                         currentSectionId === item.id
                           ? 'bg-brand-500/10 text-brand-400 font-medium border-l-2 border-brand-500'
                           : 'text-dark-200 hover:text-white'
