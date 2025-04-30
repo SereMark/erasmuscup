@@ -48,13 +48,12 @@ export default defineConfig(({ mode }) => {
           workbox: {
             navigationPreload: false,
             runtimeCaching: [
-              // Google-Fonts stylesheet → Stale-While-Revalidate + no-cors
+              // Google-Fonts stylesheet → Stale-While-Revalidate
               {
                 urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*$/i,
                 handler: 'StaleWhileRevalidate',
                 options: {
                   cacheName: 'google-fonts-stylesheets',
-                  fetchOptions: { mode: 'no-cors' },
                   expiration: {
                     maxEntries: 10,
                     maxAgeSeconds: 60 * 60 * 24 * 365
@@ -62,13 +61,12 @@ export default defineConfig(({ mode }) => {
                   cacheableResponse: { statuses: [0, 200] }
                 }
               },
-              // Google-Fonts files → CacheFirst + no-cors
+              // Google-Fonts files → CacheFirst
               {
                 urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*$/i,
                 handler: 'CacheFirst',
                 options: {
                   cacheName: 'gstatic-fonts-files',
-                  fetchOptions: { mode: 'no-cors' },
                   expiration: {
                     maxEntries: 10,
                     maxAgeSeconds: 60 * 60 * 24 * 365
