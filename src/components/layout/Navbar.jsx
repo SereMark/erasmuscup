@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, useEffect, memo, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -30,15 +30,22 @@ const Navbar = () => {
 
   // Close the mobile menu when navigating to a new page
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location]);
+    // Ensure the menu is closed when location changes
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
+  }, [location, isMobileMenuOpen]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = '';
+      // Small delay to ensure animations complete before changing scroll
+      const timer = setTimeout(() => {
+        document.body.style.overflow = '';
+      }, 300);
+      return () => clearTimeout(timer);
     }
     
     return () => {
@@ -46,10 +53,16 @@ const Navbar = () => {
     };
   }, [isMobileMenuOpen]);
 
-  // Toggle mobile menu
-  const toggleMobileMenu = () => {
+  // Toggle mobile menu with useCallback to prevent unnecessary re-renders
+  const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(prev => !prev);
-  };
+  }, []);
+
+  // Handle navigation click with dedicated handler
+  const handleNavClick = useCallback(() => {
+    // Force close the menu immediately
+    setIsMobileMenuOpen(false);
+  }, []);
 
   return (
     <header
@@ -143,10 +156,11 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu */}
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {isMobileMenuOpen && (
             <motion.nav
               id="mobile-menu"
+              key="mobile-menu"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
@@ -164,7 +178,7 @@ const Navbar = () => {
                         : 'text-dark-300 hover:text-white hover:bg-dark-800/50'
                     }`}
                     aria-current={location.pathname === link.path ? 'page' : undefined}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={handleNavClick}
                   >
                     {link.name}
                   </Link>
@@ -176,15 +190,16 @@ const Navbar = () => {
       </div>
       
       {/* Full screen overlay for mobile menu background */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isMobileMenuOpen && (
           <motion.div 
+            key="mobile-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 bg-dark-950/80 backdrop-blur-sm -z-10 md:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={handleNavClick}
             aria-hidden="true"
           />
         )}
