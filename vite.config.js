@@ -1,203 +1,173 @@
-/**
- * Vite Configuration
- */
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
 import { VitePWA } from 'vite-plugin-pwa';
-import viteCSPPlugin from './vite-csp-plugin';
+import { generateCspPlugin } from 'vite-plugin-node-csp';
+import { resolve } from 'path';
 
+// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // Load environment variables
-  const env = loadEnv(mode, process.cwd(), '');
   const isProd = mode === 'production';
-  
+
   return {
-    // Core plugins
     plugins: [
-      // React with fast refresh for development
-      react({ fastRefresh: true }),
-      
-      // Content Security Policy management
-      viteCSPPlugin({ isProd }),
-      
-      // Progressive Web App configuration
-      VitePWA({
-        registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png', 'offline.html'],
-        
-        // Service worker configuration
-        workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
-          cleanupOutdatedCaches: true,
-          maximumFileSizeToCacheInBytes: 4194304, // 4 MB
-          navigationPreload: true,
-          runtimeCaching: [
-            // Google Fonts stylesheets caching
-            {
-              urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-              handler: 'CacheFirst',
-              options: {
-                cacheName: 'google-fonts-cache',
-                expiration: {
-                  maxEntries: 10,
-                  maxAgeSeconds: 60 * 60 * 24 * 180, // 6 months
-                },
-                cacheableResponse: { statuses: [0, 200] }
+      // React with Fast Refresh in dev
+      react({
+        fastRefresh: !isProd,
+      }),
+
+      // PWA & service‑worker only in **production**
+      isProd &&
+        VitePWA({
+          registerType: 'autoUpdate',
+          includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+          manifest: {
+            name: 'Erasmus House Cup 2025',
+            short_name: 'ErasmusCup',
+            description:
+              'Official website for the Erasmus House Cup 2025—a competition of house pride, weekly events, and challenges.',
+            theme_color: '#9146ff',
+            background_color: '#0a0b0e',
+            display: 'standalone',
+            icons: [
+              {
+                src: '/assets/icons/android-chrome-192x192.png',
+                sizes: '192x192',
+                type: 'image/png',
               },
-            },
-            // Google Fonts webfonts caching
-            {
-              urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-              handler: 'CacheFirst',
-              options: {
-                cacheName: 'gstatic-fonts-cache',
-                expiration: {
-                  maxEntries: 10,
-                  maxAgeSeconds: 60 * 60 * 24 * 180, // 6 months
-                },
-                cacheableResponse: { statuses: [0, 200] }
+              {
+                src: '/assets/icons/android-chrome-512x512.png',
+                sizes: '512x512',
+                type: 'image/png',
+                purpose: 'any maskable',
               },
-            },
-            // Offline page caching
-            {
-              urlPattern: ({ url }) => url.origin === self.location.origin,
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'html-cache',
-                networkTimeoutSeconds: 10,
-                plugins: [
-                  {
-                    handlerDidError: async () => 
-                      caches.match('/offline.html')
-                  }
-                ]
-              }
-            }
-          ],
-        },
-        
-        // App manifest for PWA
-        manifest: {
-          name: 'Erasmus House Cup 2025',
-          short_name: 'House Cup',
-          description: 'The official digital hub of the Erasmus House Cup 2025',
-          theme_color: '#9146ff',
-          background_color: '#121214',
-          display: 'standalone',
-          orientation: 'portrait',
-          icons: [
-            {
-              src: '/assets/icons/favicon-16x16.png',
-              sizes: '16x16',
-              type: 'image/png'
-            },
-            {
-              src: '/assets/icons/favicon-32x32.png',
-              sizes: '32x32',
-              type: 'image/png'
-            },
-            {
-              src: '/assets/icons/apple-touch-icon.png',
-              sizes: '180x180',
-              type: 'image/png'
-            },
-            {
-              src: '/assets/icons/pwa-icon-512x512.png',
-              sizes: '512x512',
-              type: 'image/png',
-              purpose: 'any maskable'
-            }
-          ]
-        }
-      })
-    ],
-    
-    // Path resolution and aliases
+            ],
+          },
+          workbox: {
+            runtimeCaching: [
+              {
+                urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+                handler: 'CacheFirst',
+                options: {
+                  cacheName: 'google-fonts-cache',
+                  expiration: {
+                    maxEntries: 10,
+                    maxAgeSeconds: 60 * 60 * 24 * 365,
+                  },
+                  cacheableResponse: { statuses: [0, 200] },
+                },
+              },
+              {
+                urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+                handler: 'CacheFirst',
+                options: {
+                  cacheName: 'gstatic-fonts-cache',
+                  expiration: {
+                    maxEntries: 10,
+                    maxAgeSeconds: 60 * 60 * 24 * 365,
+                  },
+                  cacheableResponse: { statuses: [0, 200] },
+                },
+              },
+              {
+                urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/i,
+                handler: 'CacheFirst',
+                options: {
+                  cacheName: 'images-cache',
+                  expiration: {
+                    maxEntries: 50,
+                    maxAgeSeconds: 60 * 60 * 24 * 30,
+                  },
+                },
+              },
+              {
+                urlPattern: /\.(?:js|css)$/i,
+                handler: 'StaleWhileRevalidate',
+                options: {
+                  cacheName: 'static-resources',
+                  expiration: {
+                    maxEntries: 30,
+                    maxAgeSeconds: 60 * 60 * 24 * 7,
+                  },
+                },
+              },
+            ],
+          },
+          // explicitly disabled in dev (default), just to be safe
+          devOptions: { enabled: false },
+        }),
+
+      // Content‑Security‑Policy – prod only
+      isProd &&
+        generateCspPlugin({
+          policy: {
+            'default-src': ["'self'"],
+            'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+            'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+            'font-src': ["'self'", 'https://fonts.gstatic.com'],
+            'img-src': ["'self'", 'data:', 'blob:'],
+            'connect-src': [
+              "'self'",
+              'ws:', // for local preview of prod build
+              'wss:',
+              'https://fonts.googleapis.com',
+              'https://fonts.gstatic.com',
+            ],
+            'frame-src': ["'none'"],
+            'object-src': ["'none'"],
+          },
+        }),
+    ].filter(Boolean),
+
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
-        '@components': path.resolve(__dirname, './src/components'),
-        '@pages': path.resolve(__dirname, './src/pages'),
-        '@utils': path.resolve(__dirname, './src/utils'),
-        '@data': path.resolve(__dirname, './src/data'),
-        'react': path.resolve(__dirname, './node_modules/react'),
-        'react-dom': path.resolve(__dirname, './node_modules/react-dom')
+        '@': resolve(__dirname, './src'),
+        '@components': resolve(__dirname, './src/components'),
+        '@pages': resolve(__dirname, './src/pages'),
+        '@assets': resolve(__dirname, './src/assets'),
+        '@data': resolve(__dirname, './src/data'),
+        '@hooks': resolve(__dirname, './src/hooks'),
+        '@utils': resolve(__dirname, './src/utils'),
       },
     },
-    
-    // Build configuration
+
     build: {
+      target: 'es2015',
       outDir: 'dist',
-      minify: isProd ? 'terser' : false,
+      assetsDir: 'assets',
+      minify: isProd ? 'esbuild' : false,
       sourcemap: !isProd,
-      terserOptions: isProd ? {
-        compress: {
-          drop_console: true,
-          drop_debugger: true,
-        }
-      } : undefined,
+      reportCompressedSize: isProd,
+      chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
           manualChunks: {
-            vendor: ['react', 'react-dom', 'react-router-dom'],
-            ui: ['framer-motion', 'recharts'],
-            utils: ['gsap', 'react-intersection-observer'],
+            'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+            'vendor-ui': ['framer-motion', 'gsap', 'recharts'],
+            'vendor-three': ['three'],
           },
         },
       },
     },
-    
-    // Development server configuration
+
     server: {
-      port: parseInt(env.PORT || '3000', 10),
+      port: 3000,
+      strictPort: false,
       open: true,
       cors: true,
-      strictPort: false,
-      
-      // Hot Module Replacement optimized for WebSocket stability
       hmr: {
         protocol: 'ws',
         host: 'localhost',
-        port: parseInt(env.HMR_PORT || env.PORT || '3000', 10),
-        clientPort: parseInt(env.CLIENT_PORT || env.PORT || '3000', 10),
-        timeout: 60000,
+        port: 3000,
         overlay: true,
-        path: '/',
-        server: null, // Use the existing server
-      },
-      
-      // File system handling
-      watch: {
-        usePolling: false, // Only enable for network filesystems
-      },
-      fs: {
-        strict: false, // Allow serving files outside the project root
       },
     },
-    
-    // Dependency optimization
-    optimizeDeps: {
-      include: [
-        'react',
-        'react-dom',
-        'react-router-dom',
-        'framer-motion',
-        'recharts',
-        'gsap',
-        'react-intersection-observer',
-        'react-helmet-async',
-        '@vitejs/plugin-react'
-      ],
-      esbuildOptions: {
-        platform: 'browser',
-        define: {
-          global: 'globalThis'
-        }
-      },
+
+    preview: {
+      port: 5000,
+      strictPort: false,
+      open: true,
     },
-    
-    // esbuild configuration
+
     esbuild: {
       logOverride: { 'this-is-undefined-in-esm': 'silent' },
     },
