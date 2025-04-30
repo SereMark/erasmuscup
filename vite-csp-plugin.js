@@ -1,69 +1,102 @@
 /**
- * Custom Content Security Policy (CSP) plugin for Vite
+ * Content Security Policy (CSP) Plugin for Vite
  * 
- * This plugin adds CSP headers to development server responses
- * and injects a CSP meta tag into the HTML for production builds.
+ * Adds and manages security policies for both development and production environments:
+ * - Injects CSP headers into server responses
+ * - Updates CSP meta tags in HTML
+ * - Applies different policies based on environment
  */
 
-// Define CSP content once to ensure consistency
-const CSP_POLICY = [
-  // Default fallback
+// Development CSP: More permissive for local development tooling
+const DEV_CSP_POLICY = [
+  // Core directives
   "default-src 'self'",
-  
-  // Scripts - allow inline for dev tools
-  "script-src 'self' 'unsafe-inline'",
-  
-  // Styles - allow Google Fonts
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  
-  // Fonts - allow Google Fonts
   "font-src 'self' data: https://fonts.googleapis.com https://fonts.gstatic.com",
   
-  // Images - allow data URIs and HTTPS
-  "img-src 'self' data: https: blob:",
+  // Media and connection directives
+  "img-src 'self' data: blob: https: https://cdn.jsdelivr.net",
+  "connect-src 'self' ws://localhost:* wss://localhost:* ws: wss: https://fonts.googleapis.com https://cdn.jsdelivr.net",
   
-  // Connect - allow Google Fonts
-  "connect-src 'self' https://fonts.googleapis.com",
-  
-  // Manifests
+  // Additional resource types
   "manifest-src 'self'",
-  
-  // Workers
-  "worker-src 'self' blob:"
+  "worker-src 'self' blob:",
+  "frame-src 'self'"
 ].join("; ");
 
-export default function viteCSPPlugin() {
+// Production CSP: Stricter for security in deployed environments
+const PROD_CSP_POLICY = [
+  // Core directives - more restrictive
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' data: https://fonts.googleapis.com https://fonts.gstatic.com",
+  
+  // Media and connection directives - limited to required sources
+  "img-src 'self' data: blob: https://cdn.jsdelivr.net",
+  "connect-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net",
+  
+  // Additional resource types
+  "manifest-src 'self'",
+  "worker-src 'self' blob:",
+  
+  // Security enhancements
+  "upgrade-insecure-requests"
+].join("; ");
+
+/**
+ * Creates a Vite plugin that manages CSP for both development and production
+ * @param {Object} options Plugin configuration options
+ * @param {boolean} options.isProd Whether running in production mode
+ * @returns {Object} Vite plugin object
+ */
+export default function viteCSPPlugin({ isProd = false } = {}) {
+  const CSP_POLICY = isProd ? PROD_CSP_POLICY : DEV_CSP_POLICY;
+  
   return {
     name: 'vite-csp-plugin',
     
+    // Add CSP headers to development server responses
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        // Set CSP headers for all responses
+        // Security headers
         res.setHeader('Content-Security-Policy', CSP_POLICY);
-        
-        // Set correct MIME type for JavaScript files
-        if (req.url.endsWith('.js')) {
-          res.setHeader('Content-Type', 'application/javascript');
-        }
-        
-        // Add other security headers
         res.setHeader('X-Content-Type-Options', 'nosniff');
         res.setHeader('X-Frame-Options', 'DENY');
         res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+        res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), interest-cohort=()');
+        
+        // Development-specific headers
+        if (!isProd) {
+          res.setHeader('Cache-Control', 'no-store, max-age=0');
+        }
+        
+        // Production-specific headers
+        if (isProd) {
+          res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+        }
+        
+        // Fix for JavaScript MIME types
+        if (req.url?.endsWith('.js')) {
+          res.setHeader('Content-Type', 'application/javascript');
+        }
         
         next();
       });
     },
     
+    // Update HTML with correct CSP meta tag
     transformIndexHtml(html) {
-      // Inject CSP meta tag if not already present
-      if (!html.includes('<meta http-equiv="Content-Security-Policy"')) {
-        return html.replace(
-          '<head>',
-          `<head>\n    <meta http-equiv="Content-Security-Policy" content="${CSP_POLICY}">`
-        );
+      // Replace existing CSP meta tag or add new one
+      const cspMetaPattern = /<meta\s+http-equiv=["']Content-Security-Policy["'][^>]*>/i;
+      const cspMetaTag = `<meta http-equiv="Content-Security-Policy" content="${CSP_POLICY}">`;
+      
+      if (cspMetaPattern.test(html)) {
+        return html.replace(cspMetaPattern, cspMetaTag);
+      } else {
+        return html.replace('<head>', `<head>\n    ${cspMetaTag}`);
       }
-      return html;
     }
   };
 }

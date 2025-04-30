@@ -93,7 +93,7 @@
       "items": [
         {
           "id": "section-6",
-          "label": "6. Award of House Points",
+          "label": "6. Awarding of House Points",
           "icon": "✨"
         },
         {
@@ -277,7 +277,7 @@
         {
           "type": "numbered",
           "number": "1",
-          "text": "The objective of the House Competition is to determine the strongest Erasmus students to breed the next wave of Erasmus students by virtue of Darwinian Evolution."
+          "text": "The objective of the House Competition is to determine the strongest Erasmus students to breed the next wave or Erasmus students by virtue of Darwinian Evolution."
         },
         {
           "type": "numbered",
@@ -287,7 +287,7 @@
         {
           "type": "numbered",
           "number": "3",
-          "text": "This is not a cult; admission is not to be restricted for any reason."
+          "text": "This is not a cult, admission is not to be restricted for any reason."
         }
       ]
     },
@@ -400,7 +400,7 @@
         {
           "type": "numbered",
           "number": "1",
-          "text": "Participants are to be periodically added to the House Cup."
+          "text": "Participants are to be periodically added to the House Cup,"
         },
         {
           "type": "numbered",
@@ -427,7 +427,7 @@
         {
           "type": "numbered",
           "number": "1",
-          "text": "House Events—",
+          "text": "House Events —",
           "children": [
             {
               "type": "lettered",
@@ -460,18 +460,18 @@
     },
     {
       "id": "section-6",
-      "title": "6 Award of House Points",
+      "title": "6 Awarding of House Points",
       "emoji": "✨",
       "content": [
         {
           "type": "numbered",
           "number": "1",
-          "text": "The following, agglutinated to the rules pertaining to the Revocation of House Points in section 7, are to be known as the Point System."
+          "text": "The following, agglutinated to the rules pertaining to the Revocation of House Points in section 7 are to be known as the Point System."
         },
         {
           "type": "numbered",
           "number": "2",
-          "text": "House Points are awarded on the following rules:",
+          "text": "House Points are awarded on the following rules",
           "children": [
             {
               "type": "lettered",
@@ -515,7 +515,7 @@
         {
           "type": "numbered",
           "number": "1",
-          "text": "Points will be revoked from Houses in the following circumstances—",
+          "text": "Points will be revoked from Houses in the following circumstances —",
           "children": [
             {
               "type": "lettered",
@@ -588,7 +588,7 @@
         {
           "type": "numbered",
           "number": "1",
-          "text": "Overthrowing Event Organisers by means of—",
+          "text": "Overthrowing Event Organisers by means of —",
           "children": [
             {
               "type": "lettered",
@@ -638,7 +638,7 @@
         {
           "type": "numbered",
           "number": "1",
-          "text": "Bonus points will be awarded for attendance—",
+          "text": "Bonus points will be awarded for attendance —",
           "children": [
             {
               "type": "lettered",
@@ -687,7 +687,7 @@
         {
           "type": "numbered",
           "number": "2",
-          "text": "Gambits abide by the following rules—",
+          "text": "Gambits abide by the following rules —",
           "children": [
             {
               "type": "lettered",
@@ -731,7 +731,7 @@
         {
           "type": "numbered",
           "number": "3",
-          "text": "Gambits have the following limitations—",
+          "text": "Gambits have the following limitations —",
           "children": [
             {
               "type": "lettered",
@@ -800,17 +800,17 @@
                 {
                   "type": "roman",
                   "numeral": "ii",
-                  "text": "Second Place: (n x 14) points."
+                  "text": "Second Place: (n x 14) points"
                 },
                 {
                   "type": "roman",
                   "numeral": "iii",
-                  "text": "Third Place: (n x 10) points."
+                  "text": "Third Place (n x 10) points."
                 },
                 {
                   "type": "roman",
                   "numeral": "iv",
-                  "text": "Fourth Place: (n x 4) points."
+                  "text": "Fourth Place (n x 4) points."
                 }
               ]
             }
@@ -819,7 +819,7 @@
         {
           "type": "numbered",
           "number": "4",
-          "text": "Super Gambits' point totalling system maxes out at 4 participants from each House; any increase in number will not increase the total point value."
+          "text": "Super Gambits' point totalling system maxes out at 4 participants from each House, any increase in number will not increase the total point value."
         },
         {
           "type": "numbered",
@@ -851,7 +851,7 @@
         {
           "type": "numbered",
           "number": "3",
-          "text": "An Armistice cannot be declared for any reason other than competing in Gambits or Super Gambits."
+          "text": "An Armistice cannot be declared for any other reason other than competing in Gambits or Super Gambits."
         },
         {
           "type": "numbered",
@@ -867,18 +867,18 @@
     },
     {
       "id": "section-13",
-      "title": "13 House Crimes",
+      "title": "13 Establishment of House Crimes",
       "emoji": "🚫",
       "content": [
         {
           "type": "numbered",
           "number": "1",
-          "text": "It is hereby established that the following actions are considered House Crimes."
+          "text": "It is hereby established and forbidden actions with the status of House Crimes."
         },
         {
           "type": "numbered",
           "number": "2",
-          "text": "The proven establishment of a House Crime's actus reus and mens rea, in the absence of defenses, will attract punishment."
+          "text": "The proven establishment of a House Crime's actus reus and mens rea, in the absence of defences will attract punishment."
         },
         {
           "type": "numbered",
@@ -895,7 +895,7 @@
         {
           "type": "numbered",
           "number": "1",
-          "text": "Any person who intentionally cheats, or diminishes the integrity of any House Event, shall lose 30 points."
+          "text": "Any person who intentionally cheats, or diminishes the integrity of any House Event shall lose 30 points."
         },
         {
           "type": "numbered",
@@ -905,7 +905,7 @@
             {
               "type": "lettered",
               "letter": "a",
-              "text": "A cheater who makes it to midnight undetected is granted a full defense to the offence of Cheating."
+              "text": "A cheater who makes it to midnight undetected is granted a full defence to the offence of Cheating."
             }
           ]
         }
@@ -919,7 +919,7 @@
         {
           "type": "numbered",
           "number": "1",
-          "text": "Any person who intentionally betrays their House, or aids/abets another House contrary to the interests of their house, will be deemed a Traitor and shall be removed from their House."
+          "text": "Any person who intentionally betrays their House, or aids/abets another House contrary to the interests of their house will be deemed a Traitor, and shall be removed from their House."
         },
         {
           "type": "numbered",
@@ -951,7 +951,7 @@
         {
           "type": "numbered",
           "number": "3",
-          "text": "\"Naked\" is defined as having no fabricated items on at all."
+          "text": "Naked is defined as no fabricated items on at all."
         },
         {
           "type": "amendment",
@@ -960,7 +960,7 @@
             {
               "type": "numbered",
               "number": "4",
-              "text": "The crime of Public Nudity is hereby restricted as follows;",
+              "text": "The Crime of Public Nudity is hereby restricted as follows;",
               "children": [
                 {
                   "type": "lettered",
@@ -970,7 +970,7 @@
                 {
                   "type": "lettered",
                   "letter": "b",
-                  "text": "Public Nudity may not be performed in the same place twice; once points are awarded at a particular location, that place is disallowed."
+                  "text": "Public Nudity may not be performed in the same place twice, once a Participant has been awarded points in a particular location, the place is henceforth disallowed."
                 },
                 {
                   "type": "lettered",
@@ -1035,7 +1035,7 @@
         {
           "type": "numbered",
           "number": "2",
-          "text": "Successfully performing a Yardie is a full defense to the crime of Losing."
+          "text": "Doing the Yardie is a full defence to the crime of Losing."
         }
       ]
     },
@@ -1047,7 +1047,7 @@
         {
           "type": "numbered",
           "number": "1",
-          "text": "The following roles are also to be selected for each house—",
+          "text": "The following roles are also to be selected for each house —",
           "children": [
             {
               "type": "lettered",
@@ -1057,17 +1057,17 @@
                 {
                   "type": "roman",
                   "numeral": "i",
-                  "text": "Responsible for organizing their House for events."
+                  "text": "Each House Captain is to be responsible for organising their House for any events."
                 },
                 {
                   "type": "roman",
                   "numeral": "ii",
-                  "text": "Elected by the initial Founders."
+                  "text": "The House Captains are to be elected by the initial Founders."
                 },
                 {
                   "type": "roman",
                   "numeral": "iii",
-                  "text": "Until the finalization of the House Cup Courts Act, the House Captains, in their collective presence, are the final decision makers on any rules in this Act."
+                  "text": "Until the finalisation of the House Cup Courts Act, the House Captains, in their collective presence, are final decision makers on any of the rules in this Act."
                 }
               ]
             },
@@ -1079,22 +1079,22 @@
                 {
                   "type": "roman",
                   "numeral": "i",
-                  "text": "Responsible for accounting for House Points and verifying points of other Houses."
+                  "text": "The Bursar will be responsible for accounting for the House Points of their house, as well as checking the House Points of the other Houses to ensure their validity."
                 },
                 {
                   "type": "roman",
                   "numeral": "ii",
-                  "text": "All four House Bursars collaborate to account for points awarded and revoked during events."
+                  "text": "All four House Bursars will work together to correctly account for the points awarded and revoked during any House Events or Gambits."
                 },
                 {
                   "type": "roman",
                   "numeral": "iii",
-                  "text": "Elected by their House when a majority of members are present."
+                  "text": "Bursars are to be elected by their House when at least a majority of members are present."
                 },
                 {
                   "type": "roman",
                   "numeral": "iv",
-                  "text": "Bursars collectively organize the allocation of jelly beans if a Participant converts points."
+                  "text": "Bursars in their collective capacity organise the allocation of jelly beans if a Participant chooses to convert their points. Bursars may not refuse to convert points."
                 }
               ]
             },
@@ -1106,27 +1106,34 @@
                 {
                   "type": "roman",
                   "numeral": "i",
-                  "text": "Responsible for adjudicating rules and interpreting the House Cup Rules."
+                  "text": "The House Judge is to be responsible for the following.",
+                  "children": [
+                    {
+                      "type": "numbered",
+                      "number": "1",
+                      "text": "Adjudicating on rules and interpretation of the House Cup Rules."
+                    },
+                    {
+                      "type": "numbered",
+                      "number": "2",
+                      "text": "Hearing cases brought to the House Cup Court about penalties, House Crimes and/or any other infraction."
+                    }
+                  ]
                 },
                 {
                   "type": "roman",
                   "numeral": "ii",
-                  "text": "Hears cases in the House Cup Court regarding penalties, House Crimes, or other infractions."
+                  "text": "The House Judge is to be elected by democratic vote between the constituents of each House, in the presence of a Majority of Members."
                 },
                 {
                   "type": "roman",
                   "numeral": "iii",
-                  "text": "Elected by democratic vote within each House, with a majority present."
+                  "text": "If the House Judges cannot come to a consensus on the interpretation of the rules, all Houses Party to the dispute will be docked 10 points. It is part of the Integrity of the Judges to ensure these points are removed accordingly."
                 },
                 {
                   "type": "roman",
                   "numeral": "iv",
-                  "text": "In case of a failure to reach consensus, all Houses party to the dispute will be docked 10 points."
-                },
-                {
-                  "type": "roman",
-                  "numeral": "v",
-                  "text": "Only Judges from the involved House may adjudicate disputes."
+                  "text": "Only Judges from the House's party to a dispute may adjudicate on the dispute."
                 }
               ]
             }
@@ -1135,7 +1142,7 @@
         {
           "type": "numbered",
           "number": "2",
-          "text": "After initial election, any role holder may abdicate, and a new role holder may be elected from the current pool."
+          "text": "After initial election, any person holding a role may abdicate that role, and a new role holder may be elected out of the present Participant pool. Such an election must be conducted in the presence of at least a majority of House Participants."
         },
         {
           "type": "numbered",
