@@ -1,0 +1,37 @@
+# robots.txt for www.erasmuscup.com
+# Last updated: April 30, 2025
+
+User-agent: *
+Allow: /
+Allow: /scoreboard
+Allow: /events
+Allow: /rules
+
+# Disallow any potential development or temporary paths
+Disallow: /dev/
+Disallow: /temp/
+Disallow: /test/
+
+# Block access to specific file types
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /*.jsx$
+
+# Don't index these specific assets
+Disallow: /assets/icons/
+Disallow: /assets/logos/not-available.png
+
+# Allow CSS and JS files needed for rendering
+Allow: /*.css$
+Allow: /*.js$
+
+# Add crawl rate limits for specific bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+# Sitemap location
+Sitemap: https://www.erasmuscup.com/sitemap.xml
