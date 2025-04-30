@@ -19,7 +19,13 @@ export default defineConfig(({ mode }) => {
       isProd &&
         VitePWA({
           registerType: 'autoUpdate',
-          includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+          includeAssets: [
+            'favicon.ico',
+            'robots.txt',
+            'apple-touch-icon.png',
+            'assets/icons/android-chrome-192x192.png',
+            'assets/icons/android-chrome-512x512.png',
+          ],
           manifest: {
             name: 'Erasmus House Cup 2025',
             short_name: 'ErasmusCup',
@@ -30,12 +36,12 @@ export default defineConfig(({ mode }) => {
             display: 'standalone',
             icons: [
               {
-                src: '/icons/android-chrome-192x192.png',
+                src: '/assets/icons/android-chrome-192x192.png',
                 sizes: '192x192',
                 type: 'image/png',
               },
               {
-                src: '/icons/android-chrome-512x512.png',
+                src: '/assets/icons/android-chrome-512x512.png',
                 sizes: '512x512',
                 type: 'image/png',
                 purpose: 'any maskable',
@@ -43,10 +49,10 @@ export default defineConfig(({ mode }) => {
             ],
           },
           workbox: {
-            navigationPreload: false, // disable to avoid navigation-preload warning
+            navigationPreload: false, // silence Chrome warning
             runtimeCaching: [
               {
-                urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+                urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*$/i,
                 handler: 'CacheFirst',
                 options: {
                   cacheName: 'google-fonts-cache',
@@ -58,7 +64,7 @@ export default defineConfig(({ mode }) => {
                 },
               },
               {
-                urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+                urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*$/i,
                 handler: 'CacheFirst',
                 options: {
                   cacheName: 'gstatic-fonts-cache',
@@ -93,8 +99,7 @@ export default defineConfig(({ mode }) => {
               },
             ],
           },
-          // explicitly disabled in dev (default), just to be safe
-          devOptions: { enabled: false },
+          devOptions: { enabled: false }, // keep SW off in dev
         }),
 
       // Content-Security-Policy – prod only
@@ -102,13 +107,26 @@ export default defineConfig(({ mode }) => {
         generateCspPlugin({
           policy: {
             'default-src': ["'self'"],
-            'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
-            'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+            'script-src': [
+              "'self'",
+              "'unsafe-inline'",
+              'https://cdn.jsdelivr.net',
+            ],
+            'style-src': [
+              "'self'",
+              "'unsafe-inline'",
+              'https://fonts.googleapis.com',
+            ],
             'font-src': ["'self'", 'https://fonts.gstatic.com'],
-            'img-src': ["'self'", 'data:', 'blob:'],
+            'img-src': [
+              "'self'",
+              'data:',
+              'blob:',
+              'https://cdn.jsdelivr.net',
+            ],
             'connect-src': [
               "'self'",
-              'ws:', // for local preview of prod build
+              'ws:', // local preview of prod build
               'wss:',
               'https://fonts.googleapis.com',
               'https://fonts.gstatic.com',

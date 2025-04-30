@@ -19,12 +19,11 @@
     <!-- Favicon and app icons -->
     <link rel="canonical" href="https://erasmushousecup.com/" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"/>
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png"/>
 
-    <!-- PWA manifest -->
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <!-- vite-plugin-pwa injects manifest in production -->
 
     <!-- Social media tags -->
     <meta property="og:type" content="website" />
@@ -84,8 +83,10 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- Vite rewrites the following during build; in dev it loads the raw JSX -->
+
+    <!-- Vite rewrites this during build; in dev it loads the raw JSX -->
     <script type="module" src="/src/main.jsx"></script>
+
     <noscript>
       <div style="text-align: center; padding: 2rem;">
         This application requires JavaScript to run. Please enable JavaScript in your browser settings.
