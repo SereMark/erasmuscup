@@ -5,6 +5,7 @@ import Layout from "./components/layout/Layout";
 // Lazy load page components for better initial load performance
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const ScoreboardPage = lazy(() => import("./pages/ScoreboardPage"));
+const EventsPage = lazy(() => import("./pages/EventsPage"));
 const RulesPage = lazy(() => import("./pages/RulesPage"));
 
 // Loading fallback component
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
           <Route path="scoreboard" element={<ScoreboardPage />} />
+          <Route path="events" element={<EventsPage />} />
           <Route path="rules" element={<RulesPage />} />
           {/* Catch-all route for 404 pages */}
           <Route path="*" element={<NotFound />} />
