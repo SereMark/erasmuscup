@@ -67,7 +67,7 @@ const EventsPage = () => {
       default: return 'brand';
     }
   };
-
+  
   return (
     <motion.div
       initial="initial"
@@ -109,7 +109,7 @@ const EventsPage = () => {
                   <p className="text-dark-200 max-w-2xl">Participate in these events to earn points for your house and create unforgettable memories!</p>
                 </div>
                 
-                <div className="inline-flex flex-wrap items-center p-1.5 bg-dark-800/90 backdrop-blur-sm rounded-lg self-start md:self-auto mt-4 md:mt-0 shadow-md">
+                <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center p-1.5 bg-dark-800/90 backdrop-blur-sm rounded-lg self-start md:self-auto mt-4 md:mt-0 shadow-md gap-1 w-full sm:w-auto">
                   {categories.map(category => (
                     <button 
                       key={category}
