@@ -98,6 +98,17 @@
       },
       {
         "id": 6,
+        "date": "07.05.2025",
+        "eventName": "Beeriocart",
+        "points": {
+          "theHoo": 25,
+          "brewCrew": 50,
+          "redStorm": 75,
+          "deepJungle": 100
+        }
+      },
+      {
+        "id": 7,
         "type": "adjustment",
         "eventName": "Public nudity",
         "points": {
@@ -108,7 +119,7 @@
         }
       },
       {
-        "id": 7,
+        "id": 8,
         "type": "adjustment",
         "eventName": "Buffaloes",
         "points": {
@@ -116,17 +127,6 @@
           "brewCrew": -20,
           "redStorm": -10,
           "deepJungle": -20
-        }
-      },
-      {
-        "id": 8,
-        "date": "07.05.2025",
-        "eventName": "Beeriocart",
-        "points": {
-          "theHoo": 25,
-          "brewCrew": 50,
-          "redStorm": 75,
-          "deepJungle": 100
         }
       },
       {
