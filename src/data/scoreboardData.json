@@ -120,13 +120,24 @@
       },
       {
         "id": 8,
+        "date": "07.05.2025",
+        "eventName": "Beeriocart",
+        "points": {
+          "theHoo": 25,
+          "brewCrew": 50,
+          "redStorm": 75,
+          "deepJungle": 100
+        }
+      },
+      {
+        "id": 9,
         "type": "total",
         "eventName": "Current Total",
         "points": {
-          "theHoo": 211,
-          "brewCrew": 224,
-          "redStorm": 239,
-          "deepJungle": 323
+          "theHoo": 236,
+          "brewCrew": 274,
+          "redStorm": 314,
+          "deepJungle": 423
         }
       }
     ],
