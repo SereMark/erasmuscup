@@ -1,17 +1,20 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { formatDate, getRelativeDate, isHappeningSoon } from '../../utils/dateUtils';
+import ReactMarkdown from 'react-markdown';
 
 /**
- * Enhanced EventCard component for displaying event information
+ * EventCard component for displaying event information
  * Supports both regular and featured styling with expandable details
  */
 const EventCard = ({ event, featured = false }) => {
   const [showDetails, setShowDetails] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   
   const {
     title,
     date,
+    endDate,
     location,
     category,
     excerpt,
@@ -24,7 +27,8 @@ const EventCard = ({ event, featured = false }) => {
     cost,
     whatsappInfo,
     customStyles,
-    ctaText
+    ctaText,
+    affectedHouses
   } = event;
 
   // Check if event is happening soon (within 3 days)
@@ -58,19 +62,19 @@ const EventCard = ({ event, featured = false }) => {
   
   // Explicitly map color to button classes to avoid dynamic class issues
   const getButtonClasses = () => {
-    const baseClasses = "btn text-white px-5 py-2.5 rounded-lg flex-grow text-center font-medium transition-all hover:-translate-y-0.5 shadow-sm";
+    const baseClasses = "btn text-white px-5 py-2.5 rounded-lg flex-grow text-center font-medium transition-all hover:-translate-y-0.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900";
     
     switch (color) {
       case 'brand':
-        return `${baseClasses} bg-brand-600 hover:bg-brand-700 hover:shadow-brand-900/20`;
+        return `${baseClasses} bg-brand-600 hover:bg-brand-700 hover:shadow-brand-900/20 focus:ring-brand-500`;
       case 'accent':
-        return `${baseClasses} bg-accent-600 hover:bg-accent-700 hover:shadow-accent-900/20`;
+        return `${baseClasses} bg-accent-600 hover:bg-accent-700 hover:shadow-accent-900/20 focus:ring-accent-500`;
       case 'success':
-        return `${baseClasses} bg-success-600 hover:bg-success-700 hover:shadow-success-900/20`;
+        return `${baseClasses} bg-success-600 hover:bg-success-700 hover:shadow-success-900/20 focus:ring-success-500`;
       case 'info':
-        return `${baseClasses} bg-info-600 hover:bg-info-700 hover:shadow-info-900/20`;
+        return `${baseClasses} bg-info-600 hover:bg-info-700 hover:shadow-info-900/20 focus:ring-info-500`;
       default:
-        return `${baseClasses} bg-brand-600 hover:bg-brand-700 hover:shadow-brand-900/20`;
+        return `${baseClasses} bg-brand-600 hover:bg-brand-700 hover:shadow-brand-900/20 focus:ring-brand-500`;
     }
   };
   
@@ -83,6 +87,13 @@ const EventCard = ({ event, featured = false }) => {
     const dateObj = new Date(date);
     return dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
+
+  // Format end time if available
+  const getEventEndTime = () => {
+    if (!endDate) return '';
+    const dateObj = new Date(endDate);
+    return dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
   
   // Animation variants
   const detailsVariants = {
@@ -90,13 +101,48 @@ const EventCard = ({ event, featured = false }) => {
     visible: { 
       opacity: 1, 
       height: 'auto',
-      transition: { duration: 0.25 }
+      transition: { 
+        height: { duration: 0.4 },
+        opacity: { duration: 0.25, delay: 0.15 } 
+      }
     }
   };
+
+  // Handle image loading
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+  
+  // Preload image
+  useEffect(() => {
+    const img = new Image();
+    img.src = imageUrl;
+    img.onload = handleImageLoad;
+  }, [imageUrl]);
   
   // Handle action
   const handleJoinClick = () => {
     alert(`To participate: ${whatsappInfo || "Check the House Cup WhatsApp group!"}`);
+  };
+
+  // To render markdown content
+  const MarkdownRenderer = ({ content }) => {
+    if (!content) return null;
+    return (
+      <ReactMarkdown 
+        components={{
+          p: ({node, ...props}) => <p className="text-dark-100 whitespace-pre-line mb-2" {...props} />,
+          strong: ({node, ...props}) => <strong className="text-white font-semibold" {...props} />,
+          em: ({node, ...props}) => <em className="text-dark-200 italic" {...props} />,
+          a: ({node, ...props}) => <a className={`text-${color}-400 hover:underline`} target="_blank" rel="noopener noreferrer" {...props} />,
+          ul: ({node, ...props}) => <ul className="list-disc pl-5 space-y-1 text-dark-100 mt-2" {...props} />,
+          ol: ({node, ...props}) => <ol className="list-decimal pl-5 space-y-1 text-dark-100 mt-2" {...props} />,
+          li: ({node, ...props}) => <li className="text-dark-100" {...props} />
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    );
   };
   
   return (
@@ -134,14 +180,33 @@ const EventCard = ({ event, featured = false }) => {
             </div>
           </div>
         )}
+
+        {/* Affected Houses badge */}
+        {affectedHouses && affectedHouses.length > 0 && (
+          <div className="absolute bottom-0 right-0 z-10 m-4">
+            <div className={`px-3 py-1 text-sm font-medium rounded-lg bg-dark-900/90 text-${color}-400 shadow-sm backdrop-blur-sm border border-${color}-700/20`}>
+              {affectedHouses.join(', ')}
+            </div>
+          </div>
+        )}
         
         {/* Image */}
-        <div className="w-full h-full overflow-hidden">
-          <img 
+        <div className="w-full h-full overflow-hidden bg-dark-850">
+          <motion.img 
             src={imageUrl} 
             alt={title}
             className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: imageLoaded ? 1 : 0 }}
+            transition={{ duration: 0.5 }}
+            onLoad={handleImageLoad}
+            loading="lazy"
           />
+          {!imageLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-10 h-10 border-4 border-dark-700 border-t-brand-500 rounded-full animate-spin"></div>
+            </div>
+          )}
         </div>
         
         {/* Gradient overlay */}
@@ -172,15 +237,18 @@ const EventCard = ({ event, featured = false }) => {
               <div className="text-sm sm:text-base">{formatDate(date)}</div>
               <div>
                 <span className="text-sm text-dark-300">{getEventTime()}</span>
+                {endDate && (
+                  <span className="text-sm text-dark-300"> - {getEventEndTime()}</span>
+                )}
                 <span className="ml-2 text-sm text-dark-400">({getRelativeDate(date)})</span>
               </div>
             </div>
           </div>
           
-          <div className="flex items-center text-dark-100">
+          <div className="flex items-start text-dark-100">
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
-              className={`h-5 w-5 mr-3 text-${color}-500 flex-shrink-0`}
+              className={`h-5 w-5 mr-3 text-${color}-500 flex-shrink-0 mt-0.5`}
               fill="none" 
               viewBox="0 0 24 24" 
               stroke="currentColor"
@@ -189,13 +257,16 @@ const EventCard = ({ event, featured = false }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span className="text-sm sm:text-base">{location.name}</span>
+            <div>
+              <div className="text-sm sm:text-base">{location.name}</div>
+              <div className="text-sm text-dark-300">{location.address}</div>
+            </div>
           </div>
           
-          <div className="flex items-center text-dark-100">
+          <div className="flex items-start text-dark-100">
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
-              className={`h-5 w-5 mr-3 text-${color}-500 flex-shrink-0`}
+              className={`h-5 w-5 mr-3 text-${color}-500 flex-shrink-0 mt-0.5`}
               fill="none" 
               viewBox="0 0 24 24" 
               stroke="currentColor"
@@ -203,17 +274,31 @@ const EventCard = ({ event, featured = false }) => {
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
-            <span className="text-sm sm:text-base">
-              Organized by {organizers.map(org => org.name).join(', ')}
-            </span>
+            <div>
+              <div className="text-sm sm:text-base">
+                Organized by:
+              </div>
+              <div className="mt-1 flex flex-wrap gap-2">
+                {organizers.map((organizer, index) => (
+                  <span 
+                    key={index} 
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-dark-800 text-${color}-400 border border-dark-700`}
+                    title={organizer.house ? `${organizer.name} from ${organizer.house}` : organizer.name}
+                  >
+                    {organizer.name}
+                    {organizer.role && <span className="ml-1 text-dark-400">• {organizer.role}</span>}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
         
         {/* Description and Cost */}
         <div className="mb-5">
-          <p className="text-dark-100 leading-relaxed">
-            {featured ? description : excerpt}
-          </p>
+          <div className="text-dark-100 leading-relaxed prose prose-invert prose-sm max-w-none">
+            {featured ? <MarkdownRenderer content={description} /> : <MarkdownRenderer content={excerpt} />}
+          </div>
           
           {cost && (
             <div className="mt-4">
@@ -249,19 +334,20 @@ const EventCard = ({ event, featured = false }) => {
         )}
         
         {/* Toggle Details / CTA Buttons */}
-        <div className="mt-auto flex items-center gap-3">
+        <div className="mt-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <button 
             onClick={handleJoinClick}
             className={getButtonClasses()}
+            aria-label={`${ctaText || "I'm Interested"} in ${title}`}
           >
             {ctaText || "I'm Interested!"}
           </button>
           
           <button
             onClick={() => setShowDetails(!showDetails)}
-            className="btn bg-dark-800 hover:bg-dark-700 p-2.5 rounded-lg border border-dark-700 hover:border-dark-600 transition-all"
+            className="btn bg-dark-800 hover:bg-dark-700 p-2.5 rounded-lg border border-dark-700 hover:border-dark-600 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900 focus:ring-dark-600"
             aria-expanded={showDetails}
-            aria-label={showDetails ? "Hide details" : "Show details"}
+            aria-label={showDetails ? `Hide details for ${title}` : `Show details for ${title}`}
           >
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
@@ -298,13 +384,20 @@ const EventCard = ({ event, featured = false }) => {
                   </svg>
                   Schedule
                 </h4>
-                <div className="space-y-2 pl-2">
-                  {schedule.map((item, index) => (
-                    <div key={index} className="flex items-baseline">
-                      <div className="w-14 text-dark-300 flex-shrink-0 font-medium">{item.time}</div>
-                      <div className="text-dark-100">{item.activity}</div>
-                    </div>
-                  ))}
+                <div className="rounded-lg border border-dark-800 overflow-hidden bg-dark-900/50">
+                  <div className="space-y-0 divide-y divide-dark-800/50">
+                    {schedule.map((item, index) => (
+                      <div 
+                        key={index} 
+                        className={`flex items-baseline p-3 ${index % 2 === 0 ? 'bg-dark-800/20' : ''}`}
+                      >
+                        <div className="w-14 text-dark-300 flex-shrink-0 font-medium">{item.time}</div>
+                        <div className="text-dark-100">
+                          <MarkdownRenderer content={item.activity} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -324,7 +417,39 @@ const EventCard = ({ event, featured = false }) => {
                   </svg>
                   How to Participate
                 </h4>
-                <p className="text-dark-100 pl-2">{details.participationInfo}</p>
+                <div className="p-4 rounded-lg bg-dark-800/30 border border-dark-700/50">
+                  <MarkdownRenderer content={details.participationInfo} />
+                </div>
+              </div>
+            )}
+
+            {/* Rules */}
+            {details?.rules && details.rules.length > 0 && (
+              <div>
+                <h4 className={`text-lg font-semibold text-${color}-400 mb-3 flex items-center`}>
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    className="h-5 w-5 mr-2" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
+                  Rules
+                </h4>
+                <div className="p-4 rounded-lg bg-dark-800/30 border border-dark-700/50">
+                  <ul className="space-y-3">
+                    {details.rules.map((rule, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className={`text-${color}-500 mr-2 font-bold select-none`}>•</span>
+                        <div className="flex-1">
+                          <MarkdownRenderer content={rule} />
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             )}
             
@@ -343,14 +468,18 @@ const EventCard = ({ event, featured = false }) => {
                   </svg>
                   What to Bring
                 </h4>
-                <ul className="space-y-1 text-dark-100 pl-2">
-                  {details.bringItems.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-dark-300 mr-2">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="p-4 rounded-lg bg-dark-800/30 border border-dark-700/50">
+                  <ul className="space-y-2">
+                    {details.bringItems.map((item, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className={`text-${color}-500 mr-2 font-bold select-none`}>•</span>
+                        <span className="text-dark-100">
+                          <MarkdownRenderer content={item} />
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             )}
             
@@ -374,8 +503,10 @@ const EventCard = ({ event, featured = false }) => {
                     <ul className="space-y-2 text-dark-100">
                       {details.doAndDont.do.map((item, index) => (
                         <li key={index} className="flex items-start">
-                          <span className="text-success-500 mr-2 mt-1">✓</span>
-                          <span>{item}</span>
+                          <span className="text-success-500 mr-2 mt-0.5">✓</span>
+                          <div className="flex-1">
+                            <MarkdownRenderer content={item} />
+                          </div>
                         </li>
                       ))}
                     </ul>
@@ -399,8 +530,10 @@ const EventCard = ({ event, featured = false }) => {
                     <ul className="space-y-2 text-dark-100">
                       {details.doAndDont.dont.map((item, index) => (
                         <li key={index} className="flex items-start">
-                          <span className="text-accent-500 mr-2 mt-1">✗</span>
-                          <span>{item}</span>
+                          <span className="text-accent-500 mr-2 mt-0.5">✗</span>
+                          <div className="flex-1">
+                            <MarkdownRenderer content={item} />
+                          </div>
                         </li>
                       ))}
                     </ul>
@@ -424,14 +557,18 @@ const EventCard = ({ event, featured = false }) => {
                   </svg>
                   Safety Information
                 </h4>
-                <ul className="space-y-1 text-dark-100 pl-2">
-                  {details.safetyInfo.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-info-500 mr-2">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="p-4 rounded-lg bg-dark-800/30 border border-dark-700/50">
+                  <ul className="space-y-2">
+                    {details.safetyInfo.map((item, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-info-500 mr-2 mt-0.5">•</span>
+                        <div className="flex-1">
+                          <MarkdownRenderer content={item} />
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             )}
           </div>
