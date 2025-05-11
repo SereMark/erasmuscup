@@ -78,6 +78,129 @@ const EventCard = ({ event, featured = false }) => {
     }
   };
   
+  // Get cost badge classes based on color
+  const getCostBadgeClasses = () => {
+    const baseClasses = "inline-flex items-center px-3 py-1 rounded-lg text-sm";
+    
+    switch (color) {
+      case 'brand':
+        return `${baseClasses} bg-brand-900/30 text-brand-300 border border-brand-800/20`;
+      case 'accent':
+        return `${baseClasses} bg-accent-900/30 text-accent-300 border border-accent-800/20`;
+      case 'success':
+        return `${baseClasses} bg-success-900/30 text-success-300 border border-success-800/20`;
+      case 'info':
+        return `${baseClasses} bg-info-900/30 text-info-300 border border-info-800/20`;
+      default:
+        return `${baseClasses} bg-brand-900/30 text-brand-300 border border-brand-800/20`;
+    }
+  };
+  
+  // Get category badge classes based on color
+  const getCategoryBadgeClasses = () => {
+    const baseClasses = "px-3 py-1 text-sm font-medium rounded-lg shadow-sm backdrop-blur-sm";
+    
+    switch (color) {
+      case 'brand':
+        return `${baseClasses} bg-brand-900/90 text-brand-300 border border-brand-700/40`;
+      case 'accent':
+        return `${baseClasses} bg-accent-900/90 text-accent-300 border border-accent-700/40`;
+      case 'success':
+        return `${baseClasses} bg-success-900/90 text-success-300 border border-success-700/40`;
+      case 'info':
+        return `${baseClasses} bg-info-900/90 text-info-300 border border-info-700/40`;
+      default:
+        return `${baseClasses} bg-brand-900/90 text-brand-300 border border-brand-700/40`;
+    }
+  };
+  
+  // Get points badge classes based on color
+  const getPointsBadgeClasses = () => {
+    const baseClasses = "px-3 py-1 text-sm font-medium rounded-lg bg-dark-900/90 shadow-sm backdrop-blur-sm";
+    
+    switch (color) {
+      case 'brand':
+        return `${baseClasses} text-brand-400 border border-brand-700/20`;
+      case 'accent':
+        return `${baseClasses} text-accent-400 border border-accent-700/20`;
+      case 'success':
+        return `${baseClasses} text-success-400 border border-success-700/20`;
+      case 'info':
+        return `${baseClasses} text-info-400 border border-info-700/20`;
+      default:
+        return `${baseClasses} text-brand-400 border border-brand-700/20`;
+    }
+  };
+  
+  // Get organizer tag classes based on color
+  const getOrganizerTagClasses = () => {
+    const baseClasses = "inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-dark-800 border border-dark-700";
+    
+    switch (color) {
+      case 'brand':
+        return `${baseClasses} text-brand-400`;
+      case 'accent':
+        return `${baseClasses} text-accent-400`;
+      case 'success':
+        return `${baseClasses} text-success-400`;
+      case 'info':
+        return `${baseClasses} text-info-400`;
+      default:
+        return `${baseClasses} text-brand-400`;
+    }
+  };
+  
+  // Get colored text based on color
+  const getColoredTextClasses = () => {
+    switch (color) {
+      case 'brand':
+        return 'text-brand-500';
+      case 'accent':
+        return 'text-accent-500';
+      case 'success':
+        return 'text-success-500';
+      case 'info':
+        return 'text-info-500';
+      default:
+        return 'text-brand-500';
+    }
+  };
+  
+  // Get header text color based on color
+  const getHeaderTextClasses = () => {
+    switch (color) {
+      case 'brand':
+        return 'text-brand-400';
+      case 'accent':
+        return 'text-accent-400';
+      case 'success':
+        return 'text-success-400';
+      case 'info':
+        return 'text-info-400';
+      default:
+        return 'text-brand-400';
+    }
+  };
+  
+  // Get card classes for the main container
+  const getCardClasses = () => {
+    const baseClasses = "bg-dark-900/90 border border-dark-800/80 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300";
+    const featuredClass = featured ? 'lg:grid lg:grid-cols-12' : '';
+    
+    switch (color) {
+      case 'brand':
+        return `${baseClasses} hover:border-brand-500/40 ${featuredClass}`;
+      case 'accent':
+        return `${baseClasses} hover:border-accent-500/40 ${featuredClass}`;
+      case 'success':
+        return `${baseClasses} hover:border-success-500/40 ${featuredClass}`;
+      case 'info':
+        return `${baseClasses} hover:border-info-500/40 ${featuredClass}`;
+      default:
+        return `${baseClasses} hover:border-brand-500/40 ${featuredClass}`;
+    }
+  };
+  
   // Image to use with fallback
   const imageUrl = images?.banner || images?.thumbnail || '/assets/logos/not-available.png';
   
@@ -134,7 +257,7 @@ const EventCard = ({ event, featured = false }) => {
           p: ({node, ...props}) => <p className="text-dark-100 whitespace-pre-line mb-2" {...props} />,
           strong: ({node, ...props}) => <strong className="text-white font-semibold" {...props} />,
           em: ({node, ...props}) => <em className="text-dark-200 italic" {...props} />,
-          a: ({node, ...props}) => <a className={`text-${color}-400 hover:underline`} target="_blank" rel="noopener noreferrer" {...props} />,
+          a: ({node, ...props}) => <a className={`${getColoredTextClasses().replace('500', '400')} hover:underline`} target="_blank" rel="noopener noreferrer" {...props} />,
           ul: ({node, ...props}) => <ul className="list-disc pl-5 space-y-1 text-dark-100 mt-2" {...props} />,
           ol: ({node, ...props}) => <ol className="list-decimal pl-5 space-y-1 text-dark-100 mt-2" {...props} />,
           li: ({node, ...props}) => <li className="text-dark-100" {...props} />
@@ -147,7 +270,7 @@ const EventCard = ({ event, featured = false }) => {
   
   return (
     <motion.div 
-      className={`bg-dark-900/90 border border-dark-800/80 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:border-${color}-500/40 ${featured ? 'lg:grid lg:grid-cols-12' : ''}`}
+      className={getCardClasses()}
       initial={{ opacity: 0, y: 15 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-20px" }}
@@ -158,7 +281,7 @@ const EventCard = ({ event, featured = false }) => {
       <div className={`relative ${featured ? 'h-64 sm:h-72 lg:h-auto lg:col-span-5' : 'h-60'}`}>
         {/* Category badge */}
         <div className="absolute top-0 left-0 z-10 m-4">
-          <div className={`px-3 py-1 text-sm font-medium rounded-lg bg-${color}-900/90 text-${color}-300 border border-${color}-700/40 shadow-sm backdrop-blur-sm`}>
+          <div className={getCategoryBadgeClasses()}>
             {getCategoryLabel()}
           </div>
         </div>
@@ -175,7 +298,7 @@ const EventCard = ({ event, featured = false }) => {
         {/* Points badge */}
         {housePoints > 0 && (
           <div className="absolute bottom-0 left-0 z-10 m-4">
-            <div className={`px-3 py-1 text-sm font-medium rounded-lg bg-dark-900/90 text-${color}-400 shadow-sm backdrop-blur-sm border border-${color}-700/20`}>
+            <div className={getPointsBadgeClasses()}>
               {housePoints} House Points
             </div>
           </div>
@@ -184,7 +307,7 @@ const EventCard = ({ event, featured = false }) => {
         {/* Affected Houses badge */}
         {affectedHouses && affectedHouses.length > 0 && (
           <div className="absolute bottom-0 right-0 z-10 m-4">
-            <div className={`px-3 py-1 text-sm font-medium rounded-lg bg-dark-900/90 text-${color}-400 shadow-sm backdrop-blur-sm border border-${color}-700/20`}>
+            <div className={getPointsBadgeClasses()}>
               {affectedHouses.join(', ')}
             </div>
           </div>
@@ -225,7 +348,7 @@ const EventCard = ({ event, featured = false }) => {
           <div className="flex items-start text-dark-100">
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
-              className={`h-5 w-5 mr-3 mt-0.5 text-${color}-500 flex-shrink-0`}
+              className={`h-5 w-5 mr-3 mt-0.5 ${getColoredTextClasses()} flex-shrink-0`}
               fill="none" 
               viewBox="0 0 24 24" 
               stroke="currentColor"
@@ -248,7 +371,7 @@ const EventCard = ({ event, featured = false }) => {
           <div className="flex items-start text-dark-100">
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
-              className={`h-5 w-5 mr-3 text-${color}-500 flex-shrink-0 mt-0.5`}
+              className={`h-5 w-5 mr-3 ${getColoredTextClasses()} flex-shrink-0 mt-0.5`}
               fill="none" 
               viewBox="0 0 24 24" 
               stroke="currentColor"
@@ -266,7 +389,7 @@ const EventCard = ({ event, featured = false }) => {
           <div className="flex items-start text-dark-100">
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
-              className={`h-5 w-5 mr-3 text-${color}-500 flex-shrink-0 mt-0.5`}
+              className={`h-5 w-5 mr-3 ${getColoredTextClasses()} flex-shrink-0 mt-0.5`}
               fill="none" 
               viewBox="0 0 24 24" 
               stroke="currentColor"
@@ -282,7 +405,7 @@ const EventCard = ({ event, featured = false }) => {
                 {organizers.map((organizer, index) => (
                   <span 
                     key={index} 
-                    className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-dark-800 text-${color}-400 border border-dark-700`}
+                    className={getOrganizerTagClasses()}
                     title={organizer.house ? `${organizer.name} from ${organizer.house}` : organizer.name}
                   >
                     {organizer.name}
@@ -302,7 +425,7 @@ const EventCard = ({ event, featured = false }) => {
           
           {cost && (
             <div className="mt-4">
-              <span className={`inline-flex items-center px-3 py-1 rounded-lg bg-${color}-900/30 text-${color}-300 text-sm border border-${color}-800/20`}>
+              <span className={getCostBadgeClasses()}>
                 <svg 
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4 mr-1.5"
@@ -372,7 +495,7 @@ const EventCard = ({ event, featured = false }) => {
             {/* Schedule */}
             {schedule && schedule.length > 0 && (
               <div>
-                <h4 className={`text-lg font-semibold text-${color}-400 mb-3 flex items-center`}>
+                <h4 className={`text-lg font-semibold ${getHeaderTextClasses()} mb-3 flex items-center`}>
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className="h-5 w-5 mr-2" 
@@ -405,7 +528,7 @@ const EventCard = ({ event, featured = false }) => {
             {/* Participation Info */}
             {details?.participationInfo && (
               <div>
-                <h4 className={`text-lg font-semibold text-${color}-400 mb-3 flex items-center`}>
+                <h4 className={`text-lg font-semibold ${getHeaderTextClasses()} mb-3 flex items-center`}>
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className="h-5 w-5 mr-2" 
@@ -426,7 +549,7 @@ const EventCard = ({ event, featured = false }) => {
             {/* Rules */}
             {details?.rules && details.rules.length > 0 && (
               <div>
-                <h4 className={`text-lg font-semibold text-${color}-400 mb-3 flex items-center`}>
+                <h4 className={`text-lg font-semibold ${getHeaderTextClasses()} mb-3 flex items-center`}>
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className="h-5 w-5 mr-2" 
@@ -442,7 +565,7 @@ const EventCard = ({ event, featured = false }) => {
                   <ul className="space-y-3">
                     {details.rules.map((rule, index) => (
                       <li key={index} className="flex items-start">
-                        <span className={`text-${color}-500 mr-2 font-bold select-none`}>•</span>
+                        <span className={`${getColoredTextClasses()} mr-2 font-bold select-none`}>•</span>
                         <div className="flex-1">
                           <MarkdownRenderer content={rule} />
                         </div>
@@ -456,7 +579,7 @@ const EventCard = ({ event, featured = false }) => {
             {/* What to Bring */}
             {details?.bringItems && details.bringItems.length > 0 && (
               <div>
-                <h4 className={`text-lg font-semibold text-${color}-400 mb-3 flex items-center`}>
+                <h4 className={`text-lg font-semibold ${getHeaderTextClasses()} mb-3 flex items-center`}>
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className="h-5 w-5 mr-2" 
@@ -472,7 +595,7 @@ const EventCard = ({ event, featured = false }) => {
                   <ul className="space-y-2">
                     {details.bringItems.map((item, index) => (
                       <li key={index} className="flex items-start">
-                        <span className={`text-${color}-500 mr-2 font-bold select-none`}>•</span>
+                        <span className={`${getColoredTextClasses()} mr-2 font-bold select-none`}>•</span>
                         <span className="text-dark-100">
                           <MarkdownRenderer content={item} />
                         </span>
@@ -488,7 +611,7 @@ const EventCard = ({ event, featured = false }) => {
               <div className="grid sm:grid-cols-2 gap-4">
                 {details.doAndDont.do && (
                   <div className="p-4 rounded-lg bg-dark-800/80 border border-success-800/20">
-                    <h4 className="font-semibold text-success-400 mb-3 flex items-center">
+                    <h4 className={`text-lg font-semibold ${getHeaderTextClasses()} mb-3 flex items-center`}>
                       <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         className="h-5 w-5 mr-2" 
@@ -515,7 +638,7 @@ const EventCard = ({ event, featured = false }) => {
                 
                 {details.doAndDont.dont && (
                   <div className="p-4 rounded-lg bg-dark-800/80 border border-accent-800/20">
-                    <h4 className="font-semibold text-accent-400 mb-3 flex items-center">
+                    <h4 className={`text-lg font-semibold ${getHeaderTextClasses()} mb-3 flex items-center`}>
                       <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         className="h-5 w-5 mr-2" 
@@ -545,7 +668,7 @@ const EventCard = ({ event, featured = false }) => {
             {/* Safety Info if available */}
             {details?.safetyInfo && (
               <div className="mt-2">
-                <h4 className={`text-lg font-semibold text-${color}-400 mb-3 flex items-center`}>
+                <h4 className={`text-lg font-semibold ${getHeaderTextClasses()} mb-3 flex items-center`}>
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className="h-5 w-5 mr-2" 

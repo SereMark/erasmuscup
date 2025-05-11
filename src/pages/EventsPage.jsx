@@ -104,6 +104,59 @@ const EventsPage = () => {
       default: return 'brand';
     }
   };
+  
+  // Get progress bar classes for category stats
+  const getCategoryProgressBarClasses = (category) => {
+    switch (category) {
+      case 'house-event': return 'bg-brand-500 h-full rounded-full';
+      case 'super-gambit': return 'bg-success-500 h-full rounded-full';
+      case 'gambit': return 'bg-accent-500 h-full rounded-full';
+      case 'social': return 'bg-info-500 h-full rounded-full';
+      default: return 'bg-brand-500 h-full rounded-full';
+    }
+  };
+  
+  // Get text color classes for category points
+  const getCategoryTextClasses = (category) => {
+    switch (category) {
+      case 'house-event': return 'text-brand-400 font-semibold';
+      case 'super-gambit': return 'text-success-400 font-semibold';
+      case 'gambit': return 'text-accent-400 font-semibold';
+      case 'social': return 'text-info-400 font-semibold';
+      default: return 'text-brand-400 font-semibold';
+    }
+  };
+  
+  // Get button classes for category filter
+  const getCategoryButtonClasses = (category, isActive) => {
+    const baseClasses = "px-4 py-2 text-sm font-medium rounded-md transition-all m-0.5";
+    
+    if (isActive) {
+      switch (category) {
+        case 'house-event': return `${baseClasses} bg-brand-500 text-white shadow-sm`;
+        case 'super-gambit': return `${baseClasses} bg-success-500 text-white shadow-sm`;
+        case 'gambit': return `${baseClasses} bg-accent-500 text-white shadow-sm`;
+        case 'social': return `${baseClasses} bg-info-500 text-white shadow-sm`;
+        case 'all': return `${baseClasses} bg-brand-500 text-white shadow-sm`;
+        default: return `${baseClasses} bg-brand-500 text-white shadow-sm`;
+      }
+    }
+    
+    return `${baseClasses} text-dark-200 hover:text-white hover:bg-dark-700`;
+  };
+  
+  // Get category card classes for styling the stats cards
+  const getCategoryCardClasses = (category) => {
+    const baseClasses = "bg-dark-850 rounded-lg p-4 transition-all group cursor-pointer";
+    
+    switch (category) {
+      case 'house-event': return `${baseClasses} border border-dark-800 hover:border-brand-700/40`;
+      case 'super-gambit': return `${baseClasses} border border-dark-800 hover:border-success-700/40`;
+      case 'gambit': return `${baseClasses} border border-dark-800 hover:border-accent-700/40`;
+      case 'social': return `${baseClasses} border border-dark-800 hover:border-info-700/40`;
+      default: return `${baseClasses} border border-dark-800 hover:border-brand-700/40`;
+    }
+  };
 
   // Calculate total points across all categories
   const totalPointsAllCategories = useMemo(() => 
@@ -252,11 +305,7 @@ const EventsPage = () => {
                                 setActiveFilter(category);
                                 if (window.innerWidth < 768) setFilterMenuOpen(false);
                               }}
-                              className={`px-4 py-2 text-sm font-medium rounded-md transition-all m-0.5 ${
-                                activeFilter === category 
-                                  ? `bg-${getCategoryColor(category)}-500 text-white shadow-sm` 
-                                  : 'text-dark-200 hover:text-white hover:bg-dark-700'
-                              }`}
+                              className={getCategoryButtonClasses(category, activeFilter === category)}
                               aria-pressed={activeFilter === category}
                             >
                               {getCategoryLabel(category)}
@@ -282,7 +331,7 @@ const EventsPage = () => {
                     <>
                       {/* Stats bar showing points per category */}
                       <motion.div 
-                        className="bg-dark-800/70 rounded-xl p-5 mb-8 border border-dark-700/60 overflow-hidden"
+                        className="bg-dark-800/70 rounded-xl p-5 mb-8 border border-dark-800 overflow-hidden"
                         initial="hidden"
                         animate="visible"
                         variants={{
@@ -314,7 +363,7 @@ const EventsPage = () => {
                             return (
                               <motion.div 
                                 key={category} 
-                                className="bg-dark-850 rounded-lg p-4 border border-dark-750 hover:border-dark-600 transition-all group"
+                                className={getCategoryCardClasses(category)}
                                 whileHover={{ scale: 1.02 }}
                                 onClick={() => setActiveFilter(category)}
                                 style={{ cursor: 'pointer' }}
@@ -324,13 +373,13 @@ const EventsPage = () => {
                                     {getCategoryLabel(category)}
                                     <span className="ml-1 text-sm text-dark-400">({categoryEvents.length})</span>
                                   </h4>
-                                  <span className={`text-${getCategoryColor(category)}-400 font-semibold`}>
+                                  <span className={getCategoryTextClasses(category)}>
                                     {totalPoints} pts
                                   </span>
                                 </div>
                                 <div className="w-full bg-dark-700 h-2.5 rounded-full overflow-hidden">
                                   <motion.div 
-                                    className={`bg-${getCategoryColor(category)}-500 h-full rounded-full`}
+                                    className={getCategoryProgressBarClasses(category)}
                                     initial="hidden"
                                     animate={animateStats ? "visible" : "hidden"}
                                     variants={statVariants}
