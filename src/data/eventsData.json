@@ -30,11 +30,6 @@
           "role": "Event Host"
         },
         {
-          "name": "Liam",
-          "house": "Not Brew Crew",
-          "role": "Technician"
-        },
-        {
           "name": "The Four House Captains",
           "house": "All Houses",
           "role": "List Collectors"
