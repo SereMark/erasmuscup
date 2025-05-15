@@ -80,6 +80,83 @@
         "textColor": "white"
       },
       "ctaText": "Predict & Win!"
+    },
+    {
+      "id": "le-coin-coin-super-gambit",
+      "title": "Le Coin Coin ~ Super Gambit ~",
+      "date": "2025-05-16T19:00:00",
+      "endDate": "2025-05-16T23:00:00",
+      "location": {
+        "name": "Common Room, Julius Raab Heim",
+        "address": "Julius-Raab-Straße 10, 4040 Linz"
+      },
+      "category": "super-gambit",
+      "status": "upcoming",
+      "excerpt": "Be the first team to finish both of your own glasses in this fast-paced and exciting coin game of skill and speed!",
+      "description": "Gather your teammate and get ready for '~ Le Coin Coin ~'! The goal is simple: be the first team to finish both of your glasses. Precision throws and quick reflexes are key to victory in this super gambit.",
+      "images": {
+        "banner": "/assets/images/le-coin-coin.png",
+        "thumbnail": "/assets/images/le-coin-coin.png"
+      },
+      "housePoints": 150,
+      "organizers": [
+        {
+          "name": "Max",
+          "house": "House Jungle",
+          "role": "Event Organizer"
+        }
+      ],
+      "schedule": [
+        { "time": "19:30", "activity": "Game On! First Rounds Begin" },
+        { "time": "21:00", "activity": "Semi-Finals & Finals" },
+        { "time": "22:00", "activity": "Winners Announcement & Point Awards" },
+        { "time": "23:00", "activity": "Event End & Clean-up" }
+      ],
+      "details": {
+        "participationInfo": "Two teams of two players each. Register your team with the event organizers before 19:00. All Houses are welcome to participate and cheer!",
+        "rules": [
+          "**Setup:** Each team stands on one side of a beer-pong sized table. Four filled glasses (0.5L, traditionally beer) are placed on each corner. One empty glass is placed in the exact center.",
+          "**Gameplay:** One player from Team A throws a ping-pong ball towards Team B's glasses.",
+          "**Drinking:** If the ball *touches* an opposing team's glass (in or out), the shooter’s teammate may start drinking one of their team’s glasses.",
+          "**Stopping:** Simultaneously, the opposing team must quickly retrieve the ball, place it in the empty center glass, and loudly say “STOP”. The drinker must immediately stop.",
+          "**Missed Shot:** If the ball doesn’t touch any opposing glass, nothing happens. The other team takes their turn.",
+          "**Shooter Never Drinks:** The player who threw the ball is not allowed to drink during that turn.",
+          "**Teammate Waits:** The shooter’s teammate cannot drink or touch a glass until the ball has touched an opponent's glass.",
+          "**Finished Glass:** Once a glass is completely empty, it must be flipped upside-down on the table and can no longer be targeted.",
+          "**Glass Knocked Over:** If a glass is knocked over (by a shot or by its own team), it must be refilled completely, even if nearly empty. It's then back in play.",
+          "**No Assigned Glasses:** Teammates can drink from either glass on their side. If one glass is finished, the remaining glass can be shared.",
+          "**Winning:** The first team to completely drink and flip both of their own glasses wins. Knocked-over glasses do not count as finished.",
+          "**Points:** This is a Super Gambit Game. Points will respect Act.12a of the “Amendment as of 4 April 2025” of the official “House Cup rules 2025”."
+        ],
+        "bringItems": [
+          "2 glasses worth of drinks per team per game"
+        ],
+        "safetyInfo": [
+          "Please drink responsibly. Non-alcoholic drinks are allowed.",
+          "Ensure fair play and good sportsmanship at all times.",
+          "In case of dispute, the decision of the House Cup judges is final."
+        ],
+        "doAndDont": {
+          "do": [
+            "Communicate with your teammate.",
+            "Practice your throws beforehand.",
+            "Have fun and cheer for all teams!"
+          ],
+          "dont": [
+            "Argue excessively with opponents or judges.",
+            "Spill drinks unnecessarily (refill penalty applies!)."
+          ]
+        }
+      },
+      "affectedHouses": ["All Houses"],
+      "cost": "Free (bring your own drinks)",
+      "whatsappInfo": "For rule clarifications or disputes during the event, talk to Max.",
+      "customStyles": {
+        "backgroundColor": "success-900/70",
+        "accentColor": "success-500",
+        "textColor": "white"
+      },
+      "ctaText": "Join Le Coin Coin!"
     }
   ],
   "organizeEvent": {
