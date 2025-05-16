@@ -82,7 +82,7 @@
       "date": "2025-05-16T19:00:00",
       "endDate": "2025-05-16T23:00:00",
       "location": {
-        "name": "Common Room, Julius Raab Heim",
+        "name": "4th Floor Common Room, Julius Raab Heim",
         "address": "Julius-Raab-Straße 10, 4040 Linz"
       },
       "category": "super-gambit",
@@ -93,7 +93,7 @@
         "banner": "/assets/images/le-coin-coin.png",
         "thumbnail": "/assets/images/le-coin-coin.png"
       },
-      "housePoints": 150,
+      "housePoints": 80,
       "organizers": [
         {
           "name": "Max",
