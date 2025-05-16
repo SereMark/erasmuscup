@@ -31,9 +31,13 @@ export const formatDate = (dateString, options = {}) => {
     const date = new Date(dateString);
     const now = new Date();
     
-    // Time difference in milliseconds
-    const diffTime = date.getTime() - now.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    // Reset hours to compare just the dates
+    const dateWithoutTime = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const nowWithoutTime = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    
+    // Get the time difference in days
+    const diffTime = dateWithoutTime.getTime() - nowWithoutTime.getTime();
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
     
     if (diffDays === 0) return 'Today';
     if (diffDays === 1) return 'Tomorrow';
