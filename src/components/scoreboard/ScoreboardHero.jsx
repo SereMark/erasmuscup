@@ -112,7 +112,7 @@ const ScoreboardHero = ({ data }) => {
                 </svg>
               </motion.div>
               <span className="text-xs sm:text-sm font-medium text-brand-300">
-                Last Updated: 29/04/2025
+                Last Updated: 24/05/2025
               </span>
             </div>
           </motion.div>
